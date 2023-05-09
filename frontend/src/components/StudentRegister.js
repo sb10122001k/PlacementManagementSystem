@@ -1,58 +1,16 @@
 import React, { Component } from 'react';
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap'
-import * as yup from "yup";
-import { Formik } from 'formik'
 
 
 
-
-
-const schema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  username: yup.string().required(),
-  city: yup.string().required(),
-  state: yup.string().required(),
-  zip: yup.string().required(),
-  file: yup.mixed().required(),
-  terms: yup.bool().required().oneOf([true], 'terms must be accepted'),
-});
 
 
 const StudentRegister = () => {
-
- async function registerStudent(e){
-  console.log("Student Register")
- }
-
-
   return (
-    <Formik
-      validationSchema={schema}
-      onSubmit={console.log}
-      initialValues={{
-        firstName: '',
-        lastName: '',
-        username: '',
-        city: '',
-        state: '',
-        zip: '',
-        file: null,
-        terms: false,
-      }}
-    >
-      {({
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        values,
-        touched,
-        isValid,
-        errors,
-      }) => (
-        <Form onSubmit={registerStudent}>
+    
+        <Form>
           <br></br>
-          <h1 className="container text-center">Student Register</h1>
+          <h1 class="container text-center">Student Register</h1>
           <br></br>
 
           <div class="container">
@@ -62,44 +20,18 @@ const StudentRegister = () => {
               <Form.Group as={Col} md="4" controlId="formGridFirstname" className="position-relative"
               >
                 <Form.Label>First Name</Form.Label>
-                <Form.Control type='text' placeholder="First name"
-                  name="firstName"
-                  value={values.firstName}
-                  onChange={handleChange}
-                  required
-                  isValid={touched.firstName && !errors.firstName}
-                  isInvalid={!!errors.firstName} />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.firstName}
-                </Form.Control.Feedback>
+                <Form.Control type='text' placeholder="First name" required/>
+               
               </Form.Group>
 
               <Form.Group as={Col} md="4" controlId="formGridLastname">
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control type='text' placeholder="Last name"
-                  name="lastName"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  isValid={touched.lastName && !errors.lastName}
-                  isInvalid={!!errors.lastName}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.lastName}
-                </Form.Control.Feedback>
+                <Form.Control type='text' placeholder="Last name"/>
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridUSN">
                 <Form.Label>USN</Form.Label>
-                <Form.Control type='usn' placeholder="USN"
-                  name="string"
-                  value={values.usn}
-                  onChange={handleChange}
-                  required
-                  isValid={touched.usn && !errors.usn}
-                  isInvalid={!!errors.usn} />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.usn}
-                </Form.Control.Feedback>
+                <Form.Control type='string' placeholder="USN"  required  />
               </Form.Group>
             </Row>
             <br></br>
@@ -137,15 +69,7 @@ const StudentRegister = () => {
               </Form.Group>
               <Form.Group as={Col} controlId="formGridState">
                 <Form.Label>State</Form.Label>
-                <Form.Control required placeholder="State"
-                  type="text"
-                  name="state"
-                  value={values.state}
-                  onChange={handleChange}
-                  isInvalid={!!errors.state} />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.state}
-                </Form.Control.Feedback>
+                <Form.Control required placeholder="State" type="text" />
               </Form.Group>
             </Row>
 
@@ -155,16 +79,7 @@ const StudentRegister = () => {
 
               <Form.Group as={Col} controlId="formGridCity">
                 <Form.Label>City</Form.Label>
-                <Form.Control placeholder="City"
-                  type="text"
-                  name="city"
-                  required
-                  value={values.city}
-                  onChange={handleChange}
-                  isInvalid={!!errors.city} />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.city}
-                </Form.Control.Feedback>
+                <Form.Control placeholder="City" type="text"  required  />
               </Form.Group>
 
               <Form.Group
@@ -176,16 +91,8 @@ const StudentRegister = () => {
                 <Form.Control
                   type="text"
                   placeholder="Zip"
-                  name="zip"
                   required
-                  value={values.zip}
-                  onChange={handleChange}
-                  isInvalid={!!errors.zip}
                 />
-
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.zip}
-                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridContactnum">
@@ -332,14 +239,9 @@ const StudentRegister = () => {
                 <Form.Label>Image</Form.Label>
                 <Form.Control
                   type="file"
-                  required
-                  name="file"
-                  onChange={handleChange}
-                  isInvalid={!!errors.file}
+                  required                  
                 />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.file}
-                </Form.Control.Feedback>
+               
               </Form.Group>
             </Row>
             <br></br>
@@ -351,12 +253,7 @@ const StudentRegister = () => {
                 required
                 name="terms"
                 label="The information given by me is correct"
-                onChange={handleChange}
-                isInvalid={!!errors.terms}
-                feedback={errors.terms}
-                feedbackType="invalid"
-                id="validationFormik106"
-                feedbackTooltip
+                
               />
             </Form.Group>
 
@@ -364,7 +261,7 @@ const StudentRegister = () => {
 
             <br></br>
 
-            <input type="submit" value="Register" className="btn"/>
+            <Button variant="dark" type="submit">Submit </Button>{' '}
             <Button variant="dark" type="reset">Cancel </Button>
             <br></br>
             <br></br>
@@ -372,10 +269,9 @@ const StudentRegister = () => {
 
           </div>
         </Form>
-      )}
-    </Formik>
-  );
-}
+      )
+    }
+    
 
 export default StudentRegister;
 
