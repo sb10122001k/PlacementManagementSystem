@@ -1,8 +1,25 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, Form, Button } from 'react-bootstrap'
 
 const StudentProfile = () => {
+    const [studentData, setStudentData] = useState({});
+
+    useEffect(() => {
+        fetch('http://localhost:1337/api/studentProfile')
+            .then(response => response.json())
+            .then(data => {
+                setStudentData(data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+  
     return (
+
+        
+
+
         <div>
             <Navbar bg="dark" variant='dark' expand="lg">
                 <Container fluid>
@@ -50,14 +67,14 @@ const StudentProfile = () => {
                 <h5 class="container text-justify">
                     <img align="right" src="https://img.freepik.com/free-icon/user-profile-icon_318-33925.jpg?w=2000" height="180" width="171" />
 
-                    <b>NAME:</b>  Lakshmi B
-                    <br></br>
-                    <br></br>
-                    <b>USN:</b>  1CD20CS001
+                        <b>NAME:</b>  {studentData.firstName} {studentData.lastName}
+                        <br></br>
+                        <br></br>
+                        <b>USN:</b>  {studentData.usn}
 
-                    <br></br>
-                    <br></br>
-                    <b>SEMISTER:</b>  8
+                        <br></br>
+                        <br></br>
+                        <b>SEMISTER:</b>  {studentData.semester}
 
                     <br></br>
                     <br></br>

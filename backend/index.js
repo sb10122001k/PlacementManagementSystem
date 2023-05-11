@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const {Student, Company, Placement} = require('./models')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const studentProfileModel = require('./studentprofile')
 dotenv.config()
 main().catch(err => console.log(err));
 
@@ -15,6 +16,13 @@ async function main() {
 } 
 app.use(cors())
 app.use(express.json())
+
+app.get('/api/studentProfile',async (req,res)=>{
+
+  const data=studentProfileModel.getData()
+  res.json(data)
+
+})
 
 app.post('/api/studentRegister', async (req, res)=>{
 
