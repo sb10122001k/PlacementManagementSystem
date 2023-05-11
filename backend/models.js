@@ -12,7 +12,9 @@ const StudentSchema = new mongoose.Schema({
   },
   usn: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    index: true
   },
   skills: [
     {
