@@ -10,6 +10,7 @@ import CompanyLogin from './components/CompanyLogIn';
 import CompanyRegister from './components/CompanyRegister'
 import AdminLogin from './components/AdminLogIn';
 import AdminRegister from './components/AdminRegister';
+import { useState } from 'react'
 
 function App() {
   return (
