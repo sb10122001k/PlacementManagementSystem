@@ -53,7 +53,7 @@ const AdminCompanyView = () => {
                         <b>Website Link:</b>   <a href="">Website Link</a>
                         <br></br>
                         <br></br>
-                        <b>Email:</b> google@gmail.
+                        <b>Email:</b> google@gmail.com
                         <br></br>
                         <br></br>
                         <b>Location:</b> Bangalore
@@ -74,6 +74,9 @@ const AdminCompanyView = () => {
                             <li>This article is for small business owners who want to leverage Google’s free tools for marketing and productivity.</li>
                         </ul>
                         Google has partnered with thousands of cities and local organizations to help businesses build their websites, stay on top of Google search results, and be seen by customers. Resources include free custom websites, a step-by-step guide to using Google Business Profile, diagnostic tools to measure your website’s performance, training programs and business workshops.
+<br></br>
+<br></br>
+<Button variant="dark" type="submit">Accept </Button>
 
 
                     </h5>
