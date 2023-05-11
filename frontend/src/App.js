@@ -10,8 +10,9 @@ import CompanyLogin from './components/CompanyLogIn';
 import CompanyRegister from './components/CompanyRegister'
 import AdminLogin from './components/AdminLogIn';
 import AdminRegister from './components/AdminRegister';
-import { useState } from 'react'
-
+import CompanyHome from './components/CompanyHome';
+import StudentProfile from './components/StudentProfile';
+import EditStudentProfile from './components/EditStudentProfile';
 function App() {
   return (
    <div>
@@ -25,6 +26,9 @@ function App() {
         <Route path='/CompanyRegister' element={<CompanyRegister/>}/>
         <Route path='/AdminLogIn' element={<AdminLogin/>}/>
         <Route path='/AdminRegister' element={<AdminRegister/>}/>
+        <Route path='/CompanyHome' element={<CompanyHome/>}/>
+        <Route path='/StudentProfile' element={<StudentProfile/>}/>
+        <Route path='/EditStudentProfile' element={<EditStudentProfile/>}/>
       </Routes>
     </Router>
    </div>

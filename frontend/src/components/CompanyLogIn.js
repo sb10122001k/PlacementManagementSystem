@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component,useState } from 'react'
 import { Form, Row, Col, Button, Card } from 'react-bootstrap'
-import { useState, useNavigate } from 'react'
+import {  useNavigate } from 'react-router-dom'
 const CompanyLogIn = () => {
 
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ const CompanyLogIn = () => {
 
     console.log(data)
     if(data.status === 'ok'){
-        navigate('/login', { replace: true })
+        navigate('/CompanyHome', { replace: true })
     }
 
 }

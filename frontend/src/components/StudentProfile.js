@@ -155,8 +155,10 @@ const StudentProfile = () => {
                     <br></br>
                     <br></br>
                     <br></br>
-
+                    <a href='/EditStudentProfile'>
                     <Button variant="dark" type="submit">Edit Profile </Button>
+                    </a>
+                    
 
 
                 </h5>

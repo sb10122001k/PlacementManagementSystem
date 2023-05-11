@@ -168,12 +168,14 @@ const Home = () => {
                         </Button>
 
                         <Button bg='dark' variant="light">
-                            <Card style={{ width: '18rem' }}>
+                            <a href="/StudentProfile" style={{ textDecoration: 'none' }}>
+                            <Card style={{ width: '18rem' }} >
                                 <Card.Img variant="top" src="https://www.uww.edu/images/icit/staff/profile-square.png" />
                                 <Card.Body>
                                     <Card.Title>Profile</Card.Title>
                                 </Card.Body>
                             </Card>
+                        </a>
                         </Button>
 
 

@@ -114,7 +114,7 @@ app.post('/api/companyLogin',async (req,res)=>{
         const validPassword = await bcrypt.compare(req.body.password, company.password)
         !validPassword && res.status(400).json("invalid password")
 
-        res.status(200).json(company.name)
+        res.status(200).json({ status: 'ok' })
     } catch(err){
         console.log(err);
     }
