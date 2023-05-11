@@ -87,8 +87,8 @@ const CompanyJobPosting = () => {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="Experiance">
-                            <Form.Label>Experiance</Form.Label>
-                            <Form.Control type="String" required placeholder="Experiance" />
+                            <Form.Label>Experience</Form.Label>
+                            <Form.Control type="String" required placeholder="Experience" />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="JobLocation">
@@ -105,7 +105,11 @@ const CompanyJobPosting = () => {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="DriveDate">
-                            <Form.Label>Drive Date</Form.Label>
+                            <Form.Label>Drive From</Form.Label>
+                            <Form.Control type="date" required placeholder="Drive Date" />
+                        </Form.Group>
+                        <Form.Group as={Col} controlId="DriveDate">
+                            <Form.Label>Drive To</Form.Label>
                             <Form.Control type="date" required placeholder="Drive Date" />
                         </Form.Group>
 
