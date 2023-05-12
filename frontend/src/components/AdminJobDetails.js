@@ -5,42 +5,42 @@ const AdminJobDetails = () => {
     return (  
             <div>
                 <Navbar bg="dark" variant='dark' expand="lg">
-                    <Container fluid>
-                        <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
-                        <Navbar.Toggle aria-controls="navbarScroll" />
-                        <Navbar.Collapse id="navbarScroll">
-                            <Nav
-                                className="me-auto my-1 my-lg-0"
-                                style={{ maxHeight: '100px' }}
-                                navbarScroll
-                            >
-                                <Nav.Link href="Home">Home</Nav.Link>
-                                <Nav.Link href="Schedule">Schedule</Nav.Link>
-                                <Nav.Link href="Resume">Resume</Nav.Link>
-                            </Nav>
+                <Container fluid>
+                    <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll">
+                        <Nav
+                            className="me-auto my-1 my-lg-0"
+                            style={{ maxHeight: '100px' }}
+                            navbarScroll
+                        >
+                            <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
+                            <Nav.Link href="AdminStudentsApplied">Applicants</Nav.Link>
+                            <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
+                        </Nav>
 
 
-                            <div className="col-md-6 mx-auto" >
-                                <Form className="d-flex ">
-                                    <Form.Control
-                                        type="search"
-                                        placeholder="Search"
-                                        className="me-2"
-                                        aria-label="Search"
-                                    />
-                                    <Button variant="outline-light">Search</Button>
-                                </Form>
-                            </div>
-                            <Button variant="outline-dark">
-                                <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
+                        <div className="col-md-6 mx-auto" >
+                            <Form className="d-flex ">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+                                <Button variant="outline-light">Search</Button>
+                            </Form>
+                        </div>
 
-                            </Button>
+                        <Button variant="outline-dark">
+                            <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
+                        </Button>
 
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
 
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
                 <div class="container text-center">
                     <br></br>
                     <br></br>
@@ -65,7 +65,7 @@ const AdminJobDetails = () => {
                         <b>Specialization:</b>CSE,ISE,ECE,EEE
                         <br></br>
                         <br></br>
-                        <b>Experiance:</b> Fresher,0-11 months
+                        <b>Experience:</b> Fresher,0-11 months
                         <br></br>
                         <br></br>
                         <b>Location:</b>Bangalore
