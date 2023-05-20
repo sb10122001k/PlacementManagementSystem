@@ -60,7 +60,7 @@ const CompanyHome = () => {
             <div class="container text-center">
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
-
+                        <a href='/NewJobPosting'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://static.vecteezy.com/system/resources/previews/015/280/523/non_2x/job-logo-icon-with-tie-image-free-vector.jpg" />
@@ -69,7 +69,7 @@ const CompanyHome = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
-
+                        </a>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem', height: '22rem' }}>
                                 <Card.Img variant="top" src="https://cdn.vectorstock.com/i/preview-1x/15/78/interview-icon-on-white-background-vector-26901578.jpg" />

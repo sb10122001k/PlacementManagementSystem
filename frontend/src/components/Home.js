@@ -76,6 +76,7 @@ const Home = () => {
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
 
+                        <a href='/ALLJobRole'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/round-simple-recruitment-logo-round-simple-recruitment-logo-abstract-flat-style-trend-modern-unique-logotype-graphic-design-115857436.jpg" />
@@ -84,7 +85,8 @@ const Home = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
-
+                        </a>
+                        
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/notification-icon-template-black-bell-ring-alarm-social-media-symbol-mobile-app-ui-flat-simple-isolated-white-178124150.jpg" />
@@ -149,6 +151,7 @@ const Home = () => {
             <div class="container text-center">
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
+                        <a href="/chat">
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://static.vecteezy.com/system/resources/previews/005/337/802/original/icon-symbol-chat-outline-illustration-free-vector.jpg" />
@@ -157,6 +160,7 @@ const Home = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
+                        </a>
 
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>

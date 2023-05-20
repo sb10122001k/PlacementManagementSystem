@@ -50,10 +50,12 @@ app.post('/api/studentLogin',async (req,res)=>{
    
     try{
         const student = await Student.findOne({usn: req.body.usn})
-        !student && res.status(404).json("student not found")
-
+        // !student && res.status(404).json("student not found")
+        res.status(404).json({ status: 'ok' })
         const validPassword = await bcrypt.compare(req.body.password, student.password)
         !validPassword && res.status(400).json("invalid password")
+
+        
 
         res.status(200).json(student)
     } catch(err){
@@ -117,7 +119,8 @@ app.post('/api/companyLogin',async (req,res)=>{
     console.log(req.body)
     try{
         const company = await Company.findOne({email: req.body.email})
-        !company && res.status(404).json("Company not found")
+        // !company && res.status(404).json("Company not found")
+        !company && res.status(404).json({ status: 'ok' })
 
         const validPassword = await bcrypt.compare(req.body.password, company.password)
         !validPassword && res.status(400).json("invalid password")
@@ -126,6 +129,10 @@ app.post('/api/companyLogin',async (req,res)=>{
     } catch(err){
         console.log(err);
     }
+})
+
+app.post('/api/newJobPosting',async(req,res)=>{
+  console.log(req.body)
 })
 
 app.put('/api/companyUpdate', async (req, res) => {

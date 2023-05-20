@@ -13,6 +13,10 @@ import AdminRegister from './components/AdminRegister';
 import CompanyHome from './components/CompanyHome';
 import StudentProfile from './components/StudentProfile';
 import EditStudentProfile from './components/EditStudentProfile';
+import ChatPage from './components/chat';
+import CompanyJobPosting from './components/CompanyJobPosting';
+import StudentHiringView from './components/StudentHiringView';
+
 function App() {
   return (
    <div>
@@ -29,6 +33,9 @@ function App() {
         <Route path='/CompanyHome' element={<CompanyHome/>}/>
         <Route path='/StudentProfile' element={<StudentProfile/>}/>
         <Route path='/EditStudentProfile' element={<EditStudentProfile/>}/>
+        <Route path='/chat' element={<ChatPage/>}/>
+        <Route path='/NewJobPosting' element={<CompanyJobPosting/>}/>
+        <Route path='/ALLJobRole' element={<StudentHiringView/>}/>
       </Routes>
     </Router>
    </div>

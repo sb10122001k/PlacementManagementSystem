@@ -25,7 +25,7 @@ const StudentLogIn = () => {
 
     console.log(data)
     if(data.status === 'ok'){
-        navigate('/login', { replace: true })
+        navigate('/Home', { replace: true })
     }
 
 }
