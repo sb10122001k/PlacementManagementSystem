@@ -139,47 +139,48 @@ const JobPostingSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  jobDescription: {
+  JobDescription : {
     type: String,
     required: true
   },
-  package: {
+  Package: {
     type: String,
     required: true
   },
-  qualification: {
+  Qualification: {
     type: String,
     required: true
   },
-  eligibility: {
+  Eligibility: {
     type: String,
     required: true
   },
-  experience: {
+  Specialization: {
     type: String,
     required: true
   },
-  specialization: {
+  Experiance: {
     type: String,
     required: true
   },
-  jobLocation: {
+  
+  JobLocation: {
     type: String,
     required: true
   },
-  lastDate: {
+  LastDate: {
     type: Date,
     required: true
   },
-  driveFrom: {
+  DriveFrom: {
     type: Date,
     required: true
   },
-  driveTo: {
+  DriveTO: {
     type: Date,
     required: true
   },
-  venue: {
+  Venue: {
     type: String,
     required: true
   }
