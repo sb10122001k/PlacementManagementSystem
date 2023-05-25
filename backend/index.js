@@ -99,7 +99,7 @@ app.get('/api/student/:id', async(req, res)=>{
 
 app.post('/api/registerCompany',async (req,res)=>{
     
-    
+    console.log(req.body);
     try{
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(req.body.password, salt)
