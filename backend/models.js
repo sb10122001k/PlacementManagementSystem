@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//student schema
+
 const StudentSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -16,6 +16,15 @@ const StudentSchema = new mongoose.Schema({
     unique: true,
     index: true
   },
+  email: {
+    type: String,
+    required: true
+  
+  },
+  password: {
+    type: String,
+    required: true
+  },
   skills: [
     {
       type: String
@@ -23,7 +32,7 @@ const StudentSchema = new mongoose.Schema({
   ],
   dateOfBirth: {
     type: String,
-    default: Date.now
+   
   },
   class10: {
     schoolName: {
@@ -44,7 +53,8 @@ const StudentSchema = new mongoose.Schema({
     passingYear: Number
   }
 });
-//company schema
+
+
 const CompanySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -118,9 +128,66 @@ const PlacementSchema = new mongoose.Schema({
   }]
 });
 
+const JobPostingSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  jobRole: {
+    type: String,
+    required: true
+  },
+  jobDescription: {
+    type: String,
+    required: true
+  },
+  package: {
+    type: String,
+    required: true
+  },
+  qualification: {
+    type: String,
+    required: true
+  },
+  eligibility: {
+    type: String,
+    required: true
+  },
+  experience: {
+    type: String,
+    required: true
+  },
+  specialization: {
+    type: String,
+    required: true
+  },
+  jobLocation: {
+    type: String,
+    required: true
+  },
+  lastDate: {
+    type: Date,
+    required: true
+  },
+  driveFrom: {
+    type: Date,
+    required: true
+  },
+  driveTo: {
+    type: Date,
+    required: true
+  },
+  venue: {
+    type: String,
+    required: true
+  }
+});
+
 // Export the models
 module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
-  Placement: mongoose.model('placement', PlacementSchema)
+  Placement: mongoose.model('placement', PlacementSchema),
+  Posting: mongoose.model('posting', JobPostingSchema)
 };
