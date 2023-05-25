@@ -51,7 +51,7 @@ app.post('/api/studentLogin',async (req,res)=>{
     try{
         const student = await Student.findOne({usn: req.body.usn})
         // !student && res.status(404).json("student not found")
-        res.status(404).json({ status: 'ok' })
+        res.status(404).json({ status: 'ok' ,user:req.body.usn})
         const validPassword = await bcrypt.compare(req.body.password, student.password)
         !validPassword && res.status(400).json("invalid password")
 

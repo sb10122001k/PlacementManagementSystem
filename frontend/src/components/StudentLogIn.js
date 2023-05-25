@@ -3,20 +3,20 @@ import { Form, Row, Col, Button, Card } from 'react-bootstrap'
 import {useNavigate, Link} from "react-router-dom";  
 
 const StudentLogIn = () => {
-    const [email, setEmail] = useState('');
+    const [usn, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
   async function LogInStudent(e) {
     e.preventDefault()
-    console.log(`Email: ${email} Password: ${password}`);
+    console.log(`Email: ${usn} Password: ${password}`);
     const response = await fetch('http://localhost:1337/api/studentLogin', {
         method: 'POST',
         headers: {
         'Content-type': 'application/json'
         },
         body: JSON.stringify({
-        email, password
+        usn, password
         }),
        
     })
@@ -25,6 +25,7 @@ const StudentLogIn = () => {
 
     console.log(data)
     if(data.status === 'ok'){
+      localStorage.setItem('token', data.user);
         navigate('/Home', { replace: true })
     }
 
@@ -59,8 +60,8 @@ const StudentLogIn = () => {
 
 
                     <Form.Group as={Col} controlId="formGridEmail">
-                      <Form.Label>Email</Form.Label>
-                      <Form.Control type="email" onChange={(e) =>{setEmail(e.target.value)}} required placeholder="Enter email" />
+                      <Form.Label>USN</Form.Label>
+                      <Form.Control type="text" onChange={(e) =>{setEmail(e.target.value)}} required placeholder="Enter USN " />
                     </Form.Group>
 
                   </Row>
