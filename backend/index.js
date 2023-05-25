@@ -155,6 +155,8 @@ app.post('/api/newJobPosting',async(req,res)=>{
 
 })
 
+console.log("HELOO");
+
 app.put('/api/companyUpdate', async (req, res) => {
     const {name, email, password, address, website, contact} = req.body;
     const salt = await bcrypt.genSalt(10)
