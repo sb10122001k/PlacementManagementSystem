@@ -98,7 +98,8 @@ app.get('/api/student/:id', async(req, res)=>{
 })
 
 app.post('/api/registerCompany',async (req,res)=>{
-    
+    console.log(req.body)
+    console.log("Hi")
     
     try{
         const salt = await bcrypt.genSalt(10)
@@ -106,12 +107,16 @@ app.post('/api/registerCompany',async (req,res)=>{
         
         const newCompany = await Company.create({
             
-                name: req.body.name,
+                name: req.body.companyName,
                 email: req.body.email,
                 password: hashedPassword,
                 address: req.body.address,
-                website: req.body.website,
-                contact: req.body.contact,
+                website: req.body.companyWebsite,
+                contact: {
+                  email: req.body.email,
+                  phone: req.body.contactNumber
+                  
+                }
               
 
         })
@@ -136,13 +141,14 @@ app.post('/api/companyLogin',async (req,res)=>{
         const validPassword = await bcrypt.compare(req.body.password, company.password)
         !validPassword && res.status(400).json("invalid password")
 
-        res.status(200).json({ status: 'ok' })
+        res.status(200).json({ status: 'ok' ,user:req.body.email})
     } catch(err){
         console.log(err);
     }
 })
 
 app.post('/api/newJobPosting',async(req,res)=>{
+  console.log(req.body)
   const newPosting = await Posting.create(req.body)
   const posting = await newPosting.save()
   res.status(200).json(posting) 
