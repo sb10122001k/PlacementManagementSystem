@@ -2,7 +2,7 @@ const express=require('express')
 const cors = require('cors')
 const app = express()
 const dotenv = require('dotenv')
-const {Student, Company, Placement} = require('./models')
+const {Student, Company, Placement, Posting} = require('./models')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const studentProfileModel = require('./studentprofile')
@@ -36,6 +36,8 @@ app.post('/api/studentRegister', async (req, res)=>{
             usn: req.body.usn,
             email: req.body.email,
             password: hashedPassword,
+            class10: req.body.class10,
+            class12: req.body.class12
     
         })
 
@@ -45,13 +47,13 @@ app.post('/api/studentRegister', async (req, res)=>{
         console.log(err);
     }
 })
-
+app.json("hi")
 app.post('/api/studentLogin',async (req,res)=>{
    
     try{
         const student = await Student.findOne({usn: req.body.usn})
         // !student && res.status(404).json("student not found")
-        res.status(404).json({ status: 'ok' })
+        res.status(404).json({ status: 'ok' ,user:req.body.usn})
         const validPassword = await bcrypt.compare(req.body.password, student.password)
         !validPassword && res.status(400).json("invalid password")
 
@@ -80,7 +82,7 @@ app.put('/api/studentUpdate', async (req, res) => {
         return res.status(404).json({ message: 'Student not found' });
       }
   
-      // Save the updated document
+     
       await updatedStudent.save();
   
       res.json(updatedStudent);
@@ -88,26 +90,39 @@ app.put('/api/studentUpdate', async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
+
+app.get('/api/student/:id', async(req, res)=>{
+  const {usn} = req.params.id;
+  const student = await Student.findOne(usn);
+  res.send(student)
+})
+
 app.post('/api/registerCompany',async (req,res)=>{
     
-    
+    console.log(req.body);
     try{
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(req.body.password, salt)
         
         const newCompany = await Company.create({
             
-                name: req.body.name,
+                name: req.body.companyName,
                 email: req.body.email,
                 password: hashedPassword,
                 address: req.body.address,
-                website: req.body.website,
-                contact: req.body.contact,
+                website: req.body.companyWebsite,
+                contact: {
+                  email: req.body.email,
+                  phone: req.body.contactNumber
+                  
+                }
               
 
         })
 
         const company = await newCompany.save()
+
+
         res.status(200).json(company) 
     } catch(err){
         console.log(err);
@@ -120,12 +135,12 @@ app.post('/api/companyLogin',async (req,res)=>{
     try{
         const company = await Company.findOne({email: req.body.email})
         // !company && res.status(404).json("Company not found")
-        res.status(404).json({ status: 'ok',user:req.body.email })
+        !company && res.status(404).json({ status: 'Company not found' })
 
         const validPassword = await bcrypt.compare(req.body.password, company.password)
         !validPassword && res.status(400).json("invalid password")
 
-        res.status(200).json({ status: 'ok' })
+        res.status(200).json({ status: 'ok' ,user:req.body.email})
     } catch(err){
         console.log(err);
     }
@@ -133,6 +148,11 @@ app.post('/api/companyLogin',async (req,res)=>{
 
 app.post('/api/newJobPosting',async(req,res)=>{
   console.log(req.body)
+  const newPosting = await Posting.create(req.body)
+  const posting = await newPosting.save()
+  res.status(200).json(posting) 
+
+
 })
 
 console.log("HELOO");
@@ -152,7 +172,7 @@ app.put('/api/companyUpdate', async (req, res) => {
         return res.status(404).json({ message: 'Company not found' });
       }
   
-      // Save the updated document
+      
       await updatedCompany.save();
   
       res.json(updatedCompany);

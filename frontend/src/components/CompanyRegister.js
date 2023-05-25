@@ -20,7 +20,7 @@ const CompanyRegister = () => {
     const [companyDescription, setCompanyDescription] = useState('');
 
     const navigate = useNavigate();
-  async function registerAdmin(e) {
+  async function registerCompany(e) {
     e.preventDefault()
     console.log(`Email: ${email} Password: ${password}`);
     const response = await fetch('http://localhost:1337/api/registerCompany', {
@@ -45,12 +45,12 @@ const CompanyRegister = () => {
 
     return (
 
-        <Form>
+        <Form onSubmit={registerCompany}>
             <br></br>
             <h1 className="container text-center">Company Register</h1>
             <br></br>
 
-            <div class="container">
+            <div className="container">
 
                 <Row className="mb-2">
 

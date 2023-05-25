@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//student schema
+
 const StudentSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -16,6 +16,15 @@ const StudentSchema = new mongoose.Schema({
     unique: true,
     index: true
   },
+  email: {
+    type: String,
+    required: true
+  
+  },
+  password: {
+    type: String,
+    required: true
+  },
   skills: [
     {
       type: String
@@ -23,7 +32,7 @@ const StudentSchema = new mongoose.Schema({
   ],
   dateOfBirth: {
     type: String,
-    default: Date.now
+   
   },
   class10: {
     schoolName: {
@@ -44,7 +53,8 @@ const StudentSchema = new mongoose.Schema({
     passingYear: Number
   }
 });
-//company schema
+
+
 const CompanySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -118,9 +128,68 @@ const PlacementSchema = new mongoose.Schema({
   }]
 });
 
+const JobPostingSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    ref: 'company'
+  },
+  jobRole: {
+    type: String,
+    required: true
+  },
+  JobDescription : {
+    type: String,
+    required: true
+  },
+  Package: {
+    type: String,
+    required: true
+  },
+  Qualification: {
+    type: String,
+    required: true
+  },
+  Eligibility: {
+    type: String,
+    required: true
+  },
+  Specialization: {
+    type: String,
+    required: true
+  },
+  Experiance: {
+    type: String,
+    required: true
+  },
+  
+  JobLocation: {
+    type: String,
+    required: true
+  },
+  LastDate: {
+    type: Date,
+    required: true
+  },
+  DriveFrom: {
+    type: Date,
+    required: true
+  },
+  DriveTO: {
+    type: Date,
+    required: true
+  },
+  Venue: {
+    type: String,
+    required: true
+  }
+});
+
 // Export the models
 module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
-  Placement: mongoose.model('placement', PlacementSchema)
+  Placement: mongoose.model('placement', PlacementSchema),
+  Posting: mongoose.model('posting', JobPostingSchema)
 };
