@@ -7,9 +7,11 @@ const CompanyLogIn = () => {
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
+    
   async function loginCompany(e) {
     e.preventDefault()
     console.log(`Email: ${email} Password: ${password}`);
+    
     const response = await fetch('http://localhost:1337/api/companyLogin', {
         method: 'POST',
         headers: {
@@ -20,11 +22,13 @@ const CompanyLogIn = () => {
         }),
        
     })
+  
 
     const data = await response.json();
 
     console.log(data)
     if(data.status === 'ok'){
+      localStorage.setItem('token', data.user);
         navigate('/CompanyHome', { replace: true })
     }
 

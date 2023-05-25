@@ -120,7 +120,7 @@ app.post('/api/companyLogin',async (req,res)=>{
     try{
         const company = await Company.findOne({email: req.body.email})
         // !company && res.status(404).json("Company not found")
-        !company && res.status(404).json({ status: 'ok' })
+        res.status(404).json({ status: 'ok',user:req.body.email })
 
         const validPassword = await bcrypt.compare(req.body.password, company.password)
         !validPassword && res.status(400).json("invalid password")

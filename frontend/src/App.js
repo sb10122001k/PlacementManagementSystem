@@ -15,6 +15,7 @@ import StudentProfile from './components/StudentProfile';
 import EditStudentProfile from './components/EditStudentProfile';
 import ChatPage from './components/chat';
 import CompanyJobPosting from './components/CompanyJobPosting';
+import HiringCompanies from './components/HiringCompanies';
 import StudentHiringView from './components/StudentHiringView';
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
         <Route path='/EditStudentProfile' element={<EditStudentProfile/>}/>
         <Route path='/chat' element={<ChatPage/>}/>
         <Route path='/NewJobPosting' element={<CompanyJobPosting/>}/>
-        <Route path='/ALLJobRole' element={<StudentHiringView/>}/>
+        <Route path='/ALLJobRole' element={<HiringCompanies/>}/>
       </Routes>
     </Router>
    </div>

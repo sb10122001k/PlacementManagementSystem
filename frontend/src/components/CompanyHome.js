@@ -57,8 +57,8 @@ const CompanyHome = () => {
             <br></br>
             <br></br>
 
-            <div class="container text-center">
-                <div class="row justify-content-start">
+            <div className="container text-center">
+                <div className="row justify-content-start">
                     <div className="d-flex justify-content-around">
                         <a href='/NewJobPosting'>
                         <Button bg='dark' variant="light">

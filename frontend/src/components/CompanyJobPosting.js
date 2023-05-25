@@ -5,7 +5,8 @@ import {  useNavigate } from 'react-router-dom'
 
 
 const CompanyJobPosting = () => {
-
+    const userToken = localStorage.getItem('token')
+    const email=userToken
     const [jobRole,setJobRole] = useState('');
     const [JobDescription,setJobDiscription] = useState('');
     const [Package,setPackage] = useState('');
@@ -29,7 +30,7 @@ const CompanyJobPosting = () => {
             'Content-type': 'application/json'
             },
             body: JSON.stringify({
-            jobRole,JobDescription,Package,Qualification,Eligibility,Specialization,Experiance,JobLocation,LastDate,DriveFrom,DriveTO,Venue
+            email,jobRole,JobDescription,Package,Qualification,Eligibility,Specialization,Experiance,JobLocation,LastDate,DriveFrom,DriveTO,Venue
             }),
            
         })
