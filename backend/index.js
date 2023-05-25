@@ -47,7 +47,7 @@ app.post('/api/studentRegister', async (req, res)=>{
         console.log(err);
     }
 })
-
+app.json("hi")
 app.post('/api/studentLogin',async (req,res)=>{
    
     try{
@@ -98,17 +98,8 @@ app.get('/api/student/:id', async(req, res)=>{
 })
 
 app.post('/api/registerCompany',async (req,res)=>{
-<<<<<<< HEAD
     
     console.log(req.body);
-||||||| 6fbec62
-    
-    
-=======
-    console.log(req.body)
-    console.log("Hi")
-    
->>>>>>> d9a4db8b910755e2a2615ff7a30a172f47390e33
     try{
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(req.body.password, salt)
