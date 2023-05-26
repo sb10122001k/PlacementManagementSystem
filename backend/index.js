@@ -47,7 +47,7 @@ app.post('/api/studentRegister', async (req, res)=>{
         console.log(err);
     }
 })
-app.json("hi")
+
 app.post('/api/studentLogin',async (req,res)=>{
    
     try{
@@ -154,8 +154,6 @@ app.post('/api/newJobPosting',async(req,res)=>{
 
 
 })
-
-console.log("HELOO");
 
 app.put('/api/companyUpdate', async (req, res) => {
     const {name, email, password, address, website, contact} = req.body;
