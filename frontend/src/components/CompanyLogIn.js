@@ -29,6 +29,7 @@ const CompanyLogIn = () => {
     console.log(data)
     if(data.status === 'ok'){
       localStorage.setItem('token', data.user);
+      localStorage.setItem('name', data.name);
         navigate('/CompanyHome', { replace: true })
     }
 

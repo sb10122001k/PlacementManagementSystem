@@ -1,7 +1,39 @@
 import React, { Component } from 'react';
 import { Navbar, Container, Nav, Form, Button } from 'react-bootstrap'
+import { useLocation } from 'react-router-dom';
+import {useNavigate, Link} from "react-router-dom";  
 
 const StudentHiringView = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { postingData } = location.state;
+    console.log(postingData.jobRole)
+    const usn=localStorage.getItem('token')
+    const jobid=postingData._id
+
+    async function handleClick(e) {
+        e.preventDefault()
+        
+        const response =await fetch('http://localhost:1337/api/newJobApplied', {
+        method: 'POST',
+        headers: {
+        'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+        usn,jobid
+        }),
+       
+    })
+    const data = await response.json();
+
+    console.log(data)
+    if(data.status === 'ok'){      
+        alert('Job Applied Successfuly')
+        navigate('/Home', { replace: true })
+    }
+    }
+
+
     return (  
             <div>
                 <Navbar bg="dark" variant='dark' expand="lg">
@@ -41,34 +73,34 @@ const StudentHiringView = () => {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-                <div class="container text-center">
+                <div className="container text-center">
                     <br></br>
                     <br></br>
-                    <h1 class="container text-center">Google</h1>
+                    <h1 className="container text-center">{postingData.name}</h1>
                     <br></br>
                     <br></br>
-                    <h5 class="container text-justify">
+                    <h5 className="container text-justify">
                         <img align="right" src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/google-logo.png" height="180" width="171" />
 
-                        <b>Job Role:</b>  Software Developer
+                        <b>Job Role:</b>  {postingData.jobRole}
                         <br></br>
                         <br></br>
-                        <b>Package:</b> 10 LPA
+                        <b>Package:</b> {postingData.Package}
                         <br></br>
                         <br></br>
-                        <b>Qualification:</b> BE
+                        <b>Qualification:</b> {postingData.Qualification}
                         <br></br>
                         <br></br>
-                        <b>Eligibility:</b> 70%
+                        <b>Eligibility:</b> {postingData.Eligibility}
                         <br></br>
                         <br></br>
-                        <b>Specialization:</b>CSE,ISE,ECE,EEE
+                        <b>Specialization:</b>{postingData.Specialization}
                         <br></br>
                         <br></br>
-                        <b>Experience:</b> Fresher,0-11 months
+                        <b>Experience:</b> {postingData.Experiance}
                         <br></br>
                         <br></br>
-                        <b>Location:</b>Bangalore
+                        <b>Location:</b>    {postingData.JobLocation}
                         <br></br>
                         <br></br>
                         <b>Drive Date:</b> 26/04/23,27/04/23,28/04/23,29/04/23
@@ -79,30 +111,12 @@ const StudentHiringView = () => {
                         <b>Job Description:</b>
                         <br></br>
                         <br></br>
-                        We are looking for a Software Developer to build and implement functional programs. You will work with other Developers and Product Managers throughout the software development life cycle.
-
-                        In this role, you should be a team player with a keen eye for detail and problem-solving skills. If you also have experience in Agile frameworks and popular coding languages (e.g. JavaScript), we’d like to meet you.
-
-                        Your goal will be to build efficient programs and systems that serve user needs.
+                            {postingData.JobDescription}
                         <br></br>
                         <br></br>
+                        
 
-                        <ul>
-                            <li>Proven experience as a Software Developer, Software Engineer or similar role</li>
-                            <li>Familiarity with Agile development methodologies</li>
-                            <li>Experience with software design and development in a test-driven environment</li>
-                            <li>Knowledge of coding languages (e.g. C++, Java, JavaScript) and frameworks/systems (e.g. AngularJS, Git)</li>
-                            <li>Experience with databases and Object-Relational Mapping (ORM) frameworks (e.g. Hibernate)</li>
-                            <li>Ability to learn new languages and technologies</li>
-                            <li>Excellent communication skills</li>
-                            <li>Resourcefulness and troubleshooting aptitude</li>
-                            <li>Attention to detail</li>
-                            <li>BSc/BA in Computer Science, Engineering or a related field</li>
-                        </ul>
-                        <br></br>
-                        <br></br>
-
-                        <Button variant="dark">Apply</Button>
+                        <Button variant="dark" onClick={(e) => handleClick(e)}>Apply</Button>
 
 
                     </h5>

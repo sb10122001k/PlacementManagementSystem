@@ -131,9 +131,7 @@ const PlacementSchema = new mongoose.Schema({
 const JobPostingSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
-    unique: true,
-    ref: 'company'
+    required: true
   },
   jobRole: {
     type: String,
@@ -183,13 +181,37 @@ const JobPostingSchema = new mongoose.Schema({
   Venue: {
     type: String,
     required: true
-  }
+  },
+  Name:{
+    type:String,
+    required:true
+  },
+  
+
 });
+
+const AppliedCandidateSchema = new mongoose.Schema({ 
+  usn:{
+    type:String,
+    required:true
+  },
+  jobid:{
+    type:String,
+    required:true
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'rejected', 'accepted'],
+    default: 'pending'
+  }
+
+})
 
 // Export the models
 module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
   Placement: mongoose.model('placement', PlacementSchema),
-  Posting: mongoose.model('posting', JobPostingSchema)
+  Posting: mongoose.model('posting', JobPostingSchema),
+  AppliedCandidateSchema:mongoose.model('appliedCandidateSchema',AppliedCandidateSchema)
 };

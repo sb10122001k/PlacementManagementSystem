@@ -37,6 +37,8 @@ function App() {
         <Route path='/chat' element={<ChatPage/>}/>
         <Route path='/NewJobPosting' element={<CompanyJobPosting/>}/>
         <Route path='/ALLJobRole' element={<HiringCompanies/>}/>
+        <Route path='/JobDescription' element={<StudentHiringView/>}/>
+        
       </Routes>
     </Router>
    </div>

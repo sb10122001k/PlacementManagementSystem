@@ -2,10 +2,11 @@ const express=require('express')
 const cors = require('cors')
 const app = express()
 const dotenv = require('dotenv')
-const {Student, Company, Placement, Posting} = require('./models')
+const {Student, Company, Placement, Posting,AppliedCandidateSchema} = require('./models')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const studentProfileModel = require('./studentprofile')
+const jwt = require('jsonwebtoken')
 dotenv.config()
 main().catch(err => console.log(err));
 
@@ -22,6 +23,24 @@ app.get('/api/studentProfile',async (req,res)=>{
   const data=studentProfileModel.getData()
   res.json(data)
 
+})
+
+app.post('/api/newJobApplied',async(req,res)=>{
+  console.log(req.body)
+  const newPosting = await AppliedCandidateSchema.create(req.body)
+  const posting = await newPosting.save()
+  res.status(200).json({status:"ok"})
+})
+
+app.get('/api/getposting', async (req, res)=> {
+  console.log(req)
+    Posting.find()
+    .then((result) => {
+      res.send(result);
+  }).catch((err) => {
+      console.log(err);
+      res.status(500).send('Internal Server Error');
+  })
 })
 
 app.post('/api/studentRegister', async (req, res)=>{
@@ -47,7 +66,7 @@ app.post('/api/studentRegister', async (req, res)=>{
         console.log(err);
     }
 })
-app.json("hi")
+
 app.post('/api/studentLogin',async (req,res)=>{
    
     try{
@@ -91,7 +110,7 @@ app.put('/api/studentUpdate', async (req, res) => {
     }
   });
 
-app.get('/api/student/:id', async(req, res)=>{
+app.get('/api/StudentProfile/:id', async(req, res)=>{
   const {usn} = req.params.id;
   const student = await Student.findOne(usn);
   res.send(student)
@@ -140,7 +159,15 @@ app.post('/api/companyLogin',async (req,res)=>{
         const validPassword = await bcrypt.compare(req.body.password, company.password)
         !validPassword && res.status(400).json("invalid password")
 
-        res.status(200).json({ status: 'ok' ,user:req.body.email})
+        const token = jwt.sign(
+          {
+              name: company.name,
+              email: req.body.email,
+          },
+          'secret123'
+      )
+
+        res.status(200).json({ status: 'ok' ,user:req.body.email,name:company.name,id:company._id})
     } catch(err){
         console.log(err);
     }
