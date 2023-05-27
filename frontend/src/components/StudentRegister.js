@@ -6,9 +6,14 @@ import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap'
 
 
 const StudentRegister = () => {
+
+  const RegisterStudent = () => {
+    
+  }
+  
   return (
     
-        <Form>
+        <Form onSubmit={RegisterStudent}>
           <br></br>
           <h1 class="container text-center">Student Register</h1>
           <br></br>
