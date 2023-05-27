@@ -1,7 +1,42 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Navbar, Container, Nav, Form, Button, Card, Figure, Dropdown } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
+
+
 
 const HiringCompanies = () => {
+
+    const [postingData, setPostingData] = useState()
+
+    const navigate = useNavigate();
+
+
+    const handleClick = (e,posting) => {
+        e.preventDefault()
+        // console.log(posting)
+        navigate('/JobDescription', { state: { postingData: posting } });
+    }
+
+    useEffect(() => {
+        console.log(localStorage.getItem('userid'))
+        fetch('http://localhost:1337/api/getposting')
+            .then((response) => {
+                const reader = response.body.getReader();
+                console.log(reader)
+                reader.read().then(({ done, value }) => {
+                    if (done) {
+                        console.log('end...')
+                        return;
+                    }
+                    const decoder = new TextDecoder();
+                    const strData = decoder.decode(value)
+                    const data = JSON.parse(strData)
+                    console.log(data)
+                    setPostingData(data)
+                });
+            })
+    }, [])
+
     return (
         <div>
             <Navbar bg="dark" variant='dark' expand="lg">
@@ -43,7 +78,25 @@ const HiringCompanies = () => {
             </Navbar>
             <br></br>
             <br></br>
-            <div class="container ">
+            {
+                <div>
+                    {postingData?.map((posting) =>
+                        <div>
+                            <Card border="dark" style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/microsoft-logo.png" />
+                                <Card.Body>
+                                    <Card.Title>{posting.jobRole}</Card.Title>
+                                    <Card.Text>
+                                        {posting.Name}
+                                    </Card.Text>
+                                    <Button variant="dark" onClick={(e) => handleClick(e,posting)}>Click Here</Button>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    )}
+                </div>
+            }
+            {/* <div class="container ">
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
                         <Card border="dark" style={{ width: '18rem' }}>
@@ -127,7 +180,7 @@ const HiringCompanies = () => {
                 </div>
             </div>
             <br></br>
-            <br></br>
+            <br></br> */}
         </div>
     );
 }

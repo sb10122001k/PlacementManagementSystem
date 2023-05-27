@@ -38,6 +38,7 @@ const CompanyRegister = () => {
 
     console.log(data)
     if(data.status === 'ok'){
+        
         navigate('/login', { replace: true })
      }
     }

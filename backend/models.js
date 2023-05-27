@@ -19,7 +19,6 @@ const StudentSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true
-  
   },
   password: {
     type: String,
@@ -31,28 +30,65 @@ const StudentSchema = new mongoose.Schema({
     }
   ],
   dateOfBirth: {
-    type: String,
-   
+    type: String
   },
-  class10: {
-    schoolName: {
-      type: String,
-      required: true
-    },
-    board: String,
-    marks: String,
-    passingYear: Number
+  currentSemester: {
+    type: String
   },
-  class12: {
-    schoolName: {
-      type: String,
-      required: true
-    },
-    board: String,
-    marks: String,
-    passingYear: Number
+  country: {
+    type: String
+  },
+  state: {
+    type: String
+  },
+  city: {
+    type: String
+  },
+  zip: {
+    type: String
+  },
+  contactNumber: {
+    type: String
+  },
+  address: {
+    type: String
+  },
+  careerObjective: {
+    type: String
+  },
+  degreeCollege: {
+    type: String
+  },
+  branch: {
+    type: String
+  },
+  specialization: {
+    type: String
+  },
+  collegeAddress: {
+    type: String
+  },
+  score: {
+    type: String
+  },
+  courseDuration: {
+    type: String
+  },
+  keySkills: [
+    {
+      type: String
+    }
+  ],
+  careerPreferences: [
+    {
+      type: String
+    }
+  ],
+  image: {
+    type: String
   }
 });
+
 
 
 const CompanySchema = new mongoose.Schema({
@@ -77,6 +113,24 @@ const CompanySchema = new mongoose.Schema({
   website: {
     type: String
   },
+  country: {
+    type: String
+  },
+  state: {
+    type: String
+  },
+  city: {
+    type: String
+  },
+  zip: {
+    type: String
+  },
+  companyLogo: {
+    type: String
+  },
+  companyDescription: {
+    type: String
+  },
   contact: {
     email: {
       type: String,
@@ -90,10 +144,11 @@ const CompanySchema = new mongoose.Schema({
 });
 
 
+
 const PlacementSchema = new mongoose.Schema({
-  company: {
+  companyEmail: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'company',
+    ref: 'Company',
     required: true
   },
   position: {
@@ -114,7 +169,7 @@ const PlacementSchema = new mongoose.Schema({
   appliedStudents: [{
     student: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'student'
+      ref: 'Student'
     },
     date: {
       type: Date,
@@ -129,11 +184,9 @@ const PlacementSchema = new mongoose.Schema({
 });
 
 const JobPostingSchema = new mongoose.Schema({
-  email: {
+  companyEmail: {
     type: String,
-    required: true,
-    unique: true,
-    ref: 'company'
+    required: true
   },
   jobRole: {
     type: String,
@@ -159,7 +212,7 @@ const JobPostingSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  Experiance: {
+  Experience: {
     type: String,
     required: true
   },
@@ -183,13 +236,37 @@ const JobPostingSchema = new mongoose.Schema({
   Venue: {
     type: String,
     required: true
-  }
+  },
+  Name:{
+    type:String,
+    required:true
+  },
+  
+
 });
+
+const AppliedCandidateSchema = new mongoose.Schema({ 
+  usn:{
+    type:String,
+    required:true
+  },
+  jobid:{
+    type:String,
+    required:true
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'rejected', 'accepted'],
+    default: 'pending'
+  }
+
+})
 
 // Export the models
 module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
   Placement: mongoose.model('placement', PlacementSchema),
-  Posting: mongoose.model('posting', JobPostingSchema)
+  Posting: mongoose.model('posting', JobPostingSchema),
+  AppliedCandidateSchema:mongoose.model('appliedCandidateSchema',AppliedCandidateSchema)
 };
