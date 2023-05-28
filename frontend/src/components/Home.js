@@ -114,14 +114,16 @@ const Home = () => {
             <div class="container text-center">
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
+                        <a href='/createResume'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/resume-icon-vector-job-application-cv-sign-graphic-design-logo-web-site-social-media-mobile-app-ui-illustration-resume-icon-215388315.jpg" />
                                 <Card.Body>
-                                    <Card.Title>Resume</Card.Title>
+                                    <Card.Title>Create Resume</Card.Title>
                                 </Card.Body>
                             </Card>
                         </Button>
+                        </a>
 
 
 
