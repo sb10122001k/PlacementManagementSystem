@@ -173,15 +173,113 @@ app.post('/api/companyLogin',async (req,res)=>{
     }
 })
 
+//new job posting
 app.post('/api/newJobPosting',async(req,res)=>{
   console.log(req.body)
-  const newPosting = await Posting.create(req.body)
-  const posting = await newPosting.save()
-  res.status(200).json(posting) 
+  try {
+    
+    const newJobPosting = new Posting(req.body);
+    
+    // Save the job posting to the database
+    const savedJobPosting = await newJobPosting.save();
+    
+    res.status(201).json(savedJobPosting); 
+  } catch (error) {
+    res.status(500).json({ message: error.message }); 
+  } 
 
 
 })
 
+//delete a job
+app.delete('/api/jobPostings/:id', async (req, res) => {
+  try {
+    const jobId = req.params.id; 
+    
+    
+    const jobPosting = await Posting.findById(jobId);
+    
+    if (!jobPosting) {
+      return res.status(404).json({ message: 'Job posting not found' });
+    }
+    
+    // Delete the job posting document
+    await jobPosting.remove();
+    
+    res.json({ message: 'Job posting deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+//update the job
+app.put('/api/jobPostings/:id', async (req, res) => {
+  try {
+    const jobId = req.params.id; 
+    
+   
+    const jobPosting = await Posting.findById(jobId);
+    
+    if (!jobPosting) {
+      return res.status(404).json({ message: 'Job posting not found' });
+    }
+    
+    
+    jobPosting.jobRole = req.body.jobRole;
+    jobPosting.JobDescription = req.body.JobDescription;
+    jobPosting.Package = req.body.Package;
+    jobPosting.Qualification = req.body.Qualification;
+    jobPosting.Eligibility = req.body.Eligibility;
+    jobPosting.Specialization = req.body.Specialization;
+    jobPosting.Experiance = req.body.Experiance;
+    jobPosting.JobLocation = req.body.JobLocation;
+    jobPosting.LastDate = req.body.LastDate;
+    jobPosting.DriveFrom = req.body.DriveFrom;
+    jobPosting.DriveTO = req.body.DriveTO;
+    jobPosting.Venue = req.body.Venue;
+    
+   
+    const updatedJobPosting = await jobPosting.save();
+    
+    res.json(updatedJobPosting);
+  } catch (error) {
+    res.status(500).json({ message: error.message }); 
+  }
+});
+
+//status of candidates
+app.get('/api/job/:jobId/status', async (req, res) => {
+  try {
+    const jobId = req.params.jobId;
+
+    // Find the job posting
+    const jobPosting = await JobPosting.findById(jobId);
+    if (!jobPosting) {
+      return res.status(404).json({ error: 'Job posting not found' });
+    }
+
+    // Find the applied candidates for the job posting
+    const appliedCandidates = await AppliedCandidate.find({ jobid: jobId });
+
+    if (appliedCandidates.length === 0) {
+      return res.status(404).json({ error: 'No candidates applied for this job' });
+    }
+
+    // Prepare the response with candidate details and status
+    const candidatesStatus = appliedCandidates.map(candidate => {
+      return {
+        usn: candidate.usn,
+        status: candidate.status
+      };
+    });
+
+    res.json(candidatesStatus);
+  } catch (error) {
+    console.error('Error checking student status:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 app.put('/api/companyUpdate', async (req, res) => {
     const {name, email, password, address, website, contact} = req.body;
     const salt = await bcrypt.genSalt(10)

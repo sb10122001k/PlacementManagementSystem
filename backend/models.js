@@ -145,48 +145,11 @@ const CompanySchema = new mongoose.Schema({
 
 
 
-const PlacementSchema = new mongoose.Schema({
-  companyEmail: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Company',
-    required: true
-  },
-  position: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  requirements: [{
-    type: String
-  }],
-  deadline: {
-    type: Date,
-    required: true
-  },
-  appliedStudents: [{
-    student: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Student'
-    },
-    date: {
-      type: Date,
-      default: Date.now
-    },
-    status: {
-      type: String,
-      enum: ['applied', 'shortlisted', 'rejected', 'offered'],
-      default: 'applied'
-    }
-  }]
-});
-
 const JobPostingSchema = new mongoose.Schema({
   companyEmail: {
     type: String,
-    required: true
+    required: true,
+    ref : 'Company'
   },
   jobRole: {
     type: String,
