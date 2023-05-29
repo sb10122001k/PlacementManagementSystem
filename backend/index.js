@@ -251,22 +251,22 @@ app.put('/api/jobPostings/:id', async (req, res) => {
 //status of candidates
 app.get('/api/job/:jobId/status', async (req, res) => {
   try {
-    const jobId = req.params.jobId;
+    const companyEmail = req.params.jobId;
 
     // Find the job posting
-    const jobPosting = await JobPosting.findById(jobId);
+    const jobPosting = await JobPosting.findOne({ companyEmail });
     if (!jobPosting) {
       return res.status(404).json({ error: 'Job posting not found' });
     }
 
-    // Find the applied candidates for the job posting
+    
     const appliedCandidates = await AppliedCandidate.find({ jobid: jobId });
 
     if (appliedCandidates.length === 0) {
       return res.status(404).json({ error: 'No candidates applied for this job' });
     }
 
-    // Prepare the response with candidate details and status
+    
     const candidatesStatus = appliedCandidates.map(candidate => {
       return {
         usn: candidate.usn,
@@ -280,6 +280,7 @@ app.get('/api/job/:jobId/status', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 app.put('/api/companyUpdate', async (req, res) => {
     const {name, email, password, address, website, contact} = req.body;
     const salt = await bcrypt.genSalt(10)
