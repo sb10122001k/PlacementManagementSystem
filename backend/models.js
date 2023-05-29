@@ -211,11 +211,13 @@ const JobPostingSchema = new mongoose.Schema({
 const AppliedCandidateSchema = new mongoose.Schema({ 
   usn:{
     type:String,
-    required:true
+    required:true,
+    ref: 'Student'
   },
   jobid:{
     type:String,
-    required:true
+    required:true,
+    ref: 'Company'
   },
   status: {
     type: String,
@@ -225,11 +227,42 @@ const AppliedCandidateSchema = new mongoose.Schema({
 
 })
 
+
+const InterviewSchema = new mongoose.Schema({
+  usn: {
+    type: String,
+    required: true,
+    ref: 'Student'
+  },
+  date: {
+    type: String,
+    required: true
+  },
+  time: {
+    type: String,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ['scheduled', 'completed'],
+    default: 'scheduled'
+  }
+});
+
+const Interview = mongoose.model('Interview', InterviewSchema);
+
+module.exports = Interview;
+
+
 // Export the models
 module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
-  Placement: mongoose.model('placement', PlacementSchema),
   Posting: mongoose.model('posting', JobPostingSchema),
-  AppliedCandidateSchema:mongoose.model('appliedCandidateSchema',AppliedCandidateSchema)
+  AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
+  Interview: mongoose.model('interview',InterviewSchema)
 };
