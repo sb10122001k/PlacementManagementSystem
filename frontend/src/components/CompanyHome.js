@@ -65,7 +65,17 @@ const CompanyHome = () => {
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://static.vecteezy.com/system/resources/previews/015/280/523/non_2x/job-logo-icon-with-tie-image-free-vector.jpg" />
                                 <Card.Body>
-                                    <Card.Title>Job Posting</Card.Title>
+                                    <Card.Title>New Job Posting</Card.Title>
+                                </Card.Body>
+                            </Card>
+                        </Button>
+                        </a>
+                        <a href='/ViewJobPosting'>
+                        <Button bg='dark' variant="light">
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="https://static.vecteezy.com/system/resources/previews/015/280/523/non_2x/job-logo-icon-with-tie-image-free-vector.jpg" />
+                                <Card.Body>
+                                    <Card.Title>Job Posted</Card.Title>
                                 </Card.Body>
                             </Card>
                         </Button>
