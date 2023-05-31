@@ -145,48 +145,11 @@ const CompanySchema = new mongoose.Schema({
 
 
 
-const PlacementSchema = new mongoose.Schema({
-  companyEmail: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Company',
-    required: true
-  },
-  position: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  requirements: [{
-    type: String
-  }],
-  deadline: {
-    type: Date,
-    required: true
-  },
-  appliedStudents: [{
-    student: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Student'
-    },
-    date: {
-      type: Date,
-      default: Date.now
-    },
-    status: {
-      type: String,
-      enum: ['applied', 'shortlisted', 'rejected', 'offered'],
-      default: 'applied'
-    }
-  }]
-});
-
 const JobPostingSchema = new mongoose.Schema({
   companyEmail: {
     type: String,
-    required: true
+    required: true,
+    ref : 'Company'
   },
   jobRole: {
     type: String,
@@ -248,11 +211,13 @@ const JobPostingSchema = new mongoose.Schema({
 const AppliedCandidateSchema = new mongoose.Schema({ 
   usn:{
     type:String,
-    required:true
+    required:true,
+    ref: 'Student'
   },
   jobid:{
     type:String,
-    required:true
+    required:true,
+    ref: 'Company'
   },
   status: {
     type: String,
@@ -275,13 +240,42 @@ const usnResumeSchema = new mongoose.Schema({
 });
 
 
+const InterviewSchema = new mongoose.Schema({
+  usn: {
+    type: String,
+    required: true,
+    ref: 'Student'
+  },
+  date: {
+    type: String,
+    required: true
+  },
+  time: {
+    type: String,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ['scheduled', 'completed'],
+    default: 'scheduled'
+  }
+});
+
+const Interview = mongoose.model('Interview', InterviewSchema);
+
+module.exports = Interview;
+
 
 // Export the models
 module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
-  Placement: mongoose.model('placement', PlacementSchema),
   Posting: mongoose.model('posting', JobPostingSchema),
-  AppliedCandidateSchema:mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
-  Resume:mongoose.model('Resume',usnResumeSchema)
+  Resume:mongoose.model('Resume',usnResumeSchema),
+  AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
+  Interview: mongoose.model('interview',InterviewSchema)
 };

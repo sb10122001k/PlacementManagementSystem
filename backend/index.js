@@ -3,7 +3,9 @@ const cors = require('cors')
 const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
-const { Student, Company, Placement, Posting, AppliedCandidateSchema,Resume } = require('./models')
+const { Student, Company, Placement, Interview, Posting, AppliedCandidate,Resume } = require('./models')
+// const {Student, Company, Posting, AppliedCandidate} = require('./models')
+const email = require('./emailservice')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const studentProfileModel = require('./studentprofile')
@@ -272,14 +274,165 @@ app.post('/api/companyLogin', async (req, res) => {
   }
 })
 
-app.post('/api/newJobPosting', async (req, res) => {
+app.post('/api/newJobPosting',async(req,res)=>{
   console.log(req.body)
-  const newPosting = await Posting.create(req.body)
-  const posting = await newPosting.save()
-  res.status(200).json(posting)
+  try {
+    
+    const newJobPosting = new Posting(req.body);
+    const studentEmails = await Student.find().distinct('email');
+    
+    // Save the job posting to the database
+    const savedJobPosting = await newJobPosting.save();
+    const subject = 'New Job Posting Notification';
+    const message = 'A new job has been posted. Check the job board for more details.';
+
+    for (const email of studentEmails) {
+      await sendEmailToStudent(email, subject, message);
+    }
+    res.status(201).json(savedJobPosting); 
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message }); 
+  } 
+});
+
+//delete a job
+app.delete('/api/jobPostings/:id', async (req, res) => {
+  try {
+    const jobId = req.params.id; 
+    
+    
+    const jobPosting = await Posting.findOne(jobId);
+    
+    if (!jobPosting) {
+      return res.status(404).json({ message: 'Job posting not found' });
+    }
+    
+    // Delete the job posting document
+    await jobPosting.remove();
+    
+    res.json({ message: 'Job posting deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 
-})
+//update the job
+app.put('/api/jobPostings/:id', async (req, res) => {
+  try {
+    const jobId = req.params.id; 
+    
+   
+    const jobPosting = await Posting.findOne(jobId);
+    
+    if (!jobPosting) {
+      return res.status(404).json({ message: 'Job posting not found' });
+    }
+    
+    
+    jobPosting.jobRole = req.body.jobRole;
+    jobPosting.JobDescription = req.body.JobDescription;
+    jobPosting.Package = req.body.Package;
+    jobPosting.Qualification = req.body.Qualification;
+    jobPosting.Eligibility = req.body.Eligibility;
+    jobPosting.Specialization = req.body.Specialization;
+    jobPosting.Experiance = req.body.Experiance;
+    jobPosting.JobLocation = req.body.JobLocation;
+    jobPosting.LastDate = req.body.LastDate;
+    jobPosting.DriveFrom = req.body.DriveFrom;
+    jobPosting.DriveTO = req.body.DriveTO;
+    jobPosting.Venue = req.body.Venue;
+    
+   
+    const updatedJobPosting = await jobPosting.save();
+    
+    res.json(updatedJobPosting);
+  } catch (error) {
+    res.status(500).json({ message: error.message }); 
+  }
+  
+});
+
+//status of candidates
+app.get('/status/:jobId/:usn', async (req, res) => {
+  const jobId = req.params.jobId;
+  const usn = req.params.usn;
+
+  try {
+    // Find the job posting
+    const jobPosting = await Posting.findOne(jobId);
+
+    if (!jobPosting) {
+      return res.status(404).json({ error: 'Job posting not found' });
+    }
+
+    // Find the applied candidate for the job posting and USN
+    const appliedCandidate = await AppliedCandidate.findOne({
+      jobid: jobId,
+      usn: usn
+    });
+
+    if (!appliedCandidate) {
+      return res.status(404).json({ error: 'Candidate not found for the job' });
+    }
+
+    res.json(appliedCandidate.status);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to retrieve candidate status' });
+  }
+});
+
+//track job applications
+app.get('/applications/:jobId', async (req, res) => {
+  const jobId = req.params.jobId;
+
+  try {
+    // Find the job posting
+    const jobPosting = await Posting.findOne({ companyEmail: jobId });
+
+    if (!jobPosting) {
+      return res.status(404).json({ error: 'Job posting not found' });
+    }
+
+    // Find all the applied candidates for the job posting
+    const appliedCandidates = await AppliedCandidate.find({ jobid: jobPosting.companyEmail });
+
+    res.json(appliedCandidates);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to retrieve job applications' });
+  }
+});
+
+// Schedule an interview
+app.post('/interviews', async (req, res) => {
+  try {
+    const { usn, date, time, location } = req.body;
+
+    // Create a new interview
+    const interview = new Interview({
+      usn,
+      date,
+      time,
+      location
+    });
+
+    // Save the interview
+    await interview.save();
+    const student = await Student.findOne({ usn: req.body.usn });
+    const studentEmail = student.email;
+    const subject = 'Interview Scheduled';
+    const message = 'An interview has been scheduled. Check your interview details for more information.';
+
+    await sendEmailToStudent(studentEmail, subject, message);
+    res.json(interview);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to schedule interview' });
+  }
+});
 
 app.put('/api/companyUpdate', async (req, res) => {
   const { name, email, password, address, website, contact } = req.body;
