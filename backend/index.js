@@ -1,8 +1,9 @@
 const express = require('express')
 const cors = require('cors')
+const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
-const { Student, Company, Placement, Posting, AppliedCandidateSchema } = require('./models')
+const { Student, Company, Placement, Posting, AppliedCandidateSchema,Resume } = require('./models')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const studentProfileModel = require('./studentprofile')
@@ -17,6 +18,7 @@ async function main() {
 }
 app.use(cors())
 app.use(express.json())
+const upload = multer();
 
 app.get('/api/studentProfile', async (req, res) => {
 
@@ -24,6 +26,58 @@ app.get('/api/studentProfile', async (req, res) => {
   res.json(data)
 
 })
+
+
+app.get('/api/getResume/:usn', async (req, res) => {
+  console.log(req.baseUrl)
+  const { usn } = req.params;
+ 
+
+  try {
+    const usnPdf = await Resume.findOne({ usn:req.params.usn });
+
+    if (!usnPdf || !usnPdf.resume.data) {
+
+      console.log(usnPdf)
+      console.log(usnPdf.pdf.data)
+      return res.status(404).send('File not found');
+    }
+
+    const { data, contentType } = usnPdf.resume;
+
+   
+    res.set('Content-Type', contentType);
+
+    // Send the file data as the response
+    res.send(data);
+  } catch (error) {
+    console.error('Error fetching file:', error);
+    res.status(500).send('An error occurred while fetching the file');
+  }
+});
+
+app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
+  console.log("hi")
+  try {
+    console.log(req.body)
+    const { usn } = req.body;
+    const pdfData = req.file.buffer;
+    const contentType = req.file.mimetype;
+
+    const resume = new Resume({
+      usn,
+      resume: {
+        data: pdfData,
+        contentType
+      }
+    });
+    await resume.save();
+
+    res.status(201).json({ message: 'USN and PDF stored successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while storing USN and PDF' });
+  }
+});
 
 app.put('/api/updateApplicationStatus/:id', async (req, res) => {
   const id = req.params.id;
