@@ -184,6 +184,17 @@ const Home = () => {
                         </a>
                         </Button>
 
+                        <Button bg='dark' variant="light">
+                            <a href="/UploadResume" style={{ textDecoration: 'none' }}>
+                            <Card style={{ width: '18rem' }} >
+                                <Card.Img variant="top" src="https://www.uww.edu/images/icit/staff/profile-square.png" />
+                                <Card.Body>
+                                    <Card.Title>Upload Resume</Card.Title>
+                                </Card.Body>
+                            </Card>
+                        </a>
+                        </Button>
+
 
 
 

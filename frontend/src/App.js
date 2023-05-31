@@ -21,6 +21,8 @@ import AllJobPosted from './components/AllJobPosted';
 import LOSA from './components/ListOfStudentApplied'
 import InterviewForm from './components/InterviewForm';
 import Createresume from './components/createResume';
+import UploadResume from './components/uploadResume';
+import ViewCandidateResume from './components/ResumeViewCompany'
 function App() {
   return (
    <div>
@@ -46,6 +48,8 @@ function App() {
         <Route path='/ViewJobPosting' element={<AllJobPosted/>}/>
         <Route path='/LOSA' element={<LOSA/>}/>
         <Route path='/scheduleInterview' element={<InterviewForm/>}/>
+        <Route path='/UploadResume' element={<UploadResume/>}/>
+        <Route path='/viewCandidateResume' usn={localStorage.getItem('usn')}  element={<ViewCandidateResume/>}/>
         
         
         

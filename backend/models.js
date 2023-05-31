@@ -262,11 +262,26 @@ const AppliedCandidateSchema = new mongoose.Schema({
 
 })
 
+const usnResumeSchema = new mongoose.Schema({
+  usn: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  resume: {
+    data: Buffer,
+    contentType: String
+  }
+});
+
+
+
 // Export the models
 module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
   Placement: mongoose.model('placement', PlacementSchema),
   Posting: mongoose.model('posting', JobPostingSchema),
-  AppliedCandidateSchema:mongoose.model('appliedCandidateSchema',AppliedCandidateSchema)
+  AppliedCandidateSchema:mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
+  Resume:mongoose.model('Resume',usnResumeSchema)
 };

@@ -1,10 +1,10 @@
 import React, { useState,useEffect } from 'react';
 import { Table, Button, ButtonGroup } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useLocation ,useNavigate } from 'react-router-dom';
 
 const ApplicationTable = () => {
-  const [applications, setApplications] = useState();
-  // const navigate = useNavigate();
+  // const [applications, setApplications] = useState();
+  const navigate = useNavigate();
   const location = useLocation();
   const { data } = location.state;
   console.log('HI')
@@ -31,10 +31,13 @@ const ApplicationTable = () => {
 // }, [])
 
 
-  const handleViewResume = (id) => {
+  const handleViewResume = (usn) => {
     // Logic to view the resume of the candidate with the given id
     // You can open a modal or navigate to a different page here
-    console.log(`View resume for application ${id}`);
+    console.log(`View resume for application ${usn}`);
+    localStorage.setItem('usn', JSON.stringify(usn));
+    
+    navigate('/viewCandidateResume', { replace: true });
   };
 
   const handleScheduleInterview = (id) => {
@@ -78,7 +81,7 @@ const ApplicationTable = () => {
           <tr key={application.id}>
             <td>{application.usn}</td>
             <td>
-              <Button variant="primary" onClick={() => handleViewResume(application.id)}>
+              <Button variant="primary" onClick={() => handleViewResume(application.usn)}>
                 View Resume
               </Button>
             </td>
