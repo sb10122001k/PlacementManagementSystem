@@ -86,7 +86,16 @@ const Home = () => {
                             </Card>
                         </Button>
                         </a>
-                        
+                        <a href='/StudentSlotSelection'>
+                        <Button bg='dark' variant="light">
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/notification-icon-template-black-bell-ring-alarm-social-media-symbol-mobile-app-ui-flat-simple-isolated-white-178124150.jpg" />
+                                <Card.Body>
+                                    <Card.Title>Interview Slot Booking</Card.Title>
+                                </Card.Body>
+                            </Card>
+                        </Button>
+                        </a>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/notification-icon-template-black-bell-ring-alarm-social-media-symbol-mobile-app-ui-flat-simple-isolated-white-178124150.jpg" />

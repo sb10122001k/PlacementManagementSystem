@@ -3,7 +3,7 @@ const cors = require('cors')
 const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
-const { Student, Company, Placement, Interview, Posting, AppliedCandidate,Resume } = require('./models')
+const { Student, Company, Placement, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview } = require('./models')
 // const {Student, Company, Posting, AppliedCandidate} = require('./models')
 const email = require('./emailservice')
 const mongoose = require('mongoose')
@@ -29,14 +29,42 @@ app.get('/api/studentProfile', async (req, res) => {
 
 })
 
+app.post('/api/scheduleInterviewCompany', (req, res) => {
+
+  const { usn, companyEmail, meetingLink, schedule } = req.body;
+
+  const companyInterview = new CompanyInterview({
+    usn,
+    companyEmail,
+    meetingLink
+  });
+
+  // Process the schedule array dynamically
+  schedule.forEach((slot, index) => {
+    const dateField = `date${index + 1}`;
+    const timeField = `time${index + 1}`;
+    companyInterview[dateField] = slot.date;
+    companyInterview[timeField] = slot.time;
+  });
+
+  companyInterview.save()
+    .then(() => {
+      res.status(200).json({ message: 'Interview scheduled successfully' });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Failed to schedule interview' });
+    });
+});
+  
+
 
 app.get('/api/getResume/:usn', async (req, res) => {
   console.log(req.baseUrl)
   const { usn } = req.params;
- 
+
 
   try {
-    const usnPdf = await Resume.findOne({ usn:req.params.usn });
+    const usnPdf = await Resume.findOne({ usn: req.params.usn });
 
     if (!usnPdf || !usnPdf.resume.data) {
 
@@ -47,7 +75,7 @@ app.get('/api/getResume/:usn', async (req, res) => {
 
     const { data, contentType } = usnPdf.resume;
 
-   
+
     res.set('Content-Type', contentType);
 
     // Send the file data as the response
@@ -83,14 +111,14 @@ app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
 
 app.put('/api/updateApplicationStatus/:id', async (req, res) => {
   const id = req.params.id;
-  const { status}  = req.body;
- 
+  const { status } = req.body;
+
   console.log(status)
   try {
     // Find the job posting by ID and update the status
-    const updatedJobPosting = await AppliedCandidateSchema.findByIdAndUpdate(
+    const updatedJobPosting = await AppliedCandidate.findByIdAndUpdate(
       id,
-      {$set: { status }},
+      { $set: { status } },
       { new: true }
     );
 
@@ -103,7 +131,7 @@ app.put('/api/updateApplicationStatus/:id', async (req, res) => {
 
 app.post('/api/newJobApplied', async (req, res) => {
   console.log(req.body)
-  const newPosting = await AppliedCandidateSchema.create(req.body)
+  const newPosting = await AppliedCandidate.create(req.body)
   const posting = await newPosting.save()
   res.status(200).json({ status: "ok" })
 })
@@ -111,7 +139,7 @@ app.post('/api/newJobApplied', async (req, res) => {
 app.get('/api/getCandidateList/:id', async (req, res) => {
   const jobId = req.params.id;
   try {
-    const list = await AppliedCandidateSchema.find({ jobid: jobId })
+    const list = await AppliedCandidate.find({ jobid: jobId })
     res.status(200).json(list);
   } catch (error) {
     console.log(error)
@@ -250,6 +278,11 @@ app.post('/api/registerCompany', async (req, res) => {
 
   // res.status(206).send("ok")
 })
+
+app.get('/api/inveriewSlotAvailability/:usn',async(req,res)=>{
+  console.log(req.params)
+})
+
 app.post('/api/companyLogin', async (req, res) => {
   console.log(req.body)
   try {
@@ -274,13 +307,13 @@ app.post('/api/companyLogin', async (req, res) => {
   }
 })
 
-app.post('/api/newJobPosting',async(req,res)=>{
+app.post('/api/newJobPosting', async (req, res) => {
   console.log(req.body)
   try {
-    
+
     const newJobPosting = new Posting(req.body);
     const studentEmails = await Student.find().distinct('email');
-    
+
     // Save the job posting to the database
     const savedJobPosting = await newJobPosting.save();
     const subject = 'New Job Posting Notification';
@@ -289,28 +322,28 @@ app.post('/api/newJobPosting',async(req,res)=>{
     for (const email of studentEmails) {
       await sendEmailToStudent(email, subject, message);
     }
-    res.status(201).json(savedJobPosting); 
-    
+    res.status(201).json(savedJobPosting);
+
   } catch (error) {
-    res.status(500).json({ message: error.message }); 
-  } 
+    res.status(500).json({ message: error.message });
+  }
 });
 
 //delete a job
 app.delete('/api/jobPostings/:id', async (req, res) => {
   try {
-    const jobId = req.params.id; 
-    
-    
+    const jobId = req.params.id;
+
+
     const jobPosting = await Posting.findOne(jobId);
-    
+
     if (!jobPosting) {
       return res.status(404).json({ message: 'Job posting not found' });
     }
-    
+
     // Delete the job posting document
     await jobPosting.remove();
-    
+
     res.json({ message: 'Job posting deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -321,16 +354,16 @@ app.delete('/api/jobPostings/:id', async (req, res) => {
 //update the job
 app.put('/api/jobPostings/:id', async (req, res) => {
   try {
-    const jobId = req.params.id; 
-    
-   
+    const jobId = req.params.id;
+
+
     const jobPosting = await Posting.findOne(jobId);
-    
+
     if (!jobPosting) {
       return res.status(404).json({ message: 'Job posting not found' });
     }
-    
-    
+
+
     jobPosting.jobRole = req.body.jobRole;
     jobPosting.JobDescription = req.body.JobDescription;
     jobPosting.Package = req.body.Package;
@@ -343,15 +376,15 @@ app.put('/api/jobPostings/:id', async (req, res) => {
     jobPosting.DriveFrom = req.body.DriveFrom;
     jobPosting.DriveTO = req.body.DriveTO;
     jobPosting.Venue = req.body.Venue;
-    
-   
+
+
     const updatedJobPosting = await jobPosting.save();
-    
+
     res.json(updatedJobPosting);
   } catch (error) {
-    res.status(500).json({ message: error.message }); 
+    res.status(500).json({ message: error.message });
   }
-  
+
 });
 
 //status of candidates

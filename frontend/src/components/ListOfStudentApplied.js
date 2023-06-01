@@ -35,7 +35,7 @@ const ApplicationTable = () => {
     // Logic to view the resume of the candidate with the given id
     // You can open a modal or navigate to a different page here
     console.log(`View resume for application ${usn}`);
-    localStorage.setItem('usn', JSON.stringify(usn));
+    localStorage.setItem('usn', usn);
     
     navigate('/viewCandidateResume', { replace: true });
   };

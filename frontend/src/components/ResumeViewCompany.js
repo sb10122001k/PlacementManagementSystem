@@ -4,7 +4,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function PDFViewer() {
-    const usn=localStorage.getItem('usn ')
+    const usn=localStorage.getItem('usn')
   const [numPages, setNumPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [feedback, setFeedback] = useState('');
