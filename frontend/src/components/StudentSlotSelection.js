@@ -7,7 +7,7 @@ const App = () => {
 
   useEffect(() => {
     // Fetch interview data from the backend API
-    fetch(`http://localhost:1337/api/inveriewSlotAvailability/:${localStorage.getItem('token')}`)
+    fetch(`http://localhost:1337/api/inveriewSlotAvailability/${localStorage.getItem('token')}`)
       .then((response) => response.json())
       .then((data) => {
         setInterviews(data);

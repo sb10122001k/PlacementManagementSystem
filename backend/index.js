@@ -280,7 +280,24 @@ app.post('/api/registerCompany', async (req, res) => {
 })
 
 app.get('/api/inveriewSlotAvailability/:usn',async(req,res)=>{
-  console.log(req.params)
+  console.log(req.params.usn)
+  usn =`"${req.params.usn}"`;
+  console.log(usn)
+
+  // Find the interview data in the MongoDB collection by USN
+  CompanyInterview.findOne({ usn:usn })
+    .then((interview) => {
+      if (!interview) {
+        return res.status(404).json({ message: 'Interview not found' });
+      }
+
+      res.json(interview);
+    })
+    .catch((error) => {
+      console.error('Error fetching interview data', error);
+      res.status(500).json({ message: 'Failed to fetch interview data' });
+    });
+
 })
 
 app.post('/api/companyLogin', async (req, res) => {
