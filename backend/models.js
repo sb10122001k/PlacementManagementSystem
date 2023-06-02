@@ -299,5 +299,6 @@ module.exports = {
   Resume:mongoose.model('Resume',usnResumeSchema),
   AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
   CompanyInterview:mongoose.model('cmpanyInterview',CompanyInterviewSchema),
-  StudentInterview:mongoose.model('studentIntervew',StudentInterview)
+  StudentInterview:mongoose.model('studentIntervew',StudentInterview),
+  Admin:mongoose.model('admin',AdminSchema)
 };

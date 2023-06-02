@@ -3,7 +3,7 @@ const cors = require('cors')
 const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
-const { Student, Company, Placement, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview } = require('./models')
+const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Admin } = require('./models')
 // const {Student, Company, Posting, AppliedCandidate, Admin} = require('./models')
 const email = require('./emailservice')
 const mongoose = require('mongoose')
@@ -172,45 +172,111 @@ app.get('/api/getposting', async (req, res) => {
 
 app.post('/api/studentRegister', async (req, res) => {
 
+  const {
+    firstName,
+    lastName,
+    usn,
+    email,
+    password,
+    skills,
+    dateOfBirth,
+    currentSemester,
+    country,
+    state,
+    city,
+    zip,
+    contactNumber,
+    address,
+    careerObjective,
+    degreeCollege,
+    branch,
+    specialization,
+    collegeAddress,
+    score,
+    courseDuration,
+    keySkills,
+    careerPreferences,
+    image
+  } = req.body;
+
   try {
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(req.body.password, salt)
+    
+    const existingStudent = await Student.findOne({ usn });
 
-    const newStudent = await Student.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      usn: req.body.usn,
-      email: req.body.email,
+    if (existingStudent) {
+      return res.status(400).json({ error: 'Student already exists' });
+    }
+
+   
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    
+    const newStudent = new Student({
+      firstName,
+      lastName,
+      usn,
+      email,
       password: hashedPassword,
-      class10: req.body.class10,
-      class12: req.body.class12
+      skills,
+      dateOfBirth,
+      currentSemester,
+      country,
+      state,
+      city,
+      zip,
+      contactNumber,
+      address,
+      careerObjective,
+      degreeCollege,
+      branch,
+      specialization,
+      collegeAddress,
+      score,
+      courseDuration,
+      keySkills,
+      careerPreferences,
+      image
+    });
 
-    })
+    
+    const savedStudent = await newStudent.save();
 
-    const student = await newStudent.save()
-    res.status(200).json(student)
-  } catch (err) {
-    console.log(err);
+    res.status(201).json(savedStudent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to register student' });
   }
-})
+});
 
 app.post('/api/studentLogin', async (req, res) => {
 
+  const { usn, password } = req.body;
+
   try {
-    const student = await Student.findOne({ usn: req.body.usn })
-    // !student && res.status(404).json("student not found")
-    res.status(404).json({ status: 'ok', user: req.body.usn })
-    const validPassword = await bcrypt.compare(req.body.password, student.password)
-    !validPassword && res.status(400).json("invalid password")
+    
+    const student = await Student.findOne({ usn });
 
+    if (!student) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
 
+    
+    const isPasswordValid = await bcrypt.compare(password, student.password);
 
-    res.status(200).json(student)
-  } catch (err) {
-    console.log(err);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+ 
+    const token = jwt.sign({ usn: student.usn }, 'secretKey'); // Replace 'secretKey' with your own secret key
+
+    res.json({ token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to log in' });
   }
-  // res.status(206).send("ok")
-})
+});
+
 
 app.put('/api/students/:usn', async (req, res) => {
   const usn = req.params.usn;
@@ -505,12 +571,60 @@ app.put('/api/companyUpdate', async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
-app.post('/api/registerAdmin',(req,res)=>{
+app.post('/api/registerAdmin', async (req,res)=>{
     console.log(req.body)
+    const { username, password, email } = req.body;
+
+  try {
+    
+    const existingAdmin = await Admin.findOne().or([{ username }, { email }]);
+
+    if (existingAdmin) {
+      return res.status(409).json({ error: 'Admin already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const admin = new Admin({ username, password: hashedPassword, email });
+
+    
+    const savedAdmin = await admin.save();
+
+    res.status(201).json(savedAdmin);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to register admin' });
+  }
+
 })
-app.post('/api/adminLogin',(req,res)=>{
+app.post('/api/adminLogin',async (req,res)=>{
     console.log(req.body)
-})
+    const { username, password } = req.body;
+
+  try {
+    
+    const admin = await Admin.findOne({ username });
+
+    if (!admin) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+   
+    const passwordMatch = await bcrypt.compare(password, admin.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+
+
+    res.status(200).json({ message: 'Authentication successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to authenticate' });
+  }
+});
+
 
 app.listen(1337, () => {
   console.log('Server Started')
