@@ -17,13 +17,21 @@ import ChatPage from './components/chat';
 import CompanyJobPosting from './components/CompanyJobPosting';
 import HiringCompanies from './components/HiringCompanies';
 import StudentHiringView from './components/StudentHiringView';
-
+import AllJobPosted from './components/AllJobPosted';
+import LOSA from './components/ListOfStudentApplied'
+import InterviewForm from './components/InterviewForm';
+import Createresume from './components/createResume';
+import UploadResume from './components/StudentResume';
+import ViewCandidateResume from './components/ResumeViewCompany'
+import StudentSlotSelection from'./components/StudentSlotSelection'
 function App() {
   return (
    <div>
     <Router>
       <Routes>
+        <Route path='/createResume' element={<Createresume/>}/>
         <Route path='/' element={<Home/>}/>
+        
         <Route path='/Home' element={<Home/>}/>
         <Route path='/StudentLogIn' element={<StudentLogIn/>}/>
         <Route path='/CompanyLogIn' element={<CompanyLogin/>}/>
@@ -38,6 +46,14 @@ function App() {
         <Route path='/NewJobPosting' element={<CompanyJobPosting/>}/>
         <Route path='/ALLJobRole' element={<HiringCompanies/>}/>
         <Route path='/JobDescription' element={<StudentHiringView/>}/>
+        <Route path='/ViewJobPosting' element={<AllJobPosted/>}/>
+        <Route path='/LOSA' element={<LOSA/>}/>
+        <Route path='/scheduleInterview' element={<InterviewForm/>}/>
+        <Route path='/UploadResume' element={<UploadResume/>}/>
+        <Route path='//StudentSlotSelection' element={<StudentSlotSelection/>}/>
+        <Route path='/viewCandidateResume' usn={localStorage.getItem('usn')}  element={<ViewCandidateResume/>}/>
+        
+        
         
       </Routes>
     </Router>

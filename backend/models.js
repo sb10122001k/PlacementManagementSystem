@@ -227,31 +227,51 @@ const AppliedCandidateSchema = new mongoose.Schema({
 
 })
 
+const usnResumeSchema = new mongoose.Schema({
+  usn: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  resume: {
+    data: Buffer,
+    contentType: String
+  }
+});
 
-const InterviewSchema = new mongoose.Schema({
+
+const CompanyInterviewSchema = new mongoose.Schema({
   usn: {
     type: String,
     required: true,
     ref: 'Student'
   },
-  date: {
-    type: String,
-    required: true
+  companyEmail:{
+    type:String,
+    require:true
   },
-  time: {
-    type: String,
-    required: true
-  },
-  location: {
-    type: String,
-    required: true
-  },
-  status: {
-    type: String,
-    enum: ['scheduled', 'completed'],
-    default: 'scheduled'
-  }
+  meetingLink:String,
+  date1:String,
+  time1:String,
+  date2:String,
+  time2:String,
+  date3:String,
+  time3:String,
+  date4:String,
+  time4:String,
+  date5:String,
+  time5:String
 });
+
+const StudentInterview = new mongoose.Schema({
+  usn:String,
+  meetingLink:String,
+  companyEmail:String,
+  date:String,
+  time:String
+
+})
+
 
 
 const AdminSchema = new mongoose.Schema({
@@ -276,7 +296,8 @@ module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
   Posting: mongoose.model('posting', JobPostingSchema),
+  Resume:mongoose.model('Resume',usnResumeSchema),
   AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
-  Interview: mongoose.model('interview',InterviewSchema),
-  Admin: mongoose.model('admin',AdminSchema)
+  CompanyInterview:mongoose.model('cmpanyInterview',CompanyInterviewSchema),
+  StudentInterview:mongoose.model('studentIntervew',StudentInterview)
 };
