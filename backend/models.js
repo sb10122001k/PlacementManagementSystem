@@ -274,6 +274,22 @@ const StudentInterview = new mongoose.Schema({
 
 
 
+const AdminSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  }
+});
 
 // Export the models
 module.exports = {
@@ -283,5 +299,6 @@ module.exports = {
   Resume:mongoose.model('Resume',usnResumeSchema),
   AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
   CompanyInterview:mongoose.model('cmpanyInterview',CompanyInterviewSchema),
-  StudentInterview:mongoose.model('studentIntervew',StudentInterview)
+  StudentInterview:mongoose.model('studentIntervew',StudentInterview),
+  Admin:mongoose.model('admin',AdminSchema)
 };
