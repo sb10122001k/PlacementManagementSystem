@@ -2,7 +2,7 @@ const express=require('express')
 const cors = require('cors')
 const app = express()
 const dotenv = require('dotenv')
-const {Student, Company, Interview, Posting, AppliedCandidate} = require('./models')
+const {Student, Company, Interview, Posting, AppliedCandidate, Admin} = require('./models')
 const email = require('./emailservice')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
@@ -86,30 +86,30 @@ app.post('/api/studentLogin',async (req,res)=>{
     // res.status(206).send("ok")
 })
 
-app.put('/api/studentUpdate', async (req, res) => {
-    const { usn, skills, class10, class12, dateOfBirth} = req.body;
-  
-    try {
-      const updatedStudent = await Student.findOneAndUpdate(
-        { usn },
-        { skills , dateOfBirth,
-        class10: class10,
-        class12: class12},
-        { new: true }
-      );
-  
-      if (!updatedStudent) {
-        return res.status(404).json({ message: 'Student not found' });
-      }
-  
-     
-      await updatedStudent.save();
-  
-      res.json(updatedStudent);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+app.put('/api/students/:usn', async (req, res) => {
+  const usn = req.params.usn;
+  const updateData = req.body;
+
+  try {
+    // Find the student by USN
+    const student = await Student.findOne({ usn });
+
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
     }
-  });
+
+    // Update individual elements of the student data
+    Object.assign(student, updateData);
+
+    // Save the updated student data
+    const updatedStudent = await student.save();
+
+    res.json(updatedStudent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update student data' });
+  }
+});
 
 app.get('/api/StudentProfile/:id', async(req, res)=>{
   const {usn} = req.params.id;
@@ -358,12 +358,59 @@ app.put('/api/companyUpdate', async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
-app.post('/api/registerAdmin',(req,res)=>{
+// Register a new admin
+app.post('/aapi/registerAdmin', async (req, res) => {
+  const { username, password, email } = req.body;
+
+  try {
+    const existingAdmin = await Admin.findOne().or([{ username }, { email }]);
+
+    if (existingAdmin) {
+      return res.status(409).json({ error: 'Admin already exists' });
+    }
+
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    
+    const admin = new Admin({ username, password: hashedPassword, email });
+
+    
+    const savedAdmin = await admin.save();
+
+    res.status(201).json(savedAdmin);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to register admin' });
+  }
+});
+
+app.post('/api/adminLogin',async (req,res)=>{
     console.log(req.body)
-})
-app.post('/api/adminLogin',(req,res)=>{
-    console.log(req.body)
-})
+    const { username, password } = req.body;
+
+  try {
+    
+    const admin = await Admin.findOne({ username });
+
+    if (!admin) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+   
+    const passwordMatch = await bcrypt.compare(password, admin.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+
+    res.status(200).json({ message: 'Authentication successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to authenticate' });
+  }
+});
 
 app.listen(1337,()=>{
     console.log('Server Started')

@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   // Configure your email provider details here
   // For example, using SMTP settings
-  host: 'smtp.example.com',
+  host: 'smtp.gmail.com',
   port: 587,
   secure: false,
   auth: {

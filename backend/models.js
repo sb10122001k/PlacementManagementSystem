@@ -253,10 +253,23 @@ const InterviewSchema = new mongoose.Schema({
   }
 });
 
-const Interview = mongoose.model('Interview', InterviewSchema);
 
-module.exports = Interview;
-
+const AdminSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  }
+});
 
 // Export the models
 module.exports = {
@@ -264,5 +277,6 @@ module.exports = {
   Company: mongoose.model('company', CompanySchema),
   Posting: mongoose.model('posting', JobPostingSchema),
   AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
-  Interview: mongoose.model('interview',InterviewSchema)
+  Interview: mongoose.model('interview',InterviewSchema),
+  Admin: mongoose.model('admin',AdminSchema)
 };
