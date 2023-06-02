@@ -1,5 +1,7 @@
+// App.js
 import React, { useEffect, useState } from 'react';
 import InterviewScheduler from './InterviewScheduler';
+import { Card } from 'react-bootstrap';
 
 const App = () => {
   const [interviews, setInterviews] = useState([]);
@@ -19,10 +21,33 @@ const App = () => {
       });
   }, []);
 
-  const handleTimeSlotSelection = (slot) => {
-    // Handle the selected time slot
+  const handleTimeSlotSelection = (slot, index, usn, meetingLink, companyEmail) => {
+    // Handle the selected time slot along with usn, meetingLink, and companyEmail
     console.log('Selected time slot:', slot);
-    // Add your logic here to handle the selected slot
+    console.log('USN:', usn);
+    console.log('Meeting Link:', meetingLink);
+    console.log('Company Email:', companyEmail);
+
+    
+
+    const response = fetch('http://localhost:1337/api/finalScheduleSelection', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        slot,
+        usn,
+        meetingLink,
+        companyEmail
+      }),
+    });
+
+    const data = response.json();
+
+    if (data.status === 'ok') {
+      // Handle successful response
+    }
   };
 
   return (
@@ -32,8 +57,13 @@ const App = () => {
         <p>Loading interview data...</p>
       ) : (
         <>
-          {interviews.length > 0 ? (
-            <InterviewScheduler interviews={interviews} handleTimeSlotSelection={handleTimeSlotSelection} />
+          {interviews && interviews.length > 0 ? (
+            <Card border='2' style={{ border: '2px solid' }}>
+              <InterviewScheduler
+                interviews={interviews}
+                handleTimeSlotSelection={handleTimeSlotSelection}
+              />
+            </Card>
           ) : (
             <p>No interviews available</p>
           )}

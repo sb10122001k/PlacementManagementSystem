@@ -80,6 +80,7 @@ const CompanyHome = () => {
                             </Card>
                         </Button>
                         </a>
+                        <a href="/CompanyInterviewSchedule">
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem', height: '22rem' }}>
                                 <Card.Img variant="top" src="https://cdn.vectorstock.com/i/preview-1x/15/78/interview-icon-on-white-background-vector-26901578.jpg" />
@@ -88,6 +89,7 @@ const CompanyHome = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
+                        </a>
 
                     </div>
                 </div>
