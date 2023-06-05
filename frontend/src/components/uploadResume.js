@@ -18,7 +18,7 @@ function FileUploadForm() {
     formData.append('pdf', pdf);
 
     try {
-      await fetch('http://localhost:1337/api/Resumeupload', {
+      await fetch('http://localhost:1337/api/resumeUpload', {
         method: 'POST',
         body: formData
       });
