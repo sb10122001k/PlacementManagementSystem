@@ -227,18 +227,6 @@ const AppliedCandidateSchema = new mongoose.Schema({
 
 })
 
-const usnResumeSchema = new mongoose.Schema({
-  usn: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  resume: {
-    data: Buffer,
-    contentType: String
-  }
-});
-
 
 const CompanyInterviewSchema = new mongoose.Schema({
   usn: {
@@ -291,12 +279,52 @@ const AdminSchema = new mongoose.Schema({
   }
 });
 
+const ResumeSchema = new mongoose.Schema({
+  usn: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  resume: {
+    data: Buffer,
+    contentType: {
+      type: String,
+      required: true,
+      default: 'application/pdf'
+    }
+}
+});
+
+const ResumeFeedbackSchema = new mongoose.Schema({
+  resumeId: {
+    type: String,
+    required: true,
+    ref: 'Resume'
+  },
+  feedback: {
+    type: [
+      {
+        company: {
+          type: String,
+          required: true
+        },
+        feedback: {
+          type: String
+        }
+      }
+    ],
+    default: []
+  }
+});
+
+
 // Export the models
 module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
   Posting: mongoose.model('posting', JobPostingSchema),
-  Resume:mongoose.model('Resume',usnResumeSchema),
+  Resume:mongoose.model('resume',ResumeSchema),
+  ResumeFeedback : mongoose.model('resumefeedback', ResumeFeedbackSchema),
   AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
   CompanyInterview:mongoose.model('cmpanyInterview',CompanyInterviewSchema),
   StudentInterview:mongoose.model('studentIntervew',StudentInterview),

@@ -3,7 +3,7 @@ const cors = require('cors')
 const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
-const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Admin } = require('./models')
+const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Admin, ResumeFeedback } = require('./models')
 // const {Student, Company, Posting, AppliedCandidate, Admin} = require('./models')
 const email = require('./emailservice')
 const mongoose = require('mongoose')
@@ -624,6 +624,104 @@ app.post('/api/adminLogin',async (req,res)=>{
     res.status(500).json({ error: 'Failed to authenticate' });
   }
 });
+
+
+//resume feedback
+
+app.post('/api/resume/upload', async (req, res) => {
+  const { usn, resumeData } = req.body;
+
+  try {
+    // Check if the resume already exists
+    const existingResume = await Resume.findOne({ usn });
+
+    if (existingResume) {
+      return res.status(400).json({ error: 'Resume already exists' });
+    }
+
+    // Create a new resume
+    const newResume = new Resume({
+      usn,
+      resume: {
+        data: resumeData,
+        contentType: 'application/pdf'
+      }
+    });
+
+    // Save the resume to the database
+    const savedResume = await newResume.save();
+
+    res.status(201).json(savedResume);
+  } catch (error) {
+    console.error('Failed to upload resume:', error);
+    res.status(500).json({ error: 'Failed to upload resume' });
+  }
+});
+
+//feedback resume
+app.post('/api/resume/feedback/:usn', async (req, res) => {
+  const usn = req.params.usn;
+  const {  feedback } = req.body;
+
+  try {
+    // Check if the resume exists
+    const resume = await Resume.findOne({ usn });
+
+    if (!resume) {
+      return res.status(404).json({ error: 'Resume not found' });
+    }
+
+    // Check if feedback already exists for the resume
+    const existingFeedback = await ResumeFeedback.findOne({ resumeId: usn });
+    if (existingFeedback) {
+      return res.status(400).json({ error: 'Feedback already provided for this resume' });
+    }
+    // Create a new resume feedback
+    const resumeFeedback = new ResumeFeedback({
+      resumeId: usn,
+      feedback
+    });
+
+
+    // Save the resume feedback to the database
+    const savedResumeFeedback = await resumeFeedback.save();
+
+    res.json(savedResumeFeedback);
+  } catch (error) {
+    console.error('Failed to save resume feedback:', error);
+    res.status(500).json({ error: 'Failed to save resume feedback' });
+  }
+});
+
+//update the feedback
+app.put('/api/resume/feedback/:usn', async (req, res) => {
+  const usn = req.params.usn;
+  const { company, feedback } = req.body;
+
+  try {
+    // Find the resume feedback by usn
+    const resumeFeedback = await ResumeFeedback.findOne({ resumeId: usn });
+
+    if (!resumeFeedback) {
+      return res.status(404).json({ error: 'Resume feedback not found' });
+    }
+
+    // Update the feedback
+    resumeFeedback.feedback = feedback;
+
+    // Save the updated feedback
+    const updatedFeedback = await resumeFeedback.save();
+
+    res.json(updatedFeedback);
+  } catch (error) {
+    console.error('Failed to update resume feedback:', error);
+    res.status(500).json({ error: 'Failed to update resume feedback' });
+  }
+});
+
+
+
+
 
 
 app.listen(1337, () => {
