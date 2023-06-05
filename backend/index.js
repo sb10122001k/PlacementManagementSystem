@@ -29,6 +29,46 @@ app.get('/api/studentProfile', async (req, res) => {
 
 })
 
+app.post('/api/finalScheduleSelection',async(req,res)=>{
+  console.log(req.body)
+
+  const studentInterview = new StudentInterview({
+    usn: req.body.usn,
+    meetingLink:  req.body.meetingLink,
+    companyEmail:  req.body.companyEmail,
+    date:  req.body.slot.date,
+    time:  req.body.slot.time
+  });
+  studentInterview.save()
+    .then(() => {
+      res.status(200).json({ message: 'Interview scheduled successfully' });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Failed to schedule interview' });
+    });
+
+})
+
+app.get('/api/companySechdule/:companyEmail', (req, res) => {
+  
+  StudentInterview.find({companyEmail:req.params.companyEmail})
+    .then(interviews => res.json(interviews))
+    .catch(error => {
+      console.error('Error fetching interview data', error);
+      res.status(500).json({ message: 'Failed to fetch interview data' });
+    });
+});
+
+app.get('/api/companysechdule/:email', (req, res) => {
+  
+  StudentInterview.find({usn:usn})
+    .then(interviews => res.json(interviews))
+    .catch(error => {
+      console.error('Error fetching interview data', error);
+      res.status(500).json({ message: 'Failed to fetch interview data' });
+    });
+});
+
 app.post('/api/scheduleInterviewCompany', (req, res) => {
 
   const { usn, companyEmail, meetingLink, schedule } = req.body;
@@ -349,15 +389,18 @@ app.get('/api/inveriewSlotAvailability/:usn',async(req,res)=>{
   console.log(usn)
 
   // Find the interview data in the MongoDB collection by USN
-  CompanyInterview.findOne({ usn:usn })
+  CompanyInterview.find({ usn:usn })
     .then((interview) => {
+      console.log("Hi1")
       if (!interview) {
+        console.log("Hi2")
         return res.status(404).json({ message: 'Interview not found' });
       }
-
+      console.log(interview)
       res.json(interview);
     })
     .catch((error) => {
+      console.log("Hi3")
       console.error('Error fetching interview data', error);
       res.status(500).json({ message: 'Failed to fetch interview data' });
     });

@@ -1,3 +1,4 @@
+// InterviewScheduler.js
 import React from 'react';
 
 const InterviewScheduler = ({ interviews, handleTimeSlotSelection }) => {
@@ -14,7 +15,17 @@ const InterviewScheduler = ({ interviews, handleTimeSlotSelection }) => {
             <ul>
               {Array.from(Array(5), (_, i) => i + 1).map((num) => (
                 <li key={num}>
-                  <button onClick={() => handleTimeSlotSelection({ date: interview[`date${num}`], time: interview[`time${num}`] })}>
+                  <button
+                    onClick={() =>
+                      handleTimeSlotSelection(
+                        { date: interview[`date${num}`], time: interview[`time${num}`] },
+                        index,
+                        interview.usn,
+                        interview.meetingLink,
+                        interview.companyEmail
+                      )
+                    }
+                  >
                     {interview[`date${num}`]} - {interview[`time${num}`]}
                   </button>
                 </li>

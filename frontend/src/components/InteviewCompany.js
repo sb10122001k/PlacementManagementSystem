@@ -5,7 +5,7 @@ const App = () => {
   const usn=localStorage.getItem('token')
 
   useEffect(() => {
-    fetch(`http://localhost:1337/api/sechdule/${usn}`)
+    fetch(`http://localhost:1337/api/companySechdule/${usn}`)
       .then(response => response.json())
       .then(data => {
         setInterviews(data);

@@ -15,7 +15,7 @@ const Home = () => {
                             navbarScroll
                         >
                             <Nav.Link href="Home">Home</Nav.Link>
-                            <Nav.Link href="Schedule">Schedule</Nav.Link>
+                            <Nav.Link href="/StudentSchedule">Schedule</Nav.Link>
                             <Nav.Link href="Resume">Resume</Nav.Link>
                         </Nav>
 
