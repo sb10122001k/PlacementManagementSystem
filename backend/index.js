@@ -671,7 +671,7 @@ app.post('/api/adminLogin',async (req,res)=>{
 
 //resume feedback
 
-app.post('/api/Resumeupload', async (req, res) => {
+app.post('/api/resumeUpload', async (req, res) => {
   const { usn, resumeData } = req.body;
 
   try {
