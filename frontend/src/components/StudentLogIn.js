@@ -25,8 +25,8 @@ const StudentLogIn = () => {
 
     console.log(data)
     if(data.status === 'ok'){
-      localStorage.setItem('token', data.user);
-        navigate('/Home', { replace: true })
+      localStorage.setItem('token', data.token);
+        navigate('/StudentHome', { replace: true })
     }
 
 }

@@ -43,11 +43,11 @@ const App = () => {
       }),
     });
 
-    const data = response.json();
+    // const data = response.json();
 
-    if (data.status === 'ok') {
-      // Handle successful response
-    }
+    // if (data.status === 'ok') {
+    //   // Handle successful response
+    // }
   };
 
   return (

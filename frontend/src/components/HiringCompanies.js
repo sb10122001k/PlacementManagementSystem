@@ -78,8 +78,9 @@ const HiringCompanies = () => {
             </Navbar>
             <br></br>
             <br></br>
-            {
-                <div>
+            {<div class="container ">
+                <div class="row justify-content-start">
+                    <div className="d-flex justify-content-around">
                     {postingData?.map((posting) =>
                         <div>
                             <Card border="dark" style={{ width: '18rem' }}>
@@ -94,6 +95,8 @@ const HiringCompanies = () => {
                             </Card>
                         </div>
                     )}
+                </div>
+                </div>
                 </div>
             }
             {/* <div class="container ">

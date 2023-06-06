@@ -31,26 +31,17 @@ function PDFViewer() {
 
   const handleFeedbackSubmit = (event) => {
     event.preventDefault();
-
+    console.log("hi")
     // Send feedback to the server
     // Replace `/api/feedback` with your server endpoint to handle feedback submission
-    fetch('/api/feedback', {
-      method: 'POST',
+    fetch(`http://localhost:1337/api/resume/feedback/${usn}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ usn, feedback })
     })
-      .then((response) => {
-        if (response.ok) {
-          console.log('Feedback sent successfully');
-        } else {
-          throw new Error('Error sending feedback');
-        }
-      })
-      .catch((error) => {
-        console.error('Error sending feedback:', error);
-      });
+    
   };
 
   return (

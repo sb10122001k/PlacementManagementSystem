@@ -49,6 +49,16 @@ app.post('/api/finalScheduleSelection',async(req,res)=>{
 
 })
 
+app.get('/api/sechdule/:usn', (req, res) => {
+  
+  StudentInterview.find({usn:req.params.usn})
+    .then(interviews => res.json(interviews))
+    .catch(error => {
+      console.error('Error fetching interview data', error);
+      res.status(500).json({ message: 'Failed to fetch interview data' });
+    });
+});
+
 app.get('/api/companySechdule/:companyEmail', (req, res) => {
   
   StudentInterview.find({companyEmail:req.params.companyEmail})
@@ -100,16 +110,16 @@ app.post('/api/scheduleInterviewCompany', (req, res) => {
 
 app.get('/api/getResume/:usn', async (req, res) => {
   console.log(req.baseUrl)
-  const { usn } = req.params;
+  const usn = `"${req.params.usn}"`;
 
 
   try {
-    const usnPdf = await Resume.findOne({ usn: req.params.usn });
+    const usnPdf = await Resume.findOne({ usn:usn });
 
     if (!usnPdf || !usnPdf.resume.data) {
 
       console.log(usnPdf)
-      console.log(usnPdf.pdf.data)
+      console.log(usnPdf.resume.data)
       return res.status(404).send('File not found');
     }
 
@@ -148,7 +158,6 @@ app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
     res.status(500).json({ error: 'An error occurred while storing USN and PDF' });
   }
 });
-
 app.put('/api/updateApplicationStatus/:id', async (req, res) => {
   const id = req.params.id;
   const { status } = req.body;
@@ -308,9 +317,9 @@ app.post('/api/studentLogin', async (req, res) => {
     }
 
  
-    const token = jwt.sign({ usn: student.usn }, 'secretKey'); // Replace 'secretKey' with your own secret key
+    // const token = jwt.sign({ usn: student.usn }, 'secretKey'); // Replace 'secretKey' with your own secret key
 
-    res.json({ token });
+    res.json({ "token":req.body.usn ,"status":"ok","usn":req.body.usn});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to log in' });
@@ -385,7 +394,7 @@ app.post('/api/registerCompany', async (req, res) => {
 
 app.get('/api/inveriewSlotAvailability/:usn',async(req,res)=>{
   console.log(req.params.usn)
-  usn =`"${req.params.usn}"`;
+  usn =req.params.usn;
   console.log(usn)
 
   // Find the interview data in the MongoDB collection by USN
@@ -671,7 +680,7 @@ app.post('/api/adminLogin',async (req,res)=>{
 
 //resume feedback
 
-app.post('/api/resumeUpload', async (req, res) => {
+app.post('/api/ Upload', async (req, res) => {
   const { usn, resumeData } = req.body;
 
   try {
@@ -698,6 +707,23 @@ app.post('/api/resumeUpload', async (req, res) => {
   } catch (error) {
     console.error('Failed to upload resume:', error);
     res.status(500).json({ error: 'Failed to upload resume' });
+  }
+});
+app.post('/api/checkApplicationStatus',async(req,res)=>{
+  try {
+    const { usn, jobid } = req.body;
+
+    // Find the application
+    const application = await AppliedCandidate.findOne({ usn, jobid });
+
+    if (application) {
+      res.json({ applied: true, status: application.status });
+    } else {
+      res.json({ applied: false, status: null });
+    }
+  } catch (error) {
+    console.error('Error checking application status:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -738,8 +764,10 @@ app.post('/api/resume/feedback/:usn', async (req, res) => {
 
 //update the feedback
 app.put('/api/resume/feedback/:usn', async (req, res) => {
-  const usn = req.params.usn;
-  const { company, feedback } = req.body;
+    console.log("HI33")
+  const usn =`"${req.params.usn}"`;
+  console.log(req.body)
+  const {feedback } = req.body;
 
   try {
     // Find the resume feedback by usn

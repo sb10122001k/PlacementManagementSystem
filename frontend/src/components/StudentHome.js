@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Navbar, Container, Nav, Form, Button, Card, Figure, Dropdown } from 'react-bootstrap'
 
-const StudentHome = () => {
+const Home = () => {
     return (
         <div>
             <Navbar bg="dark" variant='dark' expand="lg">
@@ -15,7 +15,7 @@ const StudentHome = () => {
                             navbarScroll
                         >
                             <Nav.Link href="Home">Home</Nav.Link>
-                            <Nav.Link href="Schedule">Schedule</Nav.Link>
+                            <Nav.Link href="/StudentSchedule">Schedule</Nav.Link>
                             <Nav.Link href="Resume">Resume</Nav.Link>
                         </Nav>
 
@@ -36,9 +36,7 @@ const StudentHome = () => {
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
                         </Button>
-
-                           
-
+                        
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
@@ -59,6 +57,7 @@ const StudentHome = () => {
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
 
+                        <a href='/ALLJobRole'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/round-simple-recruitment-logo-round-simple-recruitment-logo-abstract-flat-style-trend-modern-unique-logotype-graphic-design-115857436.jpg" />
@@ -67,7 +66,17 @@ const StudentHome = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
-
+                        </a>
+                        <a href='/StudentSlotSelection'>
+                        <Button bg='dark' variant="light">
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/notification-icon-template-black-bell-ring-alarm-social-media-symbol-mobile-app-ui-flat-simple-isolated-white-178124150.jpg" />
+                                <Card.Body>
+                                    <Card.Title>Interview Slot Booking</Card.Title>
+                                </Card.Body>
+                            </Card>
+                        </Button>
+                        </a>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/notification-icon-template-black-bell-ring-alarm-social-media-symbol-mobile-app-ui-flat-simple-isolated-white-178124150.jpg" />
@@ -95,14 +104,16 @@ const StudentHome = () => {
             <div class="container text-center">
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
+                        <a href='/createResume'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/resume-icon-vector-job-application-cv-sign-graphic-design-logo-web-site-social-media-mobile-app-ui-illustration-resume-icon-215388315.jpg" />
                                 <Card.Body>
-                                    <Card.Title>Resume</Card.Title>
+                                    <Card.Title>Create Resume</Card.Title>
                                 </Card.Body>
                             </Card>
                         </Button>
+                        </a>
 
 
 
@@ -114,7 +125,7 @@ const StudentHome = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
-
+                        <a href='/CareerCounseling'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMHlfhHOZXZ-tH6azfOqEHBH0wpkFvhgJsqQA1EhgqU3Q7nKguziE8D2ZwBQvw9RnGoLCsrfXUv1Q&usqp=CAU&ec=48665701" />
@@ -123,6 +134,7 @@ const StudentHome = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -132,6 +144,7 @@ const StudentHome = () => {
             <div class="container text-center">
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
+                        <a href="/chat">
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://static.vecteezy.com/system/resources/previews/005/337/802/original/icon-symbol-chat-outline-illustration-free-vector.jpg" />
@@ -140,6 +153,7 @@ const StudentHome = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
+                        </a>
 
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
@@ -151,13 +165,16 @@ const StudentHome = () => {
                         </Button>
 
                         <Button bg='dark' variant="light">
-                            <Card style={{ width: '18rem' }}>
+                            <a href="/StudentProfile" style={{ textDecoration: 'none' }}>
+                            <Card style={{ width: '18rem' }} >
                                 <Card.Img variant="top" src="https://www.uww.edu/images/icit/staff/profile-square.png" />
                                 <Card.Body>
                                     <Card.Title>Profile</Card.Title>
                                 </Card.Body>
                             </Card>
+                        </a>
                         </Button>
+
 
 
 
@@ -175,4 +192,4 @@ const StudentHome = () => {
     );
 }
 
-export default StudentHome;
+export default Home;
