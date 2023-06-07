@@ -317,6 +317,12 @@ const ResumeFeedbackSchema = new mongoose.Schema({
   }
 });
 
+const ResumeTemplateSchema = new mongoose.Schema({
+  downloadUrl: {
+    type: String,
+    required: true
+  }
+});
 
 // Export the models
 module.exports = {
@@ -328,5 +334,6 @@ module.exports = {
   AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
   CompanyInterview:mongoose.model('cmpanyInterview',CompanyInterviewSchema),
   StudentInterview:mongoose.model('studentIntervew',StudentInterview),
-  Admin:mongoose.model('admin',AdminSchema)
+  Admin: mongoose.model('admin',AdminSchema),
+  Template: mongoose.model('template',ResumeTemplateSchema),
 };

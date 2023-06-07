@@ -3,7 +3,7 @@ const cors = require('cors')
 const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
-const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Admin, ResumeFeedback } = require('./models')
+const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Admin, ResumeFeedback, Template } = require('./models')
 // const {Student, Company, Posting, AppliedCandidate, Admin} = require('./models')
 const email = require('./emailservice')
 const mongoose = require('mongoose')
@@ -719,9 +719,35 @@ app.put('/api/resume/feedback/:usn', async (req, res) => {
   }
 });
 
+//get resume templates
+app.get('/api/resume-templates', async (req, res) => {
+  try {
+    const resumeTemplates = await Template.find();
+    res.json(resumeTemplates);
+  } catch (error) {
+    console.error('Error fetching resume templates:', error);
+    res.status(500).json({ error: 'Failed to fetch resume templates' });
+  }
+});
+//post resume templates
+app.post('/api/resume-templates', async (req, res) => {
+  try {
+    const {downloadUrl } = req.body;
 
+    // Create a new instance of ResumeTemplate model
+    const resumeTemplate = new Template({
+    downloadUrl
+    });
 
+    // Save the resume template to the database
+    const savedTemplate = await Template.save();
 
+    res.status(201).json(savedTemplate);
+  } catch (error) {
+    console.error('Error posting resume template:', error);
+    res.status(500).json({ error: 'Failed to post resume template' });
+  }
+});
 
 
 app.listen(1337, () => {
