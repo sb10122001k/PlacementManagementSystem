@@ -99,8 +99,8 @@ const CompanySchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
-    index: true
+    unique: true
+    
   },
   password: {
     type: String,
@@ -147,7 +147,7 @@ const CompanySchema = new mongoose.Schema({
 
 const JobPostingSchema = new mongoose.Schema({
   companyEmail: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref : 'Company'
   },
