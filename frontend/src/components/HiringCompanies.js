@@ -73,7 +73,7 @@ const HiringCompanies = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
                                 
                             </Dropdown.Menu>
                         </Dropdown>

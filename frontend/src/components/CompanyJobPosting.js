@@ -1,5 +1,5 @@
 import React, { Component ,useState} from 'react';
-import { Navbar, Container, Nav, Form, Row, Col, Button } from 'react-bootstrap'
+import { Navbar, Container, Nav, Form, Row, Col, Button,Dropdown } from 'react-bootstrap'
 import {  useNavigate } from 'react-router-dom'
 
 
@@ -86,7 +86,7 @@ const CompanyJobPosting = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
                                 
                             </Dropdown.Menu>
                         </Dropdown>

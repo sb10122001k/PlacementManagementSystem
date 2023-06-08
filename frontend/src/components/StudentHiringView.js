@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Container, Nav, Form, Button } from 'react-bootstrap';
+import { Navbar, Container, Nav, Form, Button ,Dropdown } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -93,10 +93,10 @@ const StudentHiringView = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
                                 
                             </Dropdown.Menu>
-                        </Dropdown>
+                        </Dropdown> </Button>
           </Navbar.Collapse>
         </Container>
       </Navbar>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Container, Nav, Form, Button, Card } from 'react-bootstrap';
+import { Navbar, Container, Nav, Form, Button, Card ,Dropdown} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const CareerCounselling = () => {
@@ -39,7 +39,7 @@ const CareerCounselling = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
                                 
                             </Dropdown.Menu>
                         </Dropdown>

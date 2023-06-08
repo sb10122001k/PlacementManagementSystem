@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Container, Nav, Form, Button } from 'react-bootstrap'
+import { Navbar, Container, Nav, Form, Button ,Dropdown} from 'react-bootstrap'
 
 const StructuralEngineer = () => {
     return (
@@ -39,12 +39,12 @@ const StructuralEngineer = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
                                 
                             </Dropdown.Menu>
                         </Dropdown>
 
-
+                        </Button>
 
                     </Navbar.Collapse>
                 </Container>

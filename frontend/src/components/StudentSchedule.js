@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Container, Nav, Form, Button, Card } from 'react-bootstrap'
+import { Navbar, Container, Nav, Form, Button, Card ,Dropdown} from 'react-bootstrap'
 
 const StudentSchedule = () => {
     return (
@@ -38,7 +38,7 @@ const StudentSchedule = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
                                 
                             </Dropdown.Menu>
                         </Dropdown>

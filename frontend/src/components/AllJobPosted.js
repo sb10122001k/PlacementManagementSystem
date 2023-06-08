@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav, Form, Button, Card } from 'react-bootstrap';
+import { Navbar, Container, Nav, Form, Button, Card,Dropdown } from 'react-bootstrap';
 import {useNavigate, Link } from 'react-router-dom';
 import React, { useState ,useEffect} from 'react';
 
@@ -76,7 +76,7 @@ const AllJobPosted = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
                                 
                             </Dropdown.Menu>
                         </Dropdown>
