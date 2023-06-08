@@ -31,10 +31,17 @@ const ComputerHardwareEngineer = () => {
                                 <Button variant="outline-light">Search</Button>
                             </Form>
                         </div>
-                        <Button variant="outline-dark">
+                        <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
-                        </Button>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
 
 
 
@@ -47,7 +54,7 @@ const ComputerHardwareEngineer = () => {
                 <h1 class="container text-center">Computer Hardware Engineer</h1>
 
                 <br></br>
-                <h5 class="container text-justify">
+                <h5 class="container text-justify" align="justify">
                     Computer hardware engineering is undoubtedly a brilliant career choice. With the rise of artificial intelligence systems,
                     cellular devices and high-tech computers, tablets and laptops, the demand for these professionals is going to multiply over time.
                     Computer hardware engineers create computer systems and their components, including processors, hard drives, networks and circuit boards. They work on every aspect of hardware creation, including research, design, development, testing and production.
