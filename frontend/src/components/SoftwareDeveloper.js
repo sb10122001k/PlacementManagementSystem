@@ -31,10 +31,17 @@ const SoftwareDeveloper = () => {
                                 <Button variant="outline-light">Search</Button>
                             </Form>
                         </div>
-                        <Button variant="outline-dark">
+                        <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
-                        </Button>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
 
 
 
@@ -47,7 +54,7 @@ const SoftwareDeveloper = () => {
                 <h1 class="container text-center">Software Developer</h1>
 
                 <br></br>
-                <h5 class="container text-justify">
+                <h5 class="container text-justify" align="justify">
                     Software engineering involves the development of computer system software and application software. Software Engineers analyze the user's requirements
                     specific to the software and create software that meets those requirements with the help of programming languages and
                     other software. The field of software engineering is growing at a swift pace. There are new technologies such as
