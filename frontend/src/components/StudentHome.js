@@ -15,9 +15,9 @@ const Home = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="Home">Home</Nav.Link>
+                            <Nav.Link href="/StudentHome">Home</Nav.Link>
                             <Nav.Link href="/StudentSchedule">Schedule</Nav.Link>
-                            <Nav.Link href="Resume">Resume</Nav.Link>
+                            <Nav.Link href="/Resume">Resume</Nav.Link>
                         </Nav>
 
 
@@ -40,7 +40,7 @@ const Home = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
                                 
                             </Dropdown.Menu>
                         </Dropdown>

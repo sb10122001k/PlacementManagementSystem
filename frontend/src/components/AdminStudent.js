@@ -1,9 +1,30 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Navbar, Container, Nav, Form, Row, Col, Button, Figure, Card, Table ,Dropdown} from 'react-bootstrap'
 
 
 
 const AdminStudent = () => {
+    const [postingData, setPostingData] = useState()
+
+    useEffect(() => {
+        console.log(localStorage.getItem('userid'))
+        fetch('http://localhost:1337/api/getallstudent')
+            .then((response) => {
+                const reader = response.body.getReader();
+                console.log(reader)
+                reader.read().then(({ done, value }) => {
+                    if (done) {
+                        console.log('end...')
+                        return;
+                    }
+                    const decoder = new TextDecoder();
+                    const strData = decoder.decode(value)
+                    const data = JSON.parse(strData)
+                    console.log(data)
+                    setPostingData(data)
+                });
+            })
+    }, [])
     return (
         <div>
 
@@ -63,60 +84,22 @@ const AdminStudent = () => {
                             <th>Student Name</th>
                             <th> USN</th>
                             <th>Branch</th>
-                            <th>Year of Graduation</th>
+                            <th>Semester</th>
                             <th>Know More</th>
 
                         </tr>
                     </thead>
                     <tbody>
+                    {postingData?.map((posting) =>
                         <tr>
-                            <td>Priya lakshmi</td>
-                            <td>1cd20cs007</td>
-                            <td>CSE</td>
-                            <td>2024</td>
+                            <td>{posting.firstName} {posting.lastName}</td>
+                            <td>{posting.usn}</td>
+                            <td>{posting.specialization}</td>
+                            <td>{posting.currentSemester}</td>
                             <td>      <Button variant="dark">Resume</Button>{' '}</td>
 
                         </tr>
-                        <tr>
-                            <td>Laya Sharma</td>
-                            <td>1cd20cs207</td>
-                            <td>CSE</td>
-                            <td>2024</td>
-                            <td>      <Button variant="dark">Resume</Button>{' '}</td>
-
-                        </tr>
-                        <tr>
-                            <td>Manikanta P</td>
-                            <td>1cd20cs109</td>
-                            <td>CSE</td>
-                            <td>2024</td>
-                            <td>      <Button variant="dark">Resume</Button>{' '}</td>
-
-                        </tr>
-                        <tr>
-                            <td>Vinay raj</td>
-                            <td>1cd20cs107</td>
-                            <td>CSE</td>
-                            <td>2024</td>
-                            <td>      <Button variant="dark">Resume</Button>{' '}</td>
-
-                        </tr>
-                        <tr>
-                            <td>Latitha V</td>
-                            <td>1cd20cs047</td>
-                            <td>CSE</td>
-                            <td>2024</td>
-                            <td>      <Button variant="dark">Resume</Button>{' '}</td>
-
-                        </tr>
-                        <tr>
-                            <td>Priyansh Sharma</td>
-                            <td>1cd20cs147</td>
-                            <td>CSE</td>
-                            <td>2024</td>
-                            <td>      <Button variant="dark">Resume</Button>{' '}</td>
-
-                        </tr>
+                    )}
                     </tbody>
                 </Table>
             </div>

@@ -48,14 +48,18 @@ import AdminStudentView from './components/AdminStudentView'
 import AdminStudentApplied from './components/AdminStudentsApplied'
 import AdminStudent from './components/AdminStudent'
 import AdminJobDetails from './components/AdminJobDetails'
+import Resume from './components/Resume'
+import ResumeDetail from'./components/ResumeDetail'
 
 function App() {
   return (
     <div>
       <Router>
         <Routes>
+          <Route path='/ResumeCreate' element={<ResumeDetail />} />
           <Route path='/createResume' element={<Createresume />} />
           <Route path='/' element={<Home />} />
+          <Route path='/Resume' element={<Resume />} />
           <Route path='/admin/companies' element={<AdminCompany />} />
           <Route path='/admin/jobPosting' element={<AdminJobPosting />} />
           <Route path='/admin/students' element={<AdminStudent />} />

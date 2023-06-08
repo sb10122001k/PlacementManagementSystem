@@ -131,6 +131,11 @@ app.get('/api/getResume/:usn', async (req, res) => {
     res.status(500).send('An error occurred while fetching the file');
   }
 });
+app.post('/api/createresume/:usn',async(req,res)=>{
+  console.log(req.body)
+  console.log(req.params)
+  res.status(200)
+})
 
 app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
   console.log("hi")
@@ -203,6 +208,54 @@ app.get('/api/getJobPosted/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve job postings.' });
   }
 })
+app.get('/api/getallcompany',async(req,res)=>{
+  Company.find()
+  .then((result) => {
+    res.send(result);
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  })
+})
+app.get('/api/getallstudent',async(req,res)=>{
+  Student.find()
+  .then((result) => {
+    res.send(result);
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  })
+})
+
+
+
+// Get applied candidates with student, job, and company details
+app.get('/api/appliedcandidatesadmin', async (req, res) => {
+  console.log("HI")
+  try {
+    const appliedCandidates = await AppliedCandidate.find()
+      .populate('usn', 'firstName lastName email')
+      .populate('jobid', 'jobRole')
+      .populate('jobid.companyEmail', 'companyName');
+      console.log(appliedCandidates)
+      
+    const formattedCandidates = appliedCandidates.map((candidate) => ({
+      studentName: candidate.usn.firstName + ' ' + candidate.usn.lastName,
+      studentEmail: candidate.usn.email,
+      usn: candidate.usn.usn,
+      branch: candidate.usn.branch,
+      jobRole: candidate.jobid.jobRole,
+      companyName: candidate.jobid.companyEmail.companyName,
+      jobId: candidate.jobid._id
+    }));
+    
+    res.json(formattedCandidates);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
 
 app.get('/api/getposting', async (req, res) => {
   try {
@@ -224,81 +277,14 @@ app.get('/api/getadminposting', async (req, res) => {
 })
 
 app.post('/api/studentRegister', async (req, res) => {
-  console.log(req.body)
-
-  const {
-    firstName,
-    lastName,
-    usn,
-    email,
-    password,
-    skills,
-    dateOfBirth,
-    currentSemester,
-    country,
-    state,
-    city,
-    zip,
-    contactNumber,
-    address,
-    careerObjective,
-    degreeCollege,
-    branch,
-    specialization,
-    collegeAddress,
-    score,
-    courseDuration,
-    keySkills,
-    careerPreferences,
-    image
-  } = req.body;
-
   try {
-
-    const existingStudent = await Student.findOne({ usn });
-
-    if (existingStudent) {
-      return res.status(400).json({ error: 'Student already exists' });
-    }
-
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-
-    const newStudent = new Student({
-      firstName,
-      lastName,
-      usn,
-      email,
-      password: hashedPassword,
-      skills,
-      dateOfBirth,
-      currentSemester,
-      country,
-      state,
-      city,
-      zip,
-      contactNumber,
-      address,
-      careerObjective,
-      degreeCollege,
-      branch,
-      specialization,
-      collegeAddress,
-      score,
-      courseDuration,
-      keySkills,
-      careerPreferences,
-      image
-    });
-
-
-    const savedStudent = await newStudent.save();
-
-    res.status(201).json(savedStudent);
+    const studentData = req.body;
+    const student = new Student(studentData);
+    await student.save();
+    res.status(201).json({ message: 'ok' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to register student' });
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -315,9 +301,9 @@ app.post('/api/studentLogin', async (req, res) => {
     }
 
 
-    const isPasswordValid = await bcrypt.compare(password, student.password);
+    // const isPasswordValid = await compare(password, student.password);
 
-    if (!isPasswordValid) {
+    if (password!=student.password) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 

@@ -1,8 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component ,useState, useEffect} from 'react';
 import { Navbar, Container, Nav, Form, Row, Col, Button, Figure, Card, Table,Dropdown } from 'react-bootstrap'
 
 
 const AdminStudentsApplied = () => {
+    const [postingData, setPostingData] = useState()
+
+    useEffect(() => {
+        console.log(localStorage.getItem('userid'))
+        fetch('http://localhost:1337/api/appliedcandidatesadmin')
+            .then((response) => {
+                const reader = response.body.getReader();
+                console.log(reader)
+                reader.read().then(({ done, value }) => {
+                    if (done) {
+                        console.log('end...')
+                        return;
+                    }
+                    const decoder = new TextDecoder();
+                    const strData = decoder.decode(value)
+                    const data = JSON.parse(strData)
+                    console.log(data)
+                    setPostingData(data)
+                });
+            })
+    }, [])
     return (  
 
 
@@ -149,65 +170,15 @@ const AdminStudentsApplied = () => {
                                 <th>Email</th>
                                 <th>USN</th>
                                 <th>Branch</th>
-                                <th>Date</th>
-                                <th>Time</th>
+                                <th>JobRole</th>
+
                                 <th>Resume</th>
                                 <th>Delete</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Swetha Krishna</td>
-                                <td type="email">swetha.20cs048@cambridge.edu.in</td>
-                                <td>1cd20cs048</td>
-                                <td>CSE</td>
-                                <td>27/05/23</td>
-                                <td>2:00-2:20 PM</td>
-                                <td><a href="">Resume</a></td>
-                                <td><Button variant="danger">Delete</Button>{' '}</td>
-                            </tr>
-                            <tr>
-                                <td>Sushmitha B</td>
-                                <td type="email">sushmitha.20cs118@cambridge.edu.in</td>
-                                <td>1cd20cs118</td>
-                                <td>CSE</td>
-                                <td>27/05/23</td>
-                                <td>11:00-11:20 PM</td>
-                                <td><a href="">Resume</a></td>
-                                <td><Button variant="danger">Delete</Button>{' '}</td>
-                            </tr>
-                            <tr>
-                                <td> fahaad</td>
-                                <td type="email">fahaad.20cs148@cambridge.edu.in</td>
-                                <td>1cd20cs148</td>
-                                <td>CSE</td>
-                                <td>27/05/23</td>
-                                <td>9:00-9:20 PM</td>
-                                <td><a href="">Resume</a></td>
-                                <td><Button variant="danger">Delete</Button>{' '}</td>
-                            </tr>
-                            <tr>
-                                <td>G Mahesh</td>
-                                <td type="email">mahesh.20cs068@cambridge.edu.in</td>
-                                <td>1cd20cs068</td>
-                                <td>CSE</td>
-                                <td>29/05/23</td>
-                                <td>8:00-8:20 PM</td>
-                                <td><a href="">Resume</a></td>
-                                <td><Button variant="danger">Delete</Button>{' '}</td>
-                            </tr>
-                            <tr>
-                                <td> Veena N</td>
-                                <td type="email">veena.20cs006@cambridge.edu.in</td>
-                                <td>1cd20cs006</td>
-                                <td>CSE</td>
-                                <td>29/05/23</td>
-                                <td>2:00-2:20 PM</td>
-                                <td><a href="">Resume</a></td>
-                                <td><Button variant="danger">Delete</Button>{' '}</td>
-                            </tr>
-                            <tr>
+                           <tr>
                                 <td>Priya</td>
                                 <td type="email">priya.20cs008@cambridge.edu.in</td>
                                 <td>1cd20cs008</td>

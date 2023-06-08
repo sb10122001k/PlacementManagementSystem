@@ -1,10 +1,31 @@
-import React, { Component } from 'react';
+import React, { Component,useState,useEffect } from 'react';
 import { Navbar, Container, Nav, Form, Row, Col, Button, Figure, Card, Table, Dropdown } from 'react-bootstrap';
 
 
 
 
 const  AdminCompany = () => {
+    const [postingData, setPostingData] = useState()
+
+    useEffect(() => {
+        console.log(localStorage.getItem('userid'))
+        fetch('http://localhost:1337/api/getallcompany')
+            .then((response) => {
+                const reader = response.body.getReader();
+                console.log(reader)
+                reader.read().then(({ done, value }) => {
+                    if (done) {
+                        console.log('end...')
+                        return;
+                    }
+                    const decoder = new TextDecoder();
+                    const strData = decoder.decode(value)
+                    const data = JSON.parse(strData)
+                    console.log(data)
+                    setPostingData(data)
+                });
+            })
+    }, [])
     return (  
             <div>
 
@@ -69,42 +90,14 @@ const  AdminCompany = () => {
                             </tr>
                         </thead>
                         <tbody>
+                        {postingData?.map((posting) =>
                             <tr>
-                                <td>Google</td>
-                                <td><a href="">Website Link</a></td>
-                                <td type="email">google@gmail.com</td>
+                                <td>{posting.name}</td>
+                                <td><a href={`http://${posting.website}`} target="_blank" rel="noopener noreferrer">{posting.website}</a></td>
+                                <td type="email">{posting.email}</td>
                                 <td>      <Button variant="dark">View</Button>{' '}</td>
                             </tr>
-                            <tr>
-                                <td>Synthesis</td>
-                                <td><a href="">Website Link</a></td>
-                                <td type="email">synthesis@gmail.com</td>
-                                <td>      <Button variant="dark">View</Button>{' '}</td>
-                            </tr>
-                            <tr>
-                                <td>Hitachi</td>
-                                <td><a href="">Website Link</a></td>
-                                <td type="email">hitachi@gmail.com</td>
-                                <td>      <Button variant="dark">View</Button>{' '}</td>
-                            </tr>
-                            <tr>
-                                <td>Amazon</td>
-                                <td><a href="">Website Link</a></td>
-                                <td type="email">amazon@gmail.com</td>
-                                <td>      <Button variant="dark">View</Button>{' '}</td>
-                            </tr>
-                            <tr>
-                                <td>Hitachi</td>
-                                <td><a href="">Website Link</a></td>
-                                <td type="email">hitachi@gmail.com</td>
-                                <td>      <Button variant="dark">View</Button>{' '}</td>
-                            </tr>
-                            <tr>
-                                <td>FedEx</td>
-                                <td><a href="">Website Link</a></td>
-                                <td type="email">fedex@gmail.com</td>
-                                <td>      <Button variant="dark">View</Button>{' '}</td>
-                            </tr>
+                        )}   
                         </tbody>
                     </Table>
                 </div>

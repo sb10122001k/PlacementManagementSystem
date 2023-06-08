@@ -2,91 +2,41 @@ const mongoose = require('mongoose');
 
 
 const StudentSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true
-  },
-  lastName: {
-    type: String,
-    required: true
-  },
-  usn: {
-    type: String,
-    required: true,
-    unique: true,
-    index: true
-  },
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  skills: [
-    {
-      type: String
-    }
-  ],
-  dateOfBirth: {
-    type: String
-  },
-  currentSemester: {
-    type: String
-  },
-  country: {
-    type: String
-  },
-  state: {
-    type: String
-  },
-  city: {
-    type: String
-  },
-  zip: {
-    type: String
-  },
-  contactNumber: {
-    type: String
-  },
-  address: {
-    type: String
-  },
-  careerObjective: {
-    type: String
-  },
-  degreeCollege: {
-    type: String
-  },
-  branch: {
-    type: String
-  },
-  specialization: {
-    type: String
-  },
-  collegeAddress: {
-    type: String
-  },
-  score: {
-    type: String
-  },
-  courseDuration: {
-    type: String
-  },
-  keySkills: [
-    {
-      type: String
-    }
-  ],
-  careerPreferences: [
-    {
-      type: String
-    }
-  ],
-  image: {
-    type: String
-  }
+  firstName: { type: String, required: true },
+  lastName: { type: String },
+  usn: { type: String, required: true,unique: true, },
+  currentSemester: { type: Number, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  dateOfBirth: { type: String },
+  country: { type: String },
+  state: { type: String },
+  city: { type: String },
+  zip: { type: String },
+  contactNumber: { type: String },
+  address: { type: String },
+  careerObjective: { type: String },
+  schoolName1: { type: String },
+  education1: { type: String },
+  course1: { type: String },
+  address1: { type: String },
+  score1: { type: String },
+  yearOfCompletion1: { type: String },
+  schoolName2: { type: String },
+  education2: { type: String },
+  course2: { type: String },
+  address2: { type: String },
+  score2: { type: String },
+  yearOfCompletion2: { type: String },
+  collegeName: { type: String },
+  education3: { type: String },
+  course3: { type: String },
+  specialization: { type: String },
+  address3: { type: String },
+  score3: { type: String },
+  courseDuration: { type: String },
+  keySkills: { type: String },
+  careerPreferences: { type: String },
 });
 
 
