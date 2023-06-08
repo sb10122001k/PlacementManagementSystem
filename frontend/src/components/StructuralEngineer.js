@@ -32,9 +32,17 @@ const StructuralEngineer = () => {
                             </Form>
                         </div>
                         <Button variant="outline-dark">
+                         <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
-                        </Button>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
 
 
 
@@ -47,7 +55,7 @@ const StructuralEngineer = () => {
                 <h1 class="container text-center">Structural Engineer</h1>
 
                 <br></br>
-                <h5 class="container text-justify">
+                <h5 class="container text-justify" align="justify">
                     Structural engineering is one of the most important engineering disciplines because it deals with designing, constructing, and maintaining systems that support human life. The future of structural engineering is very bright, and there are many opportunities for career growth in this field. Here are a few tips to help you prepare for a career in structural engineering:
                     <br></br>
                     <br></br>
