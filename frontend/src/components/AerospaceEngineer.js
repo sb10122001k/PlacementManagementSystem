@@ -47,7 +47,7 @@ const AerospaceEngineer = () => {
                 <h1 class="container text-center">Aerospace Engineer</h1>
 
                 <br></br>
-                <h5 class="container text-justify">
+                <h5 class="container text-justify" align="justify">
                     India is still in its infancy when it comes to aerospace engineering, despite the recent rise in the popularity of AI and ML. However, flight technology is being used more and more by industries to boost productivity, efficiency, and cost. India is experiencing accelerated expansion in the aerospace engineering sector.
                     <br></br>
                     <br></br>

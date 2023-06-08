@@ -148,7 +148,7 @@ const CompanySchema = new mongoose.Schema({
 const JobPostingSchema = new mongoose.Schema({
   companyEmail: {
     type: String,
-    required: true,
+    
     ref : 'Company'
   },
   jobRole: {
@@ -177,7 +177,7 @@ const JobPostingSchema = new mongoose.Schema({
   },
   Experience: {
     type: String,
-    required: true
+    
   },
   
   JobLocation: {
@@ -204,6 +204,11 @@ const JobPostingSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+  Status:{
+    type: String,
+    enum: ['pending', 'accepted'],
+    default: 'pending'
+  }
   
 
 });

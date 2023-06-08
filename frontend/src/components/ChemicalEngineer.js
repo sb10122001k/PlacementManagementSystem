@@ -47,7 +47,7 @@ const ChemicalEngineer = () => {
                 <h1 class="container text-center">Chemical Engineer</h1>
 
                 <br></br>
-                <h5 class="container text-justify">
+                <h5 class="container text-justify" align="justify">
                     Chemical Engineering job opportunities are numerous. Some of those job opportunities are mentioned below.
                     <br></br>
                     <br></br>

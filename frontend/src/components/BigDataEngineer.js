@@ -47,7 +47,7 @@ const BigDataEngineer = () => {
                 <h1 class="container text-center">Big Data Engineer</h1>
 
                 <br></br>
-                <h5 class="container text-justify">
+                <h5 class="container text-justify" align="justify">
                     The job profile of a Big Data Engineer is one of the most demanding roles nowadays. Their value is so high for any company across all sectors and also they get high salaries for offering their skills and talent.
                     <br></br>
                     <br></br>

@@ -47,7 +47,7 @@ const SoftwareDeveloper = () => {
                 <h1 class="container text-center">Software Developer</h1>
 
                 <br></br>
-                <h5 class="container text-justify">
+                <h5 class="container text-justify" align="justify">
                     Software engineering involves the development of computer system software and application software. Software Engineers analyze the user's requirements
                     specific to the software and create software that meets those requirements with the help of programming languages and
                     other software. The field of software engineering is growing at a swift pace. There are new technologies such as

@@ -47,7 +47,7 @@ const SystemEngineer = () => {
                 <h1 class="container text-center">System Engineer</h1>
 
                 <br></br>
-                <h5 class="container text-justify">The system engineer is a highly demanded profession in industries as well as in government. They are an essential resource for the technical development and maintenance of complex systems. Some of the top recruiters who actively hire System Engineers are as follows:
+                <h5 class="container text-justify" align="justify">The system engineer is a highly demanded profession in industries as well as in government. They are an essential resource for the technical development and maintenance of complex systems. Some of the top recruiters who actively hire System Engineers are as follows:
                     <br></br>
                     <br></br>
 

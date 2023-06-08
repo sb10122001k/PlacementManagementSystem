@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Row, Col, Button, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const AdminLogIn = () => {
+  const navigate=useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,6 +28,7 @@ const AdminLogIn = () => {
       // Handle the response from the server
       if (response.ok) {
         // Successful login, do something
+        navigate('/admin/home')
         console.log('Login successful');
       } else {
         // Login failed, handle the error

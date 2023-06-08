@@ -40,6 +40,14 @@ import CHEngineer from './components/ComputerHardwareEngineer'
 import StructuralEngineer from './components/StructuralEngineer'
 import StudentAnalyticsandRepo from './components/StudentAnalyticsandRepo';
 import StudentsAcademics from './components/StudentsAcademics';
+import AdminHome from './components/AdminHome';
+import AdminCompany from './components/AdminCompany'
+import AdminJobPosting from './components/AdminJobPosting'
+import AdminPlacedStudent from './components/AdminPlacedStudent'
+import AdminStudentView from './components/AdminStudentView'
+import AdminStudentApplied from './components/AdminStudentsApplied'
+import AdminStudent from './components/AdminStudent'
+import AdminJobDetails from './components/AdminJobDetails'
 
 function App() {
   return (
@@ -48,8 +56,15 @@ function App() {
         <Routes>
           <Route path='/createResume' element={<Createresume />} />
           <Route path='/' element={<Home />} />
+          <Route path='/admin/companies' element={<AdminCompany />} />
+          <Route path='/admin/jobPosting' element={<AdminJobPosting />} />
+          <Route path='/admin/students' element={<AdminStudent />} />
+          <Route path='/admin/studentapplied' element={<AdminStudentApplied />} />
+          <Route path='/admin/placedStudent' element={<AdminPlacedStudent />} />
+          <Route path='/admin/jobDetails' element={<AdminJobDetails  />} />
           <Route path='/CareerCounseling' element={<CareerCounselling />} />
           <Route path='/Home' element={<Home />} />
+          <Route path='/admin/home' element={<AdminHome />} />
           <Route path='/StudentHome' element={<StudentHome />} />
           <Route path='/StudentLogIn' element={<StudentLogIn />} />
           <Route path='/CompanyLogIn' element={<CompanyLogin />} />

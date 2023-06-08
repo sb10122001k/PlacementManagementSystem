@@ -1,7 +1,39 @@
-import React, { Component } from 'react';
+import React, { Component ,useState,useEffect} from 'react';
 import { Navbar, Container, Nav, Form, Button, Card, Figure, Dropdown } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 
 const AdminJobPosting = () => {
+    const [postingData, setPostingData] = useState()
+
+    const navigate = useNavigate();
+
+
+    const handleClick = (e,posting) => {
+        e.preventDefault()
+        // console.log(posting)
+        navigate('/admin/jobDetails', { state: { postingData: posting } });
+    }
+
+    useEffect(() => {
+        console.log(localStorage.getItem('userid'))
+        fetch('http://localhost:1337/api/getadminposting')
+            .then((response) => {
+                const reader = response.body.getReader();
+                console.log(reader)
+                reader.read().then(({ done, value }) => {
+                    if (done) {
+                        console.log('end...')
+                        return;
+                    }
+                    const decoder = new TextDecoder();
+                    const strData = decoder.decode(value)
+                    const data = JSON.parse(strData)
+                    console.log(data)
+                    setPostingData(data)
+                });
+            })
+    }, [])
+
     return (  
             <div>
                <Navbar bg="dark" variant='dark' expand="lg">
@@ -49,123 +81,34 @@ const AdminJobPosting = () => {
                 <br></br>
                     <div class="row justify-content-start">
                         <div className="d-flex justify-content-around">
+                        {postingData?.map((posting) =>
                             <Card border="dark" style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/microsoft-logo.png" />
                                 <Card.Body>
-                                    <Card.Title>Microsoft</Card.Title>
+                                    <Card.Title>{posting.Name}</Card.Title>
                                     <Card.Text>
-                                        Job Role: Software Developer
+                                        Job Role: {posting.jobRole}
                                         <br></br>
-                                        CTC: 6 LPA
+                                        CTC: {posting.Package}
                                         <br></br>
-                                        Specialization: CSE,ISE,ECE,EEE
+                                        Specialization: {posting.Specialization}
                                         <br></br>
-                                        Last Date: 14/02/2023
+                                        Last Date: {posting.LastDate}
                                         <br></br>
                                     </Card.Text>
-                                    <Button variant="dark">View</Button>
+                                    {/* <a href='/admin/jobDetails'> */}
+                                    <Button variant="dark" onClick={(e) => handleClick(e,posting)} >View</Button>
+                                    {/* </a> */}
                                 </Card.Body>
                             </Card>
 
-                            <Card border="dark" style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/google-logo.png" />
-                                <Card.Body>
-                                    <Card.Title>Google</Card.Title>
-                                    <Card.Text>
-                                        Job Role: Software Developer
-                                        <br></br>
-                                        CTC: 10 LPA
-                                        <br></br>
-                                        Specialization: CSE,ISE,ECE,EEE
-                                        <br></br>
-                                        Last Date: 25/03/2023
-                                        <br></br>
-                                    </Card.Text>
-                                    <Button variant="dark">View</Button>
-                                </Card.Body>
-                            </Card>
-
-                            <Card border="dark" style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="https://www.pngmart.com/files/Amazon-Logo-PNG-Free-Download.png" height="280" />
-                                <Card.Body>
-                                    <Card.Title> Amazon </Card.Title>
-                                    <Card.Text>
-                                        Job Role: Software Developer
-                                        <br></br>
-                                        CTC: 16 LPA
-                                        <br></br>
-                                        Specialization: CSE,ISE,ECE,EEE
-                                        <br></br>
-                                        Last Date: 04/03/2023
-                                        <br></br>
-                                    </Card.Text>
-                                    <Button variant="dark">View</Button>
-                                </Card.Body>
-                            </Card>
+)}
                         </div>
                     </div>
                 </div>
                 <br></br>
                 <br></br>
-                <div class="container ">
-                    <div class="row justify-content-start">
-                        <div className="d-flex justify-content-around">
-                            <Card border="dark" style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="https://www.ideaz.si/wp-content/uploads//fedex-logotip-576x360.jpg" height="280" />
-                                <Card.Body>
-                                    <Card.Title>FedEx</Card.Title>
-                                    <Card.Text>
-                                        Job Role: Software Developer
-                                        <br></br>
-                                        CTC: 8 LPA
-                                        <br></br>
-                                        Specialization: CSE,ISE,ECE,EEE
-                                        <br></br>
-                                        Last Date: 21/02/2023
-                                        <br></br>
-                                    </Card.Text>
-                                    <Button variant="dark">View</Button>
-                                </Card.Body>
-                            </Card>
-
-                            <Card border="dark" style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="https://media.licdn.com/dms/image/C510BAQFDEH8-9Iq7cg/company-logo_200_200/0/1545386571486?e=1687392000&v=beta&t=gf0yJZVdIUsjVno9ixbegCfFVbQtigypqxfQ1ZarPdk" height="280" />
-                                <Card.Body>
-                                    <Card.Title>Synthesis</Card.Title>
-                                    <Card.Text>
-                                        Job Role: Software Developer
-                                        <br></br>
-                                        CTC: 9 LPA
-                                        <br></br>
-                                        Specialization: CSE,ISE,ECE,EEE
-                                        <br></br>
-                                        Last Date: 10/05/2023
-                                        <br></br>
-                                    </Card.Text>
-                                    <Button variant="dark">View</Button>
-                                </Card.Body>
-                            </Card>
-
-                            <Card border="dark" style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="https://1000logos.net/wp-content/uploads/2017/12/Hitachi-Logo.png" height="280" />
-                                <Card.Body>
-                                    <Card.Title>Hitachi</Card.Title>
-                                    <Card.Text>
-                                        Job Role: Software Developer
-                                        <br></br>
-                                        CTC: 5 LPA
-                                        <br></br>
-                                        Specialization: CSE,ISE,ECE,EEE
-                                        <br></br>
-                                        Last Date: 14/05/2023
-                                        <br></br>
-                                    </Card.Text>
-                                    <Button variant="dark">View</Button>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    </div>
-                </div>
+               
                 <br></br>
                 <br></br>
                 <br></br>

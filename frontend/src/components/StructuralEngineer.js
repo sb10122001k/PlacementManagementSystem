@@ -47,7 +47,7 @@ const StructuralEngineer = () => {
                 <h1 class="container text-center">Structural Engineer</h1>
 
                 <br></br>
-                <h5 class="container text-justify">
+                <h5 class="container text-justify" align="justify">
                     Structural engineering is one of the most important engineering disciplines because it deals with designing, constructing, and maintaining systems that support human life. The future of structural engineering is very bright, and there are many opportunities for career growth in this field. Here are a few tips to help you prepare for a career in structural engineering:
                     <br></br>
                     <br></br>

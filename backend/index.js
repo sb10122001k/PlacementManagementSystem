@@ -29,15 +29,15 @@ app.get('/api/studentProfile', async (req, res) => {
 
 })
 
-app.post('/api/finalScheduleSelection',async(req,res)=>{
+app.post('/api/finalScheduleSelection', async (req, res) => {
   console.log(req.body)
 
   const studentInterview = new StudentInterview({
     usn: req.body.usn,
-    meetingLink:  req.body.meetingLink,
-    companyEmail:  req.body.companyEmail,
-    date:  req.body.slot.date,
-    time:  req.body.slot.time
+    meetingLink: req.body.meetingLink,
+    companyEmail: req.body.companyEmail,
+    date: req.body.slot.date,
+    time: req.body.slot.time
   });
   studentInterview.save()
     .then(() => {
@@ -50,8 +50,8 @@ app.post('/api/finalScheduleSelection',async(req,res)=>{
 })
 
 app.get('/api/sechdule/:usn', (req, res) => {
-  
-  StudentInterview.find({usn:req.params.usn})
+
+  StudentInterview.find({ usn: req.params.usn })
     .then(interviews => res.json(interviews))
     .catch(error => {
       console.error('Error fetching interview data', error);
@@ -60,8 +60,8 @@ app.get('/api/sechdule/:usn', (req, res) => {
 });
 
 app.get('/api/companySechdule/:companyEmail', (req, res) => {
-  
-  StudentInterview.find({companyEmail:req.params.companyEmail})
+
+  StudentInterview.find({ companyEmail: req.params.companyEmail })
     .then(interviews => res.json(interviews))
     .catch(error => {
       console.error('Error fetching interview data', error);
@@ -70,8 +70,8 @@ app.get('/api/companySechdule/:companyEmail', (req, res) => {
 });
 
 app.get('/api/companysechdule/:email', (req, res) => {
-  
-  StudentInterview.find({usn:usn})
+
+  StudentInterview.find({ usn: usn })
     .then(interviews => res.json(interviews))
     .catch(error => {
       console.error('Error fetching interview data', error);
@@ -105,12 +105,12 @@ app.post('/api/scheduleInterviewCompany', (req, res) => {
       res.status(500).json({ error: 'Failed to schedule interview' });
     });
 });
-  
+
 
 
 app.get('/api/getResume/:usn', async (req, res) => {
   try {
-    const usnPdf = await Resume.findOne({ usn:req.params.usn });
+    const usnPdf = await Resume.findOne({ usn: req.params.usn });
 
     if (!usnPdf || !usnPdf.resume.data) {
 
@@ -205,14 +205,22 @@ app.get('/api/getJobPosted/:id', async (req, res) => {
 })
 
 app.get('/api/getposting', async (req, res) => {
-  console.log(req)
+  try {
+    const acceptedJobs = await Posting.find({ Status: 'accepted' });
+    res.send(acceptedJobs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+})
+app.get('/api/getadminposting', async (req, res) => {
   Posting.find()
-    .then((result) => {
-      res.send(result);
-    }).catch((err) => {
-      console.log(err);
-      res.status(500).send('Internal Server Error');
-    })
+  .then((result) => {
+    res.send(result);
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  })
 })
 
 app.post('/api/studentRegister', async (req, res) => {
@@ -246,17 +254,17 @@ app.post('/api/studentRegister', async (req, res) => {
   } = req.body;
 
   try {
-    
+
     const existingStudent = await Student.findOne({ usn });
 
     if (existingStudent) {
       return res.status(400).json({ error: 'Student already exists' });
     }
 
-   
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    
+
     const newStudent = new Student({
       firstName,
       lastName,
@@ -284,7 +292,7 @@ app.post('/api/studentRegister', async (req, res) => {
       image
     });
 
-    
+
     const savedStudent = await newStudent.save();
 
     res.status(201).json(savedStudent);
@@ -299,24 +307,24 @@ app.post('/api/studentLogin', async (req, res) => {
   const { usn, password } = req.body;
 
   try {
-    
+
     const student = await Student.findOne({ usn });
 
     if (!student) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    
+
     const isPasswordValid = await bcrypt.compare(password, student.password);
 
     if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
- 
+
     // const token = jwt.sign({ usn: student.usn }, 'secretKey'); // Replace 'secretKey' with your own secret key
 
-    res.json({ "token":req.body.usn ,"status":"ok","usn":req.body.usn});
+    res.json({ "token": req.body.usn, "status": "ok", "usn": req.body.usn });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to log in' });
@@ -389,13 +397,13 @@ app.post('/api/registerCompany', async (req, res) => {
   // res.status(206).send("ok")
 })
 
-app.get('/api/inveriewSlotAvailability/:usn',async(req,res)=>{
+app.get('/api/inveriewSlotAvailability/:usn', async (req, res) => {
   console.log(req.params.usn)
-  usn =req.params.usn;
+  usn = req.params.usn;
   console.log(usn)
 
   // Find the interview data in the MongoDB collection by USN
-  CompanyInterview.find({ usn:usn })
+  CompanyInterview.find({ usn: usn })
     .then((interview) => {
       console.log("Hi1")
       if (!interview) {
@@ -598,34 +606,61 @@ app.post('/interviews', async (req, res) => {
 });
 
 app.put('/api/companyUpdate', async (req, res) => {
-    const {name, email, password, address, website, contact} = req.body;
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
-    try {
-      const updatedCompany = await Company.findOneAndUpdate(
-        { email },
-        {name, hashedPassword, address, website, contact},
-        { new: true }
-      );
-  
-      if (!updatedCompany) {
-        return res.status(404).json({ message: 'Company not found' });
-      }
-  
-      
-      await updatedCompany.save();
-  
-      res.json(updatedCompany);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+  const { name, email, password, address, website, contact } = req.body;
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt)
+  try {
+    const updatedCompany = await Company.findOneAndUpdate(
+      { email },
+      { name, hashedPassword, address, website, contact },
+      { new: true }
+    );
+
+    if (!updatedCompany) {
+      return res.status(404).json({ message: 'Company not found' });
     }
-  });
-app.post('/api/registerAdmin', async (req,res)=>{
-    console.log(req.body)
-    const { username, email,password } = req.body;
+
+
+    await updatedCompany.save();
+
+    res.json(updatedCompany);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.post('/api/changeJobStatus', async (req, res) => {
+  // Extract jobId and status from the request body
+  const { jobId, status } = req.body;
 
   try {
-    
+    // Find the job by jobId
+    const job = await Posting.findById(jobId);
+    console.log(job)
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    // Update the job status
+    job.Status = status;
+    job.Experience=job.Experience;
+    job.companyEmail=job.companyEmail;
+    await job.save();
+
+    // Send a success response
+    res.status(200).json({ message: 'Job status changed successfully.' });
+  } catch (error) {
+    // Handle error
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+app.post('/api/registerAdmin', async (req, res) => {
+  console.log(req.body)
+  const { username, email, password } = req.body;
+
+  try {
+
     const existingAdmin = await Admin.findOne().or([{ username }, { email }]);
 
     if (existingAdmin) {
@@ -636,7 +671,7 @@ app.post('/api/registerAdmin', async (req,res)=>{
 
     const admin = new Admin({ username, password: hashedPassword, email });
 
-    
+
     const savedAdmin = await admin.save();
 
     res.status(201).json(savedAdmin);
@@ -646,19 +681,19 @@ app.post('/api/registerAdmin', async (req,res)=>{
   }
 
 })
-app.post('/api/adminLogin',async (req,res)=>{
-    console.log(req.body)
-    const { email, password } = req.body;
+app.post('/api/adminLogin', async (req, res) => {
+  console.log(req.body)
+  const { email, password } = req.body;
 
   try {
-    
+
     const admin = await Admin.findOne({ email });
 
     if (!admin) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-   
+
     const passwordMatch = await bcrypt.compare(password, admin.password);
 
     if (!passwordMatch) {
@@ -667,7 +702,7 @@ app.post('/api/adminLogin',async (req,res)=>{
 
 
 
-    res.status(200).json({ status:"ok" });
+    res.status(200).json({ status: "ok" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to authenticate' });
@@ -706,7 +741,7 @@ app.post('/api/ Upload', async (req, res) => {
     res.status(500).json({ error: 'Failed to upload resume' });
   }
 });
-app.post('/api/checkApplicationStatus',async(req,res)=>{
+app.post('/api/checkApplicationStatus', async (req, res) => {
   try {
     const { usn, jobid } = req.body;
 
@@ -727,7 +762,7 @@ app.post('/api/checkApplicationStatus',async(req,res)=>{
 //feedback resume
 app.post('/api/resume/feedback/:usn', async (req, res) => {
   const usn = req.params.usn;
-  const {  feedback } = req.body;
+  const { feedback } = req.body;
 
   try {
     // Check if the resume exists
@@ -761,10 +796,10 @@ app.post('/api/resume/feedback/:usn', async (req, res) => {
 
 //update the feedback
 app.put('/api/resume/feedback/:usn', async (req, res) => {
-    console.log("HI33")
-  const usn =`"${req.params.usn}"`;
+  console.log("HI33")
+  const usn = `"${req.params.usn}"`;
   console.log(req.body)
-  const {feedback } = req.body;
+  const { feedback } = req.body;
 
   try {
     // Find the resume feedback by usn
