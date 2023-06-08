@@ -109,12 +109,8 @@ app.post('/api/scheduleInterviewCompany', (req, res) => {
 
 
 app.get('/api/getResume/:usn', async (req, res) => {
-  console.log(req.baseUrl)
-  const usn = `"${req.params.usn}"`;
-
-
   try {
-    const usnPdf = await Resume.findOne({ usn:usn });
+    const usnPdf = await Resume.findOne({ usn:req.params.usn });
 
     if (!usnPdf || !usnPdf.resume.data) {
 
@@ -220,6 +216,7 @@ app.get('/api/getposting', async (req, res) => {
 })
 
 app.post('/api/studentRegister', async (req, res) => {
+  console.log(req.body)
 
   const {
     firstName,
@@ -452,9 +449,9 @@ app.post('/api/newJobPosting', async (req, res) => {
     const subject = 'New Job Posting Notification';
     const message = 'A new job has been posted. Check the job board for more details.';
 
-    for (const email of studentEmails) {
-      await sendEmailToStudent(email, subject, message);
-    }
+    // for (const email of studentEmails) {
+    //   await sendEmailToStudent(email, subject, message);
+    // }
     res.status(201).json(savedJobPosting);
 
   } catch (error) {
@@ -625,7 +622,7 @@ app.put('/api/companyUpdate', async (req, res) => {
   });
 app.post('/api/registerAdmin', async (req,res)=>{
     console.log(req.body)
-    const { username, password, email } = req.body;
+    const { username, email,password } = req.body;
 
   try {
     
@@ -651,11 +648,11 @@ app.post('/api/registerAdmin', async (req,res)=>{
 })
 app.post('/api/adminLogin',async (req,res)=>{
     console.log(req.body)
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
   try {
     
-    const admin = await Admin.findOne({ username });
+    const admin = await Admin.findOne({ email });
 
     if (!admin) {
       return res.status(401).json({ error: 'Invalid credentials' });
@@ -670,7 +667,7 @@ app.post('/api/adminLogin',async (req,res)=>{
 
 
 
-    res.status(200).json({ message: 'Authentication successful' });
+    res.status(200).json({ status:"ok" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to authenticate' });

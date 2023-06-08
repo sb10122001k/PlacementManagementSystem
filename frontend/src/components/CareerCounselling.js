@@ -50,8 +50,8 @@ const CareerCounselling = () => {
       <div class="container text-center">
         <div class="row justify-content-start">
           <div className="d-flex justify-content-around">
+            <a href='/system-engineering'>
             <Button bg="dark" variant="light">
-              <Link to="/system-engineering">
                 <Card style={{ width: '18rem', height: '22rem' }}>
                   <Card.Img
                     variant="top"
@@ -62,11 +62,11 @@ const CareerCounselling = () => {
                     <Card.Title>System Engineer</Card.Title>
                   </Card.Body>
                 </Card>
-              </Link>
             </Button>
+            </a>
 
+            <a href='/electrical-engineering'>
             <Button bg="dark" variant="light">
-              <Link to="/electrical-engineering">
                 <Card style={{ width: '18rem', height: '22rem' }}>
                   <Card.Img
                     variant="top"
@@ -76,11 +76,12 @@ const CareerCounselling = () => {
                     <Card.Title>Electrical Engineer</Card.Title>
                   </Card.Body>
                 </Card>
-              </Link>
             </Button>
+            </a>
 
+
+            <a href='/chemical-engineering'>
             <Button bg="dark" variant="light">
-              <Link to="/chemical-engineering">
                 <Card style={{ width: '18rem', height: '22rem' }}>
                   <Card.Img
                     variant="top"
@@ -90,8 +91,9 @@ const CareerCounselling = () => {
                     <Card.Title>Chemical Engineer</Card.Title>
                   </Card.Body>
                 </Card>
-              </Link>
             </Button>
+            </a>
+
           </div>
         </div>
       </div>
@@ -99,8 +101,9 @@ const CareerCounselling = () => {
       <div class="container text-center">
         <div class="row justify-content-start">
           <div className="d-flex justify-content-around">
+
+          <a href='/big-data-engineering'>
             <Button bg="dark" variant="light">
-              <Link to="/big-data-engineering">
                 <Card style={{ width: '18rem', height: '22rem' }}>
                   <Card.Img
                     variant="top"
@@ -111,11 +114,12 @@ const CareerCounselling = () => {
                     <Card.Title>Big Data Engineer</Card.Title>
                   </Card.Body>
                 </Card>
-              </Link>
             </Button>
+            </a>
 
+
+            <a href='/aerospace-engineering'>
             <Button bg="dark" variant="light">
-              <Link to="/aerospace-engineering">
                 <Card style={{ width: '18rem', height: '22rem' }}>
                   <Card.Img
                     variant="top"
@@ -125,11 +129,12 @@ const CareerCounselling = () => {
                     <Card.Title>Aerospace Engineer</Card.Title>
                   </Card.Body>
                 </Card>
-              </Link>
             </Button>
+            </a>
 
+
+            <a href='/software-engineering'>
             <Button bg="dark" variant="light">
-              <Link to="/software-developer">
                 <Card style={{ width: '18rem', height: '22rem' }}>
                   <Card.Img
                     variant="top"
@@ -139,8 +144,9 @@ const CareerCounselling = () => {
                     <Card.Title>Software Developer</Card.Title>
                   </Card.Body>
                 </Card>
-              </Link>
             </Button>
+            </a>
+
           </div>
         </div>
       </div>
@@ -148,8 +154,8 @@ const CareerCounselling = () => {
       <div class="container text-center">
         <div class="row justify-content-start">
           <div className="d-flex justify-content-around">
+          <a href='/ui-ux-engineering'>
             <Button bg="dark" variant="light">
-              <Link to="/ui-ux-designer">
                 <Card style={{ width: '18rem', height: '22rem' }}>
                   <Card.Img
                     variant="top"
@@ -160,11 +166,11 @@ const CareerCounselling = () => {
                     <Card.Title>UI/UX Designer</Card.Title>
                   </Card.Body>
                 </Card>
-              </Link>
             </Button>
+            </a>
 
+            <a href='/computer-hardware-engineering'>
             <Button bg="dark" variant="light">
-              <Link to="/computer-hardware-engineer">
                 <Card style={{ width: '18rem', height: '22rem' }}>
                   <Card.Img
                     variant="top"
@@ -175,11 +181,11 @@ const CareerCounselling = () => {
                     <Card.Title>Computer Hardware Engineer</Card.Title>
                   </Card.Body>
                 </Card>
-              </Link>
             </Button>
+            </a>
 
+            <a href='/structural-engineer'>
             <Button bg="dark" variant="light">
-              <Link to="/structural-engineer">
                 <Card style={{ width: '18rem', height: '22rem' }}>
                   <Card.Img
                     variant="top"
@@ -189,8 +195,8 @@ const CareerCounselling = () => {
                     <Card.Title>Structural Engineer</Card.Title>
                   </Card.Body>
                 </Card>
-              </Link>
             </Button>
+            </a>
           </div>
         </div>
       </div>

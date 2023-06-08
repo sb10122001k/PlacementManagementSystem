@@ -53,7 +53,7 @@ const StudentSchedule = () => {
             <div class="container text-center">
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
-
+<a href='/StudentSlotSelection'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://files.jotform.com/jotformapps/a0b5d7e5e5cce2962a6c722e8a0d4e78.png" />
@@ -62,7 +62,8 @@ const StudentSchedule = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
-
+                        </a>
+                        <a href='/StudentScheduled'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem', height: '22rem' }}>
                                 <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/remainder-icon-alarm-259563488.jpg" />
@@ -71,7 +72,7 @@ const StudentSchedule = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
-
+                        </a>
                     </div>
                 </div>
                 <br></br>

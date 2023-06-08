@@ -102,7 +102,7 @@ const StudentHiringView = () => {
         <h1 className="container text-center">{postingData.name}</h1>
         <br />
         <br />
-        <h5 className="container text-justify">
+        <h5 className="container text-justify" align="justify">
           <img
             align="right"
             src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/google-logo.png"
@@ -162,3 +162,5 @@ const StudentHiringView = () => {
 };
 
 export default StudentHiringView;
+
+

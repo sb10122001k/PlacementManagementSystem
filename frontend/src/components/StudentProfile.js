@@ -64,7 +64,7 @@ const StudentProfile = () => {
                 <h1 class="container text-center">My Profile</h1>
 
                 <br></br>
-                <h5 class="container text-justify">
+                <h5 class="container text-justify" align="Justify">
                     <img align="right" src="https://img.freepik.com/free-icon/user-profile-icon_318-33925.jpg?w=2000" height="180" width="171" />
 
                         <b>NAME:</b>  {studentData.firstName} {studentData.lastName}

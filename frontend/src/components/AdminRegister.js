@@ -4,7 +4,7 @@ import {useNavigate, Link} from "react-router-dom";
 
 
 const AdminRegister = () => {
-    const [collegeId,setCollegeId]=useState('');
+    const [username,setCollegeId]=useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -18,7 +18,7 @@ const AdminRegister = () => {
         'Content-type': 'application/json'
         },
         body: JSON.stringify({
-        collegeId,email, password
+        username,email, password
         }),
        
     })

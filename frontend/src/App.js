@@ -24,7 +24,8 @@ import Createresume from './components/createResume';
 // import UploadResume from './components/uploadResume';
 import ViewCandidateResume from './components/ResumeViewCompany'
 import StudentSlotSelection from './components/StudentSlotSelection'
-import Schedule from './components/StudentScheduled'
+import StudentSchedule from './components/StudentSchedule'
+import StudentScheduled from './components/StudentScheduled'
 import InterviewCompany from './components/InteviewCompany'
 import CareerCounselling from './components/CareerCounselling'
 import StudentHome from './components/StudentHome'
@@ -37,6 +38,8 @@ import SoftwareDeveloper from './components/SoftwareDeveloper'
 import Uiux from './components/UiUxDesigner'
 import CHEngineer from './components/ComputerHardwareEngineer'
 import StructuralEngineer from './components/StructuralEngineer'
+import StudentAnalyticsandRepo from './components/StudentAnalyticsandRepo';
+import StudentsAcademics from './components/StudentsAcademics';
 
 function App() {
   return (
@@ -66,7 +69,8 @@ function App() {
           <Route path='/scheduleInterview' element={<InterviewForm />} />
           {/* <Route path='/UploadResume' element={<UploadResume />} /> */}
           <Route path='/StudentSlotSelection' element={<StudentSlotSelection />} />
-          <Route path='/StudentSchedule' element={<Schedule />} />
+          <Route path='/StudentSchedule' element={<StudentSchedule />} />
+          <Route path='/StudentScheduled' element={<StudentScheduled />} />
           <Route path='/CompanyInterviewSchedule' element={<InterviewCompany />} />
           <Route path="/system-engineering" element={<SystemEngineering/>} />
           <Route path="/electrical-engineering" element={<ElecticalEngineering/>} />
@@ -77,6 +81,8 @@ function App() {
           <Route path="/ui-ux-designer" element={<Uiux/>} />
           <Route path="/computer-hardware-engineer" element={<CHEngineer/>} />
           <Route path="/structural-engineer" element={<StructuralEngineer/>} />
+          <Route path="/analytics-reporting" element={<StudentAnalyticsandRepo/>} />    
+          <Route path="/student-academics" element={<StudentsAcademics/>}/>      
           <Route path='/viewCandidateResume' usn={localStorage.getItem('usn')} element={<ViewCandidateResume />} />
 
 

@@ -7,14 +7,14 @@ import {  useNavigate } from 'react-router-dom'
 const CompanyJobPosting = () => {
     const Name =localStorage.getItem('name')
     const userToken = localStorage.getItem('token')
-    const email=userToken
+    const companyEmail=userToken
     const [jobRole,setJobRole] = useState('');
     const [JobDescription,setJobDiscription] = useState('');
     const [Package,setPackage] = useState('');
     const [Qualification,setQualification] = useState('');
     const [Eligibility,setEligibility] = useState('');
     const [Specialization,setSpecialization] = useState('');
-    const [Experiance,setExperiance] = useState('');
+    const [Experience,setExperiance] = useState('');
     const [JobLocation,setJobLocation] = useState('');
     const [LastDate,setLastDate] = useState('');
     const [DriveFrom,setDriveFrom]= useState('');
@@ -32,7 +32,7 @@ const CompanyJobPosting = () => {
             'Content-type': 'application/json'
             },
             body: JSON.stringify({
-            email,jobRole,JobDescription,Package,Qualification,Eligibility,Specialization,Experiance,JobLocation,LastDate,DriveFrom,DriveTO,Venue,Name
+            companyEmail,jobRole,JobDescription,Package,Qualification,Eligibility,Specialization,Experience,JobLocation,LastDate,DriveFrom,DriveTO,Venue,Name
             }),
            
         })
@@ -62,9 +62,9 @@ const CompanyJobPosting = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="Home">Home</Nav.Link>
-                            <Nav.Link href="Schedule">Job Posting</Nav.Link>
-                            <Nav.Link href="Resume">Interviews</Nav.Link>
+                            <Nav.Link href="CompanyHome">Home</Nav.Link>
+                            <Nav.Link href="CompanyJobPosting">Job Posting</Nav.Link>
+                            <Nav.Link href="CompanyInterview">Interviews</Nav.Link>
                         </Nav>
 
 
