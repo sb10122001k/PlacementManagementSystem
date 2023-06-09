@@ -49,8 +49,8 @@ const CompanySchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
-    index: true
+    unique: true
+    
   },
   password: {
     type: String,
@@ -99,6 +99,8 @@ const JobPostingSchema = new mongoose.Schema({
   companyEmail: {
     type: String,
     
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
     ref : 'Company'
   },
   jobRole: {
@@ -172,7 +174,7 @@ const AppliedCandidateSchema = new mongoose.Schema({
   jobid:{
     type:String,
     required:true,
-    ref: 'Company'
+    ref: 'Posting'
   },
   status: {
     type: String,
@@ -272,6 +274,12 @@ const ResumeFeedbackSchema = new mongoose.Schema({
   }
 });
 
+const ResumeTemplateSchema = new mongoose.Schema({
+  downloadUrl: {
+    type: String,
+    required: true
+  }
+});
 
 // Export the models
 module.exports = {
@@ -283,5 +291,6 @@ module.exports = {
   AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
   CompanyInterview:mongoose.model('cmpanyInterview',CompanyInterviewSchema),
   StudentInterview:mongoose.model('studentIntervew',StudentInterview),
-  Admin:mongoose.model('admin',AdminSchema)
+  Admin: mongoose.model('admin',AdminSchema),
+  Template: mongoose.model('template',ResumeTemplateSchema),
 };
