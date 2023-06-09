@@ -3,7 +3,7 @@ const cors = require('cors')
 const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
-const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Admin, ResumeFeedback, Template } = require('./models')
+const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Feedback,Admin, Template } = require('./models')
 // const {Student, Company, Posting, AppliedCandidate, Admin} = require('./models')
 const email = require('./emailservice')
 const mongoose = require('mongoose')
@@ -188,16 +188,41 @@ app.get('/api/getCandidateList/:id', async (req, res) => {
 })
 
 app.get('/api/getJobPosted/:id', async (req, res) => {
+  console.log(req.params.id)
   const companyemail = req.params.id;
   try {
-    const jobPostings = await Posting.find({ email: companyemail });
-    // console.log(jobPostings)
+    const jobPostings = await Posting.find({ email:companyemail });
+    console.log(jobPostings)
     res.status(200).json(jobPostings);
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Failed to retrieve job postings.' });
   }
 })
+
+app.post('/api/sendFeedback',async(req,res)=>{
+  try {
+    const { usn, company, title, content } = req.body;
+
+    // Create a new feedback instance
+    const feedback = new Feedback({
+      usn,
+      company,
+      title,
+      content,
+    });
+
+    // Save the feedback to the database
+    await feedback.save();
+
+    res.status(201).json({ message: 'Feedback stored successfully' });
+  } catch (error) {
+    console.log('Error storing feedback:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 app.get('/api/getallcompany',async(req,res)=>{
   Company.find()
   .then((result) => {
@@ -434,16 +459,11 @@ app.post('/api/newJobPosting', async (req, res) => {
   try {
 
     const newJobPosting = new Posting(req.body);
-    const studentEmails = await Student.find().distinct('email');
 
     // Save the job posting to the database
     const savedJobPosting = await newJobPosting.save();
-    const subject = 'New Job Posting Notification';
-    const message = 'A new job has been posted. Check the job board for more details.';
 
-    // for (const email of studentEmails) {
-    //   await sendEmailToStudent(email, subject, message);
-    // }
+    
     res.status(201).json(savedJobPosting);
 
   } catch (error) {
@@ -743,68 +763,6 @@ app.post('/api/checkApplicationStatus', async (req, res) => {
   }
 });
 
-//feedback resume
-app.post('/api/resume/feedback/:usn', async (req, res) => {
-  const usn = req.params.usn;
-  const { feedback } = req.body;
-
-  try {
-    // Check if the resume exists
-    const resume = await Resume.findOne({ usn });
-
-    if (!resume) {
-      return res.status(404).json({ error: 'Resume not found' });
-    }
-
-    // Check if feedback already exists for the resume
-    const existingFeedback = await ResumeFeedback.findOne({ resumeId: usn });
-    if (existingFeedback) {
-      return res.status(400).json({ error: 'Feedback already provided for this resume' });
-    }
-    // Create a new resume feedback
-    const resumeFeedback = new ResumeFeedback({
-      resumeId: usn,
-      feedback
-    });
-
-
-    // Save the resume feedback to the database
-    const savedResumeFeedback = await resumeFeedback.save();
-
-    res.json(savedResumeFeedback);
-  } catch (error) {
-    console.error('Failed to save resume feedback:', error);
-    res.status(500).json({ error: 'Failed to save resume feedback' });
-  }
-});
-
-//update the feedback
-app.put('/api/resume/feedback/:usn', async (req, res) => {
-  console.log("HI33")
-  const usn = `"${req.params.usn}"`;
-  console.log(req.body)
-  const { feedback } = req.body;
-
-  try {
-    // Find the resume feedback by usn
-    const resumeFeedback = await ResumeFeedback.findOne({ resumeId: usn });
-
-    if (!resumeFeedback) {
-      return res.status(404).json({ error: 'Resume feedback not found' });
-    }
-
-    // Update the feedback
-    resumeFeedback.feedback = feedback;
-
-    // Save the updated feedback
-    const updatedFeedback = await resumeFeedback.save();
-
-    res.json(updatedFeedback);
-  } catch (error) {
-    console.error('Failed to update resume feedback:', error);
-    res.status(500).json({ error: 'Failed to update resume feedback' });
-  }
-});
 
 //get resume templates
 app.get('/api/resume-templates', async (req, res) => {
