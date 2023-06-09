@@ -220,25 +220,31 @@ app.get('/api/getallstudent',async(req,res)=>{
 
 
 // Get applied candidates with student, job, and company details
-app.get('/api/appliedcandidatesadmin', async (req, res) => {
-  console.log("HI")
+app.get('/api/appliedcandidates/:companyEmail', async (req, res) => {
   try {
-    const appliedCandidates = await AppliedCandidate.find()
-      .populate('usn', 'firstName lastName email')
-      .populate('jobid', 'jobRole')
-      .populate('jobid.companyEmail', 'companyName');
-      console.log(appliedCandidates)
-      
+    const companyEmail = req.params.companyEmail;
+
+    const appliedCandidates = await AppliedCandidate.find({ companyEmail: companyEmail })
+      .populate('usn', 'firstName lastName email branch')
+      .populate({
+        path: 'jobid',
+        select: 'jobRole companyEmail',
+        populate: {
+          path: 'companyEmail',
+          select: 'name'
+        }
+      });
+
     const formattedCandidates = appliedCandidates.map((candidate) => ({
       studentName: candidate.usn.firstName + ' ' + candidate.usn.lastName,
       studentEmail: candidate.usn.email,
       usn: candidate.usn.usn,
       branch: candidate.usn.branch,
       jobRole: candidate.jobid.jobRole,
-      companyName: candidate.jobid.companyEmail.companyName,
+      companyName: candidate.jobid.companyEmail.name,
       jobId: candidate.jobid._id
     }));
-    
+
     res.json(formattedCandidates);
   } catch (err) {
     console.error(err);
