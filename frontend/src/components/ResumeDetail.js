@@ -32,30 +32,33 @@ function ResumeForm() {
 
     // Prepare the data to be sent
     const data = {
+      usn,
       linkedinId,
       projects,
       hobbies,
     };
 
-    try {
-      // Make a POST request to localhost
-      const response = await fetch(`http://localhost:1337/api/createresume/${usn}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+    navigate('/Resume', { state: { resumedata: data } })
 
-      if (response.ok) {
-        console.log('Resume data submitted successfully');
-        navigate('/StudentHome', { replace: true });
-      } else {
-        console.error('Error submitting resume data');
-      }
-    } catch (error) {
-      console.error('Error submitting resume data:', error);
-    }
+    // try {
+    //   // Make a POST request to localhost
+    //   const response = await fetch(`http://localhost:1337/api/createresume/${usn}`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data),
+    //   });
+
+    //   if (response.ok) {
+    //     console.log('Resume data submitted successfully');
+    //     navigate('/StudentHome', { replace: true });
+    //   } else {
+    //     console.error('Error submitting resume data');
+    //   }
+    // } catch (error) {
+    //   console.error('Error submitting resume data:', error);
+    // }
 
     // Reset form fields after submission
     setLinkedinId('');

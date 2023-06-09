@@ -138,7 +138,6 @@ app.post('/api/createresume/:usn',async(req,res)=>{
 })
 
 app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
-  console.log("hi")
   try {
     console.log(req.body)
     const { usn } = req.body;
@@ -156,6 +155,7 @@ app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
 
     res.status(201).json({ message: 'USN and PDF stored successfully' });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'An error occurred while storing USN and PDF' });
   }
 });
@@ -344,9 +344,20 @@ app.put('/api/students/:usn', async (req, res) => {
 });
 
 app.get('/api/StudentProfile/:id', async (req, res) => {
-  const { usn } = req.params.id;
-  const student = await Student.findOne(usn);
+  const  usn  = req.params.id;
+  console.log('usn')
+  console.log(typeof(usn))
+  try{
+  const student = await Student.findOne({usn: usn});
+  console.log(student)
   res.send(student)
+  }
+  catch(err){
+    console.log('err')
+    console.log(err)
+    res.send("Couldn't fetch")
+
+  }
 })
 
 app.post('/api/registerCompany', async (req, res) => {

@@ -1,87 +1,133 @@
-import React, { Component } from 'react';
-import { Navbar, Container, Nav, Form, Button } from 'react-bootstrap'
+import React, { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import html2pdf from 'html2pdf.js';
 
 const Resume = () => {
+    const location = useLocation();
+    const { resumedata } = location.state;
+    const [otherData, setOtherData] = useState(null);
+    const usn = localStorage.getItem('token');
+    const resumeRef = useRef(null);
+
+    useEffect(() => {
+        fetch(`http://localhost:1337/api/StudentProfile/${usn}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setOtherData(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    const createResume = () => {
+        const createButton = document.getElementById('createButton');
+        if (createButton) {
+            createButton.style.display = 'none';
+        }
+
+        window.print();
+    };
+
     return (
         <div>
-
-            <div class="container text-center">
-                <br></br>
-                <br></br>
-                <h1 class="container text-center">Swetha Krishna</h1>
-                <h6   ><li align="left">swetha@gmail.com</li><li align="center">linkedin ID   </li><li align="right">phone number</li></h6>
-
-
-
-                <h3 class="containet text-center">Summary</h3>
-
-                <hr></hr>
-
-                <p align="justify">Description about the student or student intro An independent and self-motivated business student with proven and tested business, procurement, sales, and marketing skills.An award-winning and confident communication graduate, able to establish rapport quickly and conduct training sessions with clarity and enthusiasm.An award-winning and confident communication graduate, able to establish rapport quickly and conduct training sessions with clarity and enthusiasm.An award-winning and confident communication graduate, able to establish rapport quickly and conduct training sessions with clarity and enthusiasm.An award-winning and confident communication graduate, able to establish rapport quickly and conduct training sessions with clarity and enthusiasm.</p>
-
-                <br></br>
-
-                <h3 class="containet text-center">Skills</h3>
-
-                <hr></hr>
-
-                <p align="justify"> Skills should be displayed here.</p>
-
-                <br></br>
-
-                <h3 class="containet text-center">Education</h3>
-
-                <hr></hr>
-
-                <p align="justify"> Educational details should  be displayed here.
-                    <br></br>
-                    Engineering
-                    <br></br>
-                    PU/inter
-                    <br></br>
-                    10th
+            <div className="container text-center" ref={resumeRef}>
+                {/* Resume content */}
+                <h1 className="container text-center">{otherData?.firstName} {otherData?.lastName}</h1>
+                {otherData && (
+                    <h6>
+                        <li align="left">{otherData.email}</li>
+                        <li align="center">{resumedata.linkedinId}</li>
+                        <li align="right">{otherData.contactNumber}</li>
+                    </h6>
+                )}
+                {/* Rest of the resume */}
+                <hr />
+                <p align="justify">
+                    {otherData?.careerPreferences}
                 </p>
-                <br></br>
-
-                <h3 class="containet text-center">Projects</h3>
-
-                <hr></hr>
-
-                <p align="justify"> Projects done by the students should be displayed here.
-                    <br></br>
-                    Project 1
-                    <br></br>
-                    Project 2
-                    <br></br>
-                    Project 3</p>
-                <br></br>
-                <h3 class="containet text-center">Hobbies & Interests</h3>
-
-                <hr></hr>
-
-                <p align="justify"> Hobbies and Interests of the students should be displayed here.
-                    <br></br>
-                    Hobbies/Interests 1
-                    <br></br>
-                    Hobbies/Interests 2
-                    <br></br>
-                    Hobbies/Interests 3</p>
-                <br></br>
-                <br></br>
                 
-                <br></br>
-
-                <Button variant="dark" type="submit">Download </Button>
-
-
-
-                <br></br>
-                <br></br>
-                <br></br>
+                <h3 className="container text-center">Skills</h3>
+                <hr />
+                <p align="justify"> {otherData?.keySkills}</p>
+                
+                <h3 className="container text-center">Education</h3>
+                <hr />
+                <p align="justify">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>School Name</th>
+                                <th>Address</th>
+                                <th>Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{otherData?.course3} {otherData?.specialization}</td>
+                                <td>{otherData?.collegeName}</td>
+                                <td>{otherData?.address3}</td>
+                                <td>{otherData?.score3}</td>
+                            </tr>
+                            <tr>
+                                <td>{otherData?.course2}</td>
+                                <td>{otherData?.schoolName2}</td>
+                                <td>{otherData?.address2}</td>
+                                <td>{otherData?.score2}</td>
+                            </tr>
+                            <tr>
+                                <td>{otherData?.course1}</td>
+                                <td>{otherData?.schoolName1}</td>
+                                <td>{otherData?.address1}</td>
+                                <td>{otherData?.score1}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </p>
+                
+                <h3 className="container text-center">Projects</h3>
+                <hr />
+                <p align="justify">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Technology</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {resumedata.projects?.map((posting) => (
+                                <tr key={posting.name}>
+                                    <td>{posting.name}</td>
+                                    <td>{posting.technology}</td>
+                                    <td>{posting.details}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </p>
+                
+                <h3 className="container text-center">Hobbies & Interests</h3>
+                <hr />
+                <p align="justify">
+                    {resumedata.hobbies}
+                </p>
+                <br />
+                <br />
+                <br />
+                <Button id="createButton" variant="dark" onClick={createResume}>
+                    Create
+                </Button>
+                <br />
+                <br />
+                <br />
             </div>
         </div>
-
     );
-}
+};
 
 export default Resume;

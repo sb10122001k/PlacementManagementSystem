@@ -238,7 +238,7 @@ const ResumeSchema = new mongoose.Schema({
   usn: {
     type: String,
     required: true,
-    unique: true
+    
   },
   resume: {
     data: Buffer,

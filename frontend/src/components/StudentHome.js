@@ -117,7 +117,7 @@ const Home = () => {
                         </a>
 
 
-
+                        <a href="/StudentCoverLetter">
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="https://careercenter.tamu.edu/Images/Icon-Images/mail" />
@@ -126,6 +126,7 @@ const Home = () => {
                                 </Card.Body>
                             </Card>
                         </Button>
+                        </a>
                         <a href='/CareerCounseling'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
