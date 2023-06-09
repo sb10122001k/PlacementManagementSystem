@@ -96,10 +96,10 @@ const CompanySchema = new mongoose.Schema({
 
 
 const JobPostingSchema = new mongoose.Schema({
-  companyEmail: {
+  email: {
     type: String,
     
-    type: mongoose.Schema.Types.ObjectId,
+    // type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref : 'Company'
   },
@@ -252,26 +252,23 @@ const ResumeSchema = new mongoose.Schema({
 }
 });
 
-const ResumeFeedbackSchema = new mongoose.Schema({
-  resumeId: {
+const FeedbackSchema = new mongoose.Schema({
+  usn: {
     type: String,
     required: true,
-    ref: 'Resume'
+    
   },
-  feedback: {
-    type: [
-      {
-        company: {
-          type: String,
-          required: true
-        },
-        feedback: {
-          type: String
-        }
-      }
-    ],
-    default: []
+  company:{
+    type:String,
+    required:true
+  },
+  title:{
+    type:String,
+  },
+  content:{
+    type:String
   }
+
 });
 
 const ResumeTemplateSchema = new mongoose.Schema({
@@ -287,7 +284,7 @@ module.exports = {
   Company: mongoose.model('company', CompanySchema),
   Posting: mongoose.model('posting', JobPostingSchema),
   Resume:mongoose.model('resume',ResumeSchema),
-  ResumeFeedback : mongoose.model('resumefeedback', ResumeFeedbackSchema),
+  Feedback : mongoose.model('feedback', FeedbackSchema),
   AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),
   CompanyInterview:mongoose.model('cmpanyInterview',CompanyInterviewSchema),
   StudentInterview:mongoose.model('studentIntervew',StudentInterview),
