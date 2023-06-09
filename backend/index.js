@@ -3,7 +3,7 @@ const cors = require('cors')
 const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
-const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Admin, ResumeFeedback } = require('./models')
+const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Admin, ResumeFeedback, Template } = require('./models')
 // const {Student, Company, Posting, AppliedCandidate, Admin} = require('./models')
 const email = require('./emailservice')
 const mongoose = require('mongoose')
@@ -29,15 +29,15 @@ app.get('/api/studentProfile', async (req, res) => {
 
 })
 
-app.post('/api/finalScheduleSelection', async (req, res) => {
+app.post('/api/finalScheduleSelection',async(req,res)=>{
   console.log(req.body)
 
   const studentInterview = new StudentInterview({
     usn: req.body.usn,
-    meetingLink: req.body.meetingLink,
-    companyEmail: req.body.companyEmail,
-    date: req.body.slot.date,
-    time: req.body.slot.time
+    meetingLink:  req.body.meetingLink,
+    companyEmail:  req.body.companyEmail,
+    date:  req.body.slot.date,
+    time:  req.body.slot.time
   });
   studentInterview.save()
     .then(() => {
@@ -49,19 +49,9 @@ app.post('/api/finalScheduleSelection', async (req, res) => {
 
 })
 
-app.get('/api/sechdule/:usn', (req, res) => {
-
-  StudentInterview.find({ usn: req.params.usn })
-    .then(interviews => res.json(interviews))
-    .catch(error => {
-      console.error('Error fetching interview data', error);
-      res.status(500).json({ message: 'Failed to fetch interview data' });
-    });
-});
-
 app.get('/api/companySechdule/:companyEmail', (req, res) => {
-
-  StudentInterview.find({ companyEmail: req.params.companyEmail })
+  
+  StudentInterview.find({companyEmail:req.params.companyEmail})
     .then(interviews => res.json(interviews))
     .catch(error => {
       console.error('Error fetching interview data', error);
@@ -70,8 +60,8 @@ app.get('/api/companySechdule/:companyEmail', (req, res) => {
 });
 
 app.get('/api/companysechdule/:email', (req, res) => {
-
-  StudentInterview.find({ usn: usn })
+  
+  StudentInterview.find({usn:usn})
     .then(interviews => res.json(interviews))
     .catch(error => {
       console.error('Error fetching interview data', error);
@@ -389,18 +379,15 @@ app.get('/api/inveriewSlotAvailability/:usn', async (req, res) => {
   console.log(usn)
 
   // Find the interview data in the MongoDB collection by USN
-  CompanyInterview.find({ usn: usn })
+  CompanyInterview.find({ usn:usn })
     .then((interview) => {
-      console.log("Hi1")
       if (!interview) {
-        console.log("Hi2")
         return res.status(404).json({ message: 'Interview not found' });
       }
-      console.log(interview)
+
       res.json(interview);
     })
     .catch((error) => {
-      console.log("Hi3")
       console.error('Error fetching interview data', error);
       res.status(500).json({ message: 'Failed to fetch interview data' });
     });
@@ -808,9 +795,35 @@ app.put('/api/resume/feedback/:usn', async (req, res) => {
   }
 });
 
+//get resume templates
+app.get('/api/resume-templates', async (req, res) => {
+  try {
+    const resumeTemplates = await Template.find();
+    res.json(resumeTemplates);
+  } catch (error) {
+    console.error('Error fetching resume templates:', error);
+    res.status(500).json({ error: 'Failed to fetch resume templates' });
+  }
+});
+//post resume templates
+app.post('/api/resume-templates', async (req, res) => {
+  try {
+    const {downloadUrl } = req.body;
 
+    // Create a new instance of ResumeTemplate model
+    const resumeTemplate = new Template({
+    downloadUrl
+    });
 
+    // Save the resume template to the database
+    const savedTemplate = await Template.save();
 
+    res.status(201).json(savedTemplate);
+  } catch (error) {
+    console.error('Error posting resume template:', error);
+    res.status(500).json({ error: 'Failed to post resume template' });
+  }
+});
 
 
 app.listen(1337, () => {
