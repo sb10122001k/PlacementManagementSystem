@@ -217,7 +217,7 @@ const AppliedCandidateSchema = new mongoose.Schema({
   jobid:{
     type:String,
     required:true,
-    ref: 'Company'
+    ref: 'Posting'
   },
   status: {
     type: String,
