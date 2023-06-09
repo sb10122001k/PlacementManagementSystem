@@ -29,6 +29,46 @@ app.get('/api/studentProfile', async (req, res) => {
 
 })
 
+app.post('/api/finalScheduleSelection',async(req,res)=>{
+  console.log(req.body)
+
+  const studentInterview = new StudentInterview({
+    usn: req.body.usn,
+    meetingLink:  req.body.meetingLink,
+    companyEmail:  req.body.companyEmail,
+    date:  req.body.slot.date,
+    time:  req.body.slot.time
+  });
+  studentInterview.save()
+    .then(() => {
+      res.status(200).json({ message: 'Interview scheduled successfully' });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Failed to schedule interview' });
+    });
+
+})
+
+app.get('/api/companySechdule/:companyEmail', (req, res) => {
+  
+  StudentInterview.find({companyEmail:req.params.companyEmail})
+    .then(interviews => res.json(interviews))
+    .catch(error => {
+      console.error('Error fetching interview data', error);
+      res.status(500).json({ message: 'Failed to fetch interview data' });
+    });
+});
+
+app.get('/api/companysechdule/:email', (req, res) => {
+  
+  StudentInterview.find({usn:usn})
+    .then(interviews => res.json(interviews))
+    .catch(error => {
+      console.error('Error fetching interview data', error);
+      res.status(500).json({ message: 'Failed to fetch interview data' });
+    });
+});
+
 app.post('/api/scheduleInterviewCompany', (req, res) => {
 
   const { usn, companyEmail, meetingLink, schedule } = req.body;
@@ -55,21 +95,17 @@ app.post('/api/scheduleInterviewCompany', (req, res) => {
       res.status(500).json({ error: 'Failed to schedule interview' });
     });
 });
-  
+
 
 
 app.get('/api/getResume/:usn', async (req, res) => {
-  console.log(req.baseUrl)
-  const { usn } = req.params;
-
-
   try {
     const usnPdf = await Resume.findOne({ usn: req.params.usn });
 
     if (!usnPdf || !usnPdf.resume.data) {
 
       console.log(usnPdf)
-      console.log(usnPdf.pdf.data)
+      console.log(usnPdf.resume.data)
       return res.status(404).send('File not found');
     }
 
@@ -85,6 +121,11 @@ app.get('/api/getResume/:usn', async (req, res) => {
     res.status(500).send('An error occurred while fetching the file');
   }
 });
+app.post('/api/createresume/:usn',async(req,res)=>{
+  console.log(req.body)
+  console.log(req.params)
+  res.status(200)
+})
 
 app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
   console.log("hi")
@@ -108,7 +149,6 @@ app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
     res.status(500).json({ error: 'An error occurred while storing USN and PDF' });
   }
 });
-
 app.put('/api/updateApplicationStatus/:id', async (req, res) => {
   const id = req.params.id;
   const { status } = req.body;
@@ -158,93 +198,83 @@ app.get('/api/getJobPosted/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve job postings.' });
   }
 })
+app.get('/api/getallcompany',async(req,res)=>{
+  Company.find()
+  .then((result) => {
+    res.send(result);
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  })
+})
+app.get('/api/getallstudent',async(req,res)=>{
+  Student.find()
+  .then((result) => {
+    res.send(result);
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  })
+})
+
+
+
+// Get applied candidates with student, job, and company details
+app.get('/api/appliedcandidatesadmin', async (req, res) => {
+  console.log("HI")
+  try {
+    const appliedCandidates = await AppliedCandidate.find()
+      .populate('usn', 'firstName lastName email')
+      .populate('jobid', 'jobRole')
+      .populate('jobid.companyEmail', 'companyName');
+      console.log(appliedCandidates)
+      
+    const formattedCandidates = appliedCandidates.map((candidate) => ({
+      studentName: candidate.usn.firstName + ' ' + candidate.usn.lastName,
+      studentEmail: candidate.usn.email,
+      usn: candidate.usn.usn,
+      branch: candidate.usn.branch,
+      jobRole: candidate.jobid.jobRole,
+      companyName: candidate.jobid.companyEmail.companyName,
+      jobId: candidate.jobid._id
+    }));
+    
+    res.json(formattedCandidates);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
 
 app.get('/api/getposting', async (req, res) => {
-  console.log(req)
+  try {
+    const acceptedJobs = await Posting.find({ Status: 'accepted' });
+    res.send(acceptedJobs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+})
+app.get('/api/getadminposting', async (req, res) => {
   Posting.find()
-    .then((result) => {
-      res.send(result);
-    }).catch((err) => {
-      console.log(err);
-      res.status(500).send('Internal Server Error');
-    })
+  .then((result) => {
+    res.send(result);
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  })
 })
 
 app.post('/api/studentRegister', async (req, res) => {
-
-  const {
-    firstName,
-    lastName,
-    usn,
-    email,
-    password,
-    skills,
-    dateOfBirth,
-    currentSemester,
-    country,
-    state,
-    city,
-    zip,
-    contactNumber,
-    address,
-    careerObjective,
-    degreeCollege,
-    branch,
-    specialization,
-    collegeAddress,
-    score,
-    courseDuration,
-    keySkills,
-    careerPreferences,
-    image
-  } = req.body;
-
   try {
-    
-    const existingStudent = await Student.findOne({ usn });
-
-    if (existingStudent) {
-      return res.status(400).json({ error: 'Student already exists' });
-    }
-
-   
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    
-    const newStudent = new Student({
-      firstName,
-      lastName,
-      usn,
-      email,
-      password: hashedPassword,
-      skills,
-      dateOfBirth,
-      currentSemester,
-      country,
-      state,
-      city,
-      zip,
-      contactNumber,
-      address,
-      careerObjective,
-      degreeCollege,
-      branch,
-      specialization,
-      collegeAddress,
-      score,
-      courseDuration,
-      keySkills,
-      careerPreferences,
-      image
-    });
-
-    
-    const savedStudent = await newStudent.save();
-
-    res.status(201).json(savedStudent);
+    const studentData = req.body;
+    const student = new Student(studentData);
+    await student.save();
+    res.status(201).json({ message: 'ok' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to register student' });
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -253,24 +283,24 @@ app.post('/api/studentLogin', async (req, res) => {
   const { usn, password } = req.body;
 
   try {
-    
+
     const student = await Student.findOne({ usn });
 
     if (!student) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    
-    const isPasswordValid = await bcrypt.compare(password, student.password);
 
-    if (!isPasswordValid) {
+    // const isPasswordValid = await compare(password, student.password);
+
+    if (password!=student.password) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
- 
-    const token = jwt.sign({ usn: student.usn }, 'secretKey'); // Replace 'secretKey' with your own secret key
 
-    res.json({ token });
+    // const token = jwt.sign({ usn: student.usn }, 'secretKey'); // Replace 'secretKey' with your own secret key
+
+    res.json({ "token": req.body.usn, "status": "ok", "usn": req.body.usn });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to log in' });
@@ -343,13 +373,13 @@ app.post('/api/registerCompany', async (req, res) => {
   // res.status(206).send("ok")
 })
 
-app.get('/api/inveriewSlotAvailability/:usn',async(req,res)=>{
+app.get('/api/inveriewSlotAvailability/:usn', async (req, res) => {
   console.log(req.params.usn)
-  usn =`"${req.params.usn}"`;
+  usn = req.params.usn;
   console.log(usn)
 
   // Find the interview data in the MongoDB collection by USN
-  CompanyInterview.findOne({ usn:usn })
+  CompanyInterview.find({ usn:usn })
     .then((interview) => {
       if (!interview) {
         return res.status(404).json({ message: 'Interview not found' });
@@ -400,9 +430,9 @@ app.post('/api/newJobPosting', async (req, res) => {
     const subject = 'New Job Posting Notification';
     const message = 'A new job has been posted. Check the job board for more details.';
 
-    for (const email of studentEmails) {
-      await sendEmailToStudent(email, subject, message);
-    }
+    // for (const email of studentEmails) {
+    //   await sendEmailToStudent(email, subject, message);
+    // }
     res.status(201).json(savedJobPosting);
 
   } catch (error) {
@@ -549,34 +579,61 @@ app.post('/interviews', async (req, res) => {
 });
 
 app.put('/api/companyUpdate', async (req, res) => {
-    const {name, email, password, address, website, contact} = req.body;
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
-    try {
-      const updatedCompany = await Company.findOneAndUpdate(
-        { email },
-        {name, hashedPassword, address, website, contact},
-        { new: true }
-      );
-  
-      if (!updatedCompany) {
-        return res.status(404).json({ message: 'Company not found' });
-      }
-  
-      
-      await updatedCompany.save();
-  
-      res.json(updatedCompany);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+  const { name, email, password, address, website, contact } = req.body;
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt)
+  try {
+    const updatedCompany = await Company.findOneAndUpdate(
+      { email },
+      { name, hashedPassword, address, website, contact },
+      { new: true }
+    );
+
+    if (!updatedCompany) {
+      return res.status(404).json({ message: 'Company not found' });
     }
-  });
-app.post('/api/registerAdmin', async (req,res)=>{
-    console.log(req.body)
-    const { username, password, email } = req.body;
+
+
+    await updatedCompany.save();
+
+    res.json(updatedCompany);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.post('/api/changeJobStatus', async (req, res) => {
+  // Extract jobId and status from the request body
+  const { jobId, status } = req.body;
 
   try {
-    
+    // Find the job by jobId
+    const job = await Posting.findById(jobId);
+    console.log(job)
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    // Update the job status
+    job.Status = status;
+    job.Experience=job.Experience;
+    job.companyEmail=job.companyEmail;
+    await job.save();
+
+    // Send a success response
+    res.status(200).json({ message: 'Job status changed successfully.' });
+  } catch (error) {
+    // Handle error
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+app.post('/api/registerAdmin', async (req, res) => {
+  console.log(req.body)
+  const { username, email, password } = req.body;
+
+  try {
+
     const existingAdmin = await Admin.findOne().or([{ username }, { email }]);
 
     if (existingAdmin) {
@@ -587,7 +644,7 @@ app.post('/api/registerAdmin', async (req,res)=>{
 
     const admin = new Admin({ username, password: hashedPassword, email });
 
-    
+
     const savedAdmin = await admin.save();
 
     res.status(201).json(savedAdmin);
@@ -597,19 +654,19 @@ app.post('/api/registerAdmin', async (req,res)=>{
   }
 
 })
-app.post('/api/adminLogin',async (req,res)=>{
-    console.log(req.body)
-    const { username, password } = req.body;
+app.post('/api/adminLogin', async (req, res) => {
+  console.log(req.body)
+  const { email, password } = req.body;
 
   try {
-    
-    const admin = await Admin.findOne({ username });
+
+    const admin = await Admin.findOne({ email });
 
     if (!admin) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-   
+
     const passwordMatch = await bcrypt.compare(password, admin.password);
 
     if (!passwordMatch) {
@@ -618,7 +675,7 @@ app.post('/api/adminLogin',async (req,res)=>{
 
 
 
-    res.status(200).json({ message: 'Authentication successful' });
+    res.status(200).json({ status: "ok" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to authenticate' });
@@ -628,7 +685,7 @@ app.post('/api/adminLogin',async (req,res)=>{
 
 //resume feedback
 
-app.post('/api/resumeUpload', async (req, res) => {
+app.post('/api/ Upload', async (req, res) => {
   const { usn, resumeData } = req.body;
 
   try {
@@ -657,11 +714,28 @@ app.post('/api/resumeUpload', async (req, res) => {
     res.status(500).json({ error: 'Failed to upload resume' });
   }
 });
+app.post('/api/checkApplicationStatus', async (req, res) => {
+  try {
+    const { usn, jobid } = req.body;
+
+    // Find the application
+    const application = await AppliedCandidate.findOne({ usn, jobid });
+
+    if (application) {
+      res.json({ applied: true, status: application.status });
+    } else {
+      res.json({ applied: false, status: null });
+    }
+  } catch (error) {
+    console.error('Error checking application status:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 //feedback resume
 app.post('/api/resume/feedback/:usn', async (req, res) => {
   const usn = req.params.usn;
-  const {  feedback } = req.body;
+  const { feedback } = req.body;
 
   try {
     // Check if the resume exists
@@ -695,8 +769,10 @@ app.post('/api/resume/feedback/:usn', async (req, res) => {
 
 //update the feedback
 app.put('/api/resume/feedback/:usn', async (req, res) => {
-  const usn = req.params.usn;
-  const { company, feedback } = req.body;
+  console.log("HI33")
+  const usn = `"${req.params.usn}"`;
+  console.log(req.body)
+  const { feedback } = req.body;
 
   try {
     // Find the resume feedback by usn
