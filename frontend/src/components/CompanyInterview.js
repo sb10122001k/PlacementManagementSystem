@@ -1,9 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component ,useState,useEffect} from 'react';
 import { Navbar, Container, Nav, Form, Table, Button ,Dropdown} from 'react-bootstrap'
 
 
 
 const CompanyInterview = () => {
+    const [interviews, setInterviews] = useState([]);
+  const usn=localStorage.getItem('token')
+
+  useEffect(() => {
+    fetch(`http://localhost:1337/api/companySechdule/${usn}`)
+      .then(response => response.json())
+      .then(data => {
+        setInterviews(data);
+        console.log(data)
+      })
+      .catch(error => {
+        console.error('Error fetching interview data:', error);
+      });
+  }, []);
     return (
         <div>
 
@@ -17,9 +31,9 @@ const CompanyInterview = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="Home">Home</Nav.Link>
-                            <Nav.Link href="Schedule">Job Posting</Nav.Link>
-                            <Nav.Link href="Resume">Interviews</Nav.Link>
+                            <Nav.Link href="CompanyHome">Home</Nav.Link>
+                            <Nav.Link href="CompanyJobPosting">Job Posting</Nav.Link>
+                            <Nav.Link href="CompanyInterview">Interviews</Nav.Link>
                         </Nav>
 
 

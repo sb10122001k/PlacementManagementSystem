@@ -78,6 +78,12 @@ const StudentResume = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
 
       <div className="container text-center">
         <div className="row justify-content-start">
@@ -86,7 +92,7 @@ const StudentResume = () => {
             <a href="/">
               <Button bg="dark" variant="light">
                 <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="https://files.jotform.com/jotformapps/a0b5d7e5e5cce2962a6c722e8a0d4e78.png" />
+                <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/resume-icon-vector-job-application-cv-sign-graphic-design-logo-web-site-social-media-mobile-app-ui-illustration-resume-icon-215388315.jpg" />
                   <Card.Body>
                     <Card.Title>Download Resume</Card.Title>
                   </Card.Body>
@@ -97,7 +103,7 @@ const StudentResume = () => {
             <a href="/ResumeCreate">
               <Button bg="dark" variant="light">
                 <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="https://files.jotform.com/jotformapps/a0b5d7e5e5cce2962a6c722e8a0d4e78.png" />
+                <Card.Img variant="top" src="https://i.pinimg.com/474x/63/47/43/6347437bd768b80657f60bf78de91c45--resume-writing-services-accounting-services.jpg" height="300" />
                   <Card.Body>
                     <Card.Title>Create Resume</Card.Title>
                   </Card.Body>
@@ -108,7 +114,7 @@ const StudentResume = () => {
            
             <Button bg="dark" variant="light" onClick={handleCardClick}>
               <Card style={{ width: '18rem', height: '22rem' }}>
-                <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/remainder-icon-alarm-259563488.jpg" />
+                <Card.Img variant="top" src="https://www.shutterstock.com/image-vector/job-search-logo-unique-vector-260nw-787885846.jpg"  height="300" />
                 <Card.Body>
                   <Card.Title>Upload Resume</Card.Title>
                 </Card.Body>
@@ -117,7 +123,6 @@ const StudentResume = () => {
           </div>
         </div>
         <br />
-        <Button variant="dark">Download</Button>
       </div>
 
       {/* Upload Resume Dialog */}

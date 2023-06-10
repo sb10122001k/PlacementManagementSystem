@@ -31,9 +31,9 @@ const StudentProfile = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="Home">Home</Nav.Link>
-                            <Nav.Link href="Schedule">Schedule</Nav.Link>
-                            <Nav.Link href="Resume">Resume</Nav.Link>
+                            <Nav.Link href="StudentHome">Home</Nav.Link>
+                            <Nav.Link href="StudentSchedule">Schedule</Nav.Link>
+                            <Nav.Link href="StudentResume">Resume</Nav.Link>
                         </Nav>
 
 

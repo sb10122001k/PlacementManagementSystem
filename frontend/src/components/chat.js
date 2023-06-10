@@ -25,6 +25,8 @@ const ChatPage = () => {
           <div
             key={index}
             style={{
+              maxHeight: '100px',
+
               backgroundColor: '#f2f2f2',
               padding: '5px',
               marginBottom: '5px'

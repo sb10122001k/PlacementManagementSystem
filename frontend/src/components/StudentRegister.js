@@ -253,15 +253,16 @@ const StudentRegister = () => {
             />
           </Form.Group>
         </Row>
+<br></br>
 
         <h3>Educational Qualification</h3>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridSchoolName1">
-            <Form.Label>School Name 1</Form.Label>
+            <Form.Label>Institute Name </Form.Label>
             <Form.Control
               type="text"
               name="schoolName1"
-              placeholder="School Name"
+              placeholder="Institute Name"
               value={formData.schoolName1}
               onChange={handleChange}
             />
@@ -325,11 +326,11 @@ const StudentRegister = () => {
 
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridSchoolName2">
-            <Form.Label>School Name 2</Form.Label>
+            <Form.Label>Institute Name</Form.Label>
             <Form.Control
               type="text"
               name="schoolName2"
-              placeholder="School Name"
+              placeholder="Institute Name"
               value={formData.schoolName2}
               onChange={handleChange}
             />
@@ -390,6 +391,7 @@ const StudentRegister = () => {
             />
           </Form.Group>
         </Row>
+<br></br>
 
         <h3>College Qualification</h3>
         <Row className="mb-3">
@@ -498,9 +500,12 @@ const StudentRegister = () => {
           </Form.Group>
         </Row>
 
-        <Button variant="primary" type="submit">
+        <Button variant="dark" type="submit">
           Submit
         </Button>
+        <br></br>
+        <br></br>
+        <br></br>
       </div>
     </Form>
   );

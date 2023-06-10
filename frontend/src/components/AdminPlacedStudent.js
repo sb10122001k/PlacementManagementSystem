@@ -17,8 +17,8 @@ const AdminPlacedStudent = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
+                          <Nav.Link href="AdminHome">Home</Nav.Link>
                             <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
-                            <Nav.Link href="AdminStudentsApplied">Applicants</Nav.Link>
                             <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
                         </Nav>
 

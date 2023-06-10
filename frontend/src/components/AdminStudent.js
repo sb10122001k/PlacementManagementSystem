@@ -37,9 +37,9 @@ const AdminStudent = () => {
                             className="me-auto my-1 my-lg-0"
                             style={{ maxHeight: '100px' }}
                             navbarScroll>
-                            <Nav.Link href="Home">Home</Nav.Link>
-                            <Nav.Link href="Schedule">Job Posting</Nav.Link>
-                            <Nav.Link href="Resume">Interviews</Nav.Link>
+                            <Nav.Link href="AdminHome">Home</Nav.Link>
+                            <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
+                            <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
                         </Nav>
 
 

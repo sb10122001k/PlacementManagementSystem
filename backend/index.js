@@ -29,25 +29,48 @@ app.get('/api/studentProfile', async (req, res) => {
 
 })
 
-app.post('/api/finalScheduleSelection',async(req,res)=>{
-  console.log(req.body)
+app.get('/api/sechdule/:usn',async(req,res)=>{
+  const usn=req.params.usn
+  StudentInterview.find({usn:usn})
+  .then(interviews => res.json(interviews))
+  .catch(error => {
+    console.error('Error fetching interview data', error);
+    res.status(500).json({ message: 'Failed to fetch interview data' });
+  });
+})
+
+app.post('/api/finalScheduleSelection', async (req, res) => {
+  console.log(req.body);
 
   const studentInterview = new StudentInterview({
     usn: req.body.usn,
-    meetingLink:  req.body.meetingLink,
-    companyEmail:  req.body.companyEmail,
-    date:  req.body.slot.date,
-    time:  req.body.slot.time
+    meetingLink: req.body.meetingLink,
+    companyEmail: req.body.companyEmail,
+    date: req.body.date,
+    time: req.body.time,
   });
-  studentInterview.save()
-    .then(() => {
-      res.status(200).json({ message: 'Interview scheduled successfully' });
-    })
-    .catch((error) => {
-      res.status(500).json({ error: 'Failed to schedule interview' });
-    });
 
-})
+  try {
+    await studentInterview.save();
+    const jobId = req.body.did;
+    
+   try {
+    const result = await CompanyInterview.deleteOne({ _id: jobId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Job posting not found' });
+    }
+
+    res.json({ message: 'Job posting deleted successfully' });
+  }
+  catch (error){
+    console.log(error)
+  }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to schedule interview' });
+  }
+});
+
 
 app.get('/api/companySechdule/:companyEmail', (req, res) => {
   

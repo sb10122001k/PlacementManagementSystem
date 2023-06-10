@@ -31,32 +31,51 @@ const StudentResume = () => {
                                 <Button variant="outline-light">Search</Button>
                             </Form>
                         </div>
-                        <Dropdown className="me-auto my-1 my-lg-0">
-                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
+                        <Button variant="outline-dark">
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
-                                
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        </Button>
 
 
 
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+
             <div class="container text-center">
+                <div class="row justify-content-start">
+                    <div className="d-flex justify-content-around">
+                        <a href='/'>
+                            <Button bg='dark' variant="light">
+                                <Card style={{ width: '18rem' }}>
+                                    <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/resume-icon-vector-job-application-cv-sign-graphic-design-logo-web-site-social-media-mobile-app-ui-illustration-resume-icon-215388315.jpg" />
+                                    <Card.Body>
+                                        <Card.Title>Download Resume</Card.Title>
+                                    </Card.Body>
+                                </Card>
+                            </Button>
+                        </a>
+                        <a href='/'>
+                            <Button bg='dark' variant="light">
+                                <Card style={{ width: '18rem', height: '22rem' }}>
+                                    <Card.Img variant="top" src="https://www.shutterstock.com/image-vector/job-search-logo-unique-vector-260nw-787885846.jpg"  height="300" />
+                                    <Card.Body>
+                                        <Card.Title>Upload Resume</Card.Title>
+                                    </Card.Body>
+                                </Card>
+                            </Button>
+                        </a>
+                    </div>
+                </div>
                 <br></br>
-                <br></br>
-                <h1 class="container text-center">Resume</h1>
 
-                <br></br>
-                <Button variant="dark">Download</Button>
-
-               </div>
+            </div>
         </div>
     );
 }

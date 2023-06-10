@@ -18,7 +18,7 @@ const CoverLetter = () => {
     return (
         <div>
 
-            <div class="container text-center" >
+            <div className="container text-justify" align="justify" >
                 <br></br>
                 <br></br>
                 <h1 class="container text-left">{data.name}</h1>
@@ -40,14 +40,17 @@ const CoverLetter = () => {
                     <br></br>
                     {data.letterContent}
                     <br></br>
+                    <br></br>
                     kind regards,
                     <br></br>
                     {data.name}
                 </h6>
+                <br></br>
+                <br></br>
 
                 
                 <Button id="createButton" variant="dark" onClick={createLetter}>
-                    Create
+                    Download
                 </Button>
 
 

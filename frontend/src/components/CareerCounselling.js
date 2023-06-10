@@ -15,13 +15,13 @@ const CareerCounselling = () => {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="me-auto my-1 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-              <Nav.Link as={Link} to="/Home">
+              <Nav.Link as={Link} to="/StudentHome">
                 Home
               </Nav.Link>
-              <Nav.Link as={Link} to="/Schedule">
+              <Nav.Link as={Link} to="/StudentSchedule">
                 Schedule
               </Nav.Link>
-              <Nav.Link as={Link} to="/Resume">
+              <Nav.Link as={Link} to="/StudentResume">
                 Resume
               </Nav.Link>
             </Nav>

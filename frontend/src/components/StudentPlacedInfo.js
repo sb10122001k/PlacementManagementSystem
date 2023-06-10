@@ -16,9 +16,9 @@ const StudentPlacedInfo = () => {
                             className="me-auto my-1 my-lg-0"
                             style={{ maxHeight: '100px' }}
                             navbarScroll>
-                            <Nav.Link href="Home">Home</Nav.Link>
-                            <Nav.Link href="Schedule">Job Posting</Nav.Link>
-                            <Nav.Link href="Resume">Interviews</Nav.Link>
+                            <Nav.Link href="StudentHome">Home</Nav.Link>
+                            <Nav.Link href="StudentSchedule">Job Posting</Nav.Link>
+                            <Nav.Link href="StudentResume">Interviews</Nav.Link>
                         </Nav>
 
 

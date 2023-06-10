@@ -74,9 +74,9 @@ const StudentHiringView = () => {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="me-auto my-1 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-              <Nav.Link href="Home">Home</Nav.Link>
-              <Nav.Link href="Schedule">Schedule</Nav.Link>
-              <Nav.Link href="Resume">Resume</Nav.Link>
+              <Nav.Link href="StudentHome">Home</Nav.Link>
+              <Nav.Link href="StudentSchedule">Schedule</Nav.Link>
+              <Nav.Link href="StudentResume">Resume</Nav.Link>
             </Nav>
 
             <div className="col-md-6 mx-auto">

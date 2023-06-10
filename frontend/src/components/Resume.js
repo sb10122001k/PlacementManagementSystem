@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import html2pdf from 'html2pdf.js';
 
 const Resume = () => {
     const location = useLocation();
@@ -36,10 +35,10 @@ const Resume = () => {
                 {/* Resume content */}
                 <h1 className="container text-center">{otherData?.firstName} {otherData?.lastName}</h1>
                 {otherData && (
-                    <h6>
-                        <li align="left">{otherData.email}</li>
-                        <li align="center">{resumedata.linkedinId}</li>
-                        <li align="right">{otherData.contactNumber}</li>
+                    <h6 className="container text-center">
+                        <ul>{otherData.email}</ul>
+                        <ul>{resumedata.linkedinId}</ul>
+                        <ul>{otherData.contactNumber}</ul>
                     </h6>
                 )}
                 {/* Rest of the resume */}

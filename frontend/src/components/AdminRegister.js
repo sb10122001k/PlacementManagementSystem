@@ -36,6 +36,8 @@ const AdminRegister = () => {
     return (
         <Form onSubmit={registerAdmin}>
             <br></br>
+            <br></br>
+            <br></br>
             <h1 className="container text-center">Admin Register</h1>
             <br></br>
 

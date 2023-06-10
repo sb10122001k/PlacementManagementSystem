@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Container, Nav, Form, Row, Col, Button, Figure, Card , Dropdown } from 'react-bootstrap'
+import { Navbar, Container, Nav, Form, Row, Col, Button, Figure, Card,Dropdown } from 'react-bootstrap'
 
 
 
@@ -17,9 +17,9 @@ const CompanyHome = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="Home">Home</Nav.Link>
-                            <Nav.Link href="Schedule">Job Posting</Nav.Link>
-                            <Nav.Link href="Resume">Interviews</Nav.Link>
+                            <Nav.Link href="CompanyHome">Home</Nav.Link>
+                            <Nav.Link href="CompanyJobPosting">Job Posting</Nav.Link>
+                            <Nav.Link href="CompanyInterview">Interviews</Nav.Link>
                         </Nav>
 
 
@@ -80,14 +80,14 @@ const CompanyHome = () => {
                         <a href='/ViewJobPosting'>
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="https://static.vecteezy.com/system/resources/previews/015/280/523/non_2x/job-logo-icon-with-tie-image-free-vector.jpg" />
+                                <Card.Img variant="top" src="https://static.vecteezy.com/system/resources/thumbnails/008/201/149/small/education-logo-graduation-cap-education-icon-university-logo-template-design-vector.jpg" />
                                 <Card.Body>
                                     <Card.Title>Job Posted</Card.Title>
                                 </Card.Body>
                             </Card>
                         </Button>
                         </a>
-                        <a href="/CompanyInterviewSchedule">
+                        <a href="/CompanyInterview">
                         <Button bg='dark' variant="light">
                             <Card style={{ width: '18rem', height: '22rem' }}>
                                 <Card.Img variant="top" src="https://cdn.vectorstock.com/i/preview-1x/15/78/interview-icon-on-white-background-vector-26901578.jpg" />
