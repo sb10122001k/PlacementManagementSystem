@@ -249,9 +249,9 @@ app.get('/api/appliedcandidatesadmin', async (req, res) => {
   console.log("HI")
   try {
     const appliedCandidates = await AppliedCandidate.find()
-      .populate('usn', 'firstName lastName email')
-      .populate('jobid', 'jobRole')
-      .populate('jobid.companyEmail', 'companyName');
+      // .populate('usn', 'firstName lastName email')
+      // .populate('jobid', 'jobRole')
+      // .populate('jobid.companyEmail', 'companyName');
       console.log(appliedCandidates)
       
     const formattedCandidates = appliedCandidates.map((candidate) => ({
