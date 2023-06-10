@@ -58,7 +58,7 @@ const StudentHome = () => {
                         </Dropdown>
 
 
-                           
+
 
                     </Navbar.Collapse>
                 </Container>
@@ -184,6 +184,22 @@ const StudentHome = () => {
 
 
 
+                    </div>
+                </div>
+            </div>
+            <br></br>
+            <div class="container text-center">
+                <div class="row justify-content-start">
+                    <div className="d-flex justify-content-around">
+
+                        <Button bg='dark' variant="light">
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="https://img.freepik.com/premium-vector/feedback-concept-line-icon-simple-element-illustration-feedback-concept-outline-symbol-design-can-be-used-web-mobile-ui-ux_159242-3724.jpg" />
+                                <Card.Body>
+                                    <Card.Title>Feedback</Card.Title>
+                                </Card.Body>
+                            </Card>
+                        </Button>
                     </div>
                 </div>
             </div>
