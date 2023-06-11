@@ -121,9 +121,10 @@ app.post('/api/scheduleInterviewCompany', (req, res) => {
 
 
 
-app.get('/api/getResume/:usn', async (req, res) => {
+app.get('/api/getResume', async (req, res) => {
+    console.log("Req")
   try {
-    const usnPdf = await Resume.findOne({ usn: req.params.usn });
+    const usnPdf = await Resume.findOne({ usn: "1CD19EC055"});
 
     if (!usnPdf || !usnPdf.resume.data) {
 
