@@ -28,8 +28,7 @@ const CompanyInterview = () => {
 
     return (
         <div>
-
-            <Navbar bg="dark" variant='dark' expand="lg">
+<Navbar bg="dark" variant='dark' expand="lg">
                 <Container fluid>
                     <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
                     <Navbar.Toggle aria-controls="navbarScroll" />
@@ -40,7 +39,7 @@ const CompanyInterview = () => {
                             navbarScroll
                         >
                             <Nav.Link href="CompanyHome">Home</Nav.Link>
-                            <Nav.Link href="CompanyJobPosting">Job Posting</Nav.Link>
+                            <Nav.Link href="NewJobPosting">Job Posting</Nav.Link>
                             <Nav.Link href="CompanyInterview">Interviews</Nav.Link>
                         </Nav>
 
@@ -58,15 +57,17 @@ const CompanyInterview = () => {
                         </div>
                         <Dropdown className="me-auto my-1 my-lg-0">
                             <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
-                                <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
+                            <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
                                 <Dropdown.Item href="/">Log Out</Dropdown.Item>
-
+                                
                             </Dropdown.Menu>
                         </Dropdown>
+
+
 
                     </Navbar.Collapse>
                 </Container>

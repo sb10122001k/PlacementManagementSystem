@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Navbar, Container, Nav, Form, Button } from 'react-bootstrap'
+import { Navbar, Container, Nav, Form, Button ,Dropdown} from 'react-bootstrap'
 
 const AdminCompanyView = () => {
     return (  
             <div>
-                <Navbar bg="dark" variant='dark' expand="lg">
+                 <Navbar bg="dark" variant='dark' expand="lg">
                 <Container fluid>
                     <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
                     <Navbar.Toggle aria-controls="navbarScroll" />
@@ -14,9 +14,9 @@ const AdminCompanyView = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="AdminHome">Home</Nav.Link>
-                            <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
-                            <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
+                            <Nav.Link href="/AdminHome">Home</Nav.Link>
+                            <Nav.Link href="/AdminJobPosting">Job Posted</Nav.Link>
+                            <Nav.Link href="/AdminPlacedStudent">Placed Students</Nav.Link>
                         </Nav>
 
 
@@ -39,7 +39,7 @@ const AdminCompanyView = () => {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/StudentLogIn">Log Out</Dropdown.Item>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
                                 
                             </Dropdown.Menu>
                         </Dropdown>
@@ -54,7 +54,7 @@ const AdminCompanyView = () => {
                     <h1 class="container text-center">Google</h1>
 
                     <br></br>
-                    <h5 class="container text-justify">
+                    <h5 class="container text-justify" align="left">
                         <img align="right" src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/google-logo.png" height="180" width="171" />
 
                         <b>Website Link:</b>   <a href="">Website Link</a>

@@ -14,9 +14,9 @@ const AdminHome = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="AdminHome">Home</Nav.Link>
-                            <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
-                            <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
+                            <Nav.Link href="/AdminHome">Home</Nav.Link>
+                            <Nav.Link href="/AdminJobPosting">Job Posted</Nav.Link>
+                            <Nav.Link href="/AdminPlacedStudent">Placed Students</Nav.Link>
                         </Nav>
 
 
@@ -32,14 +32,22 @@ const AdminHome = () => {
                             </Form>
                         </div>
 
-                        <Button variant="outline-dark">
+                        <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
-                        </Button>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
 
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+
 
             <Figure>
                 <Figure.Image
@@ -108,7 +116,7 @@ const AdminHome = () => {
                         <a href='/admin/placedStudent'>
                             <Button bg='dark' variant="light">
                                 <Card style={{ width: '18rem' }}>
-                                    <Card.Img variant="top" src="https://t3.ftcdn.net/jpg/01/38/23/38/360_F_138233891_TglN1sHLp63fI4j0NZ2I6rdtJiV0tmJD.jpg" />
+                                    <Card.Img variant="top" src="https://t3.ftcdn.net/jpg/01/38/23/38/360_F_138233891_TglN1sHLp63fI4j0NZ2I6rdtJiV0tmJD.jpg" height={290} />
                                     <Card.Body>
                                         <Card.Title>Placed Students</Card.Title>
                                     </Card.Body>

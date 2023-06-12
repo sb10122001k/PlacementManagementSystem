@@ -18,7 +18,7 @@ const CompanyHome = () => {
                             navbarScroll
                         >
                             <Nav.Link href="CompanyHome">Home</Nav.Link>
-                            <Nav.Link href="CompanyJobPosting">Job Posting</Nav.Link>
+                            <Nav.Link href="NewJobPosting">Job Posting</Nav.Link>
                             <Nav.Link href="CompanyInterview">Interviews</Nav.Link>
                         </Nav>
 

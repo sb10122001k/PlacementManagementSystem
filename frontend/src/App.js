@@ -55,6 +55,7 @@ import CoverLetter from './components/CoverLetter';
 import CompanyInterview from './components/CompanyInterview'
 import StudentResume from './components/PdfViewer';
 import FeedbackTable from './components/Feedback';
+import AdminCompanyView from './components/AdminCompanyView';
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path='/ResumeCreate' element={<ResumeDetail />} />
           <Route path='/createResume' element={<Createresume />} />
           <Route path='/' element={<Home />} />
+          <Route path='/adminCompanyView' element={<AdminCompanyView />} />
           <Route path='/Feedback' element={<FeedbackTable />} />
           <Route path='/StudentResume' element={<StudentResume />} />
           <Route path='/CompanyInterview' element ={<CompanyInterview/>}/>
@@ -96,7 +98,6 @@ function App() {
           <Route path='/ViewJobPosting' element={<AllJobPosted />} />
           <Route path='/LOSA' element={<LOSA />} />
           <Route path='/scheduleInterview' element={<InterviewForm />} />
-          {/* <Route path='/UploadResume' element={<UploadResume />} /> */}
           <Route path='/StudentSlotSelection' element={<StudentSlotSelection />} />
           <Route path='/StudentSchedule' element={<StudentSchedule />} />
           <Route path='/StudentScheduled' element={<StudentScheduled />} />
@@ -113,7 +114,9 @@ function App() {
           <Route path="/analytics-reporting" element={<StudentAnalyticsandRepo/>} />    
           <Route path="/student-academics" element={<StudentsAcademics/>}/>      
           <Route path='/viewCandidateResume' usn={localStorage.getItem('usn')} element={<ViewCandidateResume />} />
-
+          <Route path="/AdminHome" element={<AdminHome/>}/>      
+          <Route path="/AdminJobPosting" element={<AdminJobPosting/>}/>   
+          <Route path="/AdminPlacedStudent" element={<AdminPlacedStudent/>}/>
 
 
         </Routes>

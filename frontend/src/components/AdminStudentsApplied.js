@@ -3,7 +3,7 @@ import { Navbar, Container, Nav, Form, Button, Table, Dropdown } from 'react-boo
 import { useNavigate } from 'react-router-dom';
 const AdminStudentsApplied = () => {
     const [postingData, setPostingData] = useState([]);
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     useEffect(() => {
         fetch('http://localhost:1337/api/appliedcandidatesadmin')
             .then((response) => response.json())
@@ -32,6 +32,7 @@ const AdminStudentsApplied = () => {
 
     return (
         <div>
+
             <Navbar bg="dark" variant='dark' expand="lg">
                 <Container fluid>
                     <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
@@ -40,10 +41,11 @@ const AdminStudentsApplied = () => {
                         <Nav
                             className="me-auto my-1 my-lg-0"
                             style={{ maxHeight: '100px' }}
-                            navbarScroll>
-                            <Nav.Link href="AdminHome">Home</Nav.Link>
-                            <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
-                            <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
+                            navbarScroll
+                        >
+                            <Nav.Link href="/AdminHome">Home</Nav.Link>
+                            <Nav.Link href="/AdminJobPosting">Job Posted</Nav.Link>
+                            <Nav.Link href="/AdminPlacedStudent">Placed Students</Nav.Link>
                         </Nav>
 
 
@@ -58,23 +60,22 @@ const AdminStudentsApplied = () => {
                                 <Button variant="outline-light">Search</Button>
                             </Form>
                         </div>
+
                         <Dropdown className="me-auto my-1 my-lg-0">
                             <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
-                            <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
+                                <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
                                 <Dropdown.Item href="/">Log Out</Dropdown.Item>
-                                
+
                             </Dropdown.Menu>
                         </Dropdown>
 
-
-
                     </Navbar.Collapse>
                 </Container>
-            </Navbar>   
+            </Navbar>
             <br />
             <br />
             <h1 className="container text-center">Students Applied</h1>

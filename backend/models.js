@@ -103,10 +103,7 @@ const ChatSchema = new mongoose.Schema({
 const JobPostingSchema = new mongoose.Schema({
   companyEmail: {
     type: String,
-    
-    type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref : 'Company'
   },
   jobRole: {
     type: String,
@@ -338,7 +335,7 @@ const ResumeTemplateSchema = new mongoose.Schema({
 module.exports = {
   Student: mongoose.model('student', StudentSchema),
   Company: mongoose.model('company', CompanySchema),
-  Posting: mongoose.model('posting', JobPostingSchema),
+  Posting: mongoose.model('jobposting', JobPostingSchema),
   Resume:mongoose.model('resume',ResumeSchema),
   ResumeFeedback : mongoose.model('resumefeedback', ResumeFeedbackSchema),
   AppliedCandidate: mongoose.model('appliedCandidateSchema',AppliedCandidateSchema),

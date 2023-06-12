@@ -43,6 +43,9 @@ const CompanyJobPosting = () => {
         if(data.status === 'ok'){
             navigate('/CompanyHome', { replace: true })
         }
+        else{
+            console.log(data)
+        }
     
     }
     
@@ -63,7 +66,7 @@ const CompanyJobPosting = () => {
                             navbarScroll
                         >
                             <Nav.Link href="CompanyHome">Home</Nav.Link>
-                            <Nav.Link href="CompanyJobPosting">Job Posting</Nav.Link>
+                            <Nav.Link href="NewJobPosting">Job Posting</Nav.Link>
                             <Nav.Link href="CompanyInterview">Interviews</Nav.Link>
                         </Nav>
 

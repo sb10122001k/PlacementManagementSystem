@@ -547,7 +547,7 @@ app.post('/api/registerCompany', async (req, res) => {
     const company = await newCompany.save()
 
 
-    res.status(200).json(company)
+    res.status(200).json({ message: 'ok' })
   } catch (err) {
     console.log(err);
   }
@@ -613,6 +613,7 @@ app.post('/api/newJobPosting', async (req, res) => {
     res.status(201).json(savedJobPosting);
 
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: error.message });
   }
 });
@@ -801,7 +802,7 @@ app.post('/api/changeJobStatus', async (req, res) => {
     res.status(200).json({ message: 'Job status changed successfully.' });
   } catch (error) {
     // Handle error
-    console.error(error);
+    console.log(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

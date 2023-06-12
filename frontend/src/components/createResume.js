@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, Container, Nav, Form, Button, Card, Modal } from 'react-bootstrap';
+import { Navbar, Container, Nav, Form, Button, Card, Modal,Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const StudentResume = () => {
@@ -53,7 +53,7 @@ const StudentResume = () => {
             >
               <Nav.Link href="StudentHome">Home</Nav.Link>
               <Nav.Link href="StudentSchedule">Schedule</Nav.Link>
-              <Nav.Link href="StudentResume">Resume</Nav.Link>
+              <Nav.Link href="createResume">Resume</Nav.Link>
             </Nav>
 
 
@@ -68,10 +68,17 @@ const StudentResume = () => {
                 <Button variant="outline-light">Search</Button>
               </Form>
             </div>
-            <Button variant="outline-dark">
-              <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
+            <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
+                            <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
-            </Button>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
 
 
 
@@ -89,16 +96,7 @@ const StudentResume = () => {
         <div className="row justify-content-start">
           <div className="d-flex justify-content-around">
             
-            <a href="/">
-              <Button bg="dark" variant="light">
-                <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/resume-icon-vector-job-application-cv-sign-graphic-design-logo-web-site-social-media-mobile-app-ui-illustration-resume-icon-215388315.jpg" />
-                  <Card.Body>
-                    <Card.Title>Download Resume</Card.Title>
-                  </Card.Body>
-                </Card>
-              </Button>
-            </a>
+            
 
             <a href="/ResumeCreate">
               <Button bg="dark" variant="light">

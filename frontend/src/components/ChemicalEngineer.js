@@ -16,7 +16,7 @@ const ChemicalEngineer = () => {
                         >
                             <Nav.Link href="StudentHome">Home</Nav.Link>
                             <Nav.Link href="StudentSchedule">Schedule</Nav.Link>
-                            <Nav.Link href="StudentResume">Resume</Nav.Link>
+                            <Nav.Link href="createResume">Resume</Nav.Link>
                         </Nav>
 
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Navbar, Container, Nav, Form, Button, Card, Figure, Dropdown } from 'react-bootstrap'
 
 function ResumeForm() {
   const navigate = useNavigate();
@@ -67,8 +68,52 @@ function ResumeForm() {
   };
 
   return (
+    <div>
+            <Navbar bg="dark" variant='dark' expand="lg">
+                <Container fluid>
+                    <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll">
+                        <Nav
+                            className="me-auto my-1 my-lg-0"
+                            style={{ maxHeight: '100px' }}
+                            navbarScroll
+                        >
+                            <Nav.Link href="/StudentHome">Home</Nav.Link>
+                            <Nav.Link href="/StudentSchedule">Schedule</Nav.Link>
+                            <Nav.Link href="/createResume">Resume</Nav.Link>
+                        </Nav>
+
+
+                        <div className="col-md-6 mx-auto" >
+                            <Form className="d-flex ">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+                                <Button variant="outline-light">Search</Button>
+                            </Form>
+                        </div>
+
+                        <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
+                            <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
+
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
+                        
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
     <div className="container" style={{ backgroundColor: '#f0f0f0' }}>
-      <h1 className="mb-4">Create or Upload Resume</h1>
+      <h1 className="mb-4">Create Resume</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="linkedinId" className="form-label">
@@ -148,10 +193,11 @@ function ResumeForm() {
             onChange={(e) => setHobbies(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-dark">
           Submit
         </button>
       </form>
+    </div>
     </div>
   );
 }

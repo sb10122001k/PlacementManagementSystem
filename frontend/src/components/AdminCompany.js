@@ -6,7 +6,6 @@ import { Navbar, Container, Nav, Form, Row, Col, Button, Figure, Card, Table, Dr
 
 const  AdminCompany = () => {
     const [postingData, setPostingData] = useState()
-
     useEffect(() => {
         console.log(localStorage.getItem('userid'))
         fetch('http://localhost:1337/api/getallcompany')
@@ -26,6 +25,7 @@ const  AdminCompany = () => {
                 });
             })
     }, [])
+    
     return (  
             <div>
 
@@ -39,9 +39,9 @@ const  AdminCompany = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="AdminHome">Home</Nav.Link>
-                            <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
-                            <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
+                            <Nav.Link href="/AdminHome">Home</Nav.Link>
+                            <Nav.Link href="/AdminJobPosting">Job Posted</Nav.Link>
+                            <Nav.Link href="/AdminPlacedStudent">Placed Students</Nav.Link>
                         </Nav>
 
 
@@ -57,7 +57,7 @@ const  AdminCompany = () => {
                             </Form>
                         </div>
 
-                       <Dropdown className="me-auto my-1 my-lg-0">
+                        <Dropdown className="me-auto my-1 my-lg-0">
                             <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
@@ -72,7 +72,6 @@ const  AdminCompany = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-
                 <br></br>
                 <br></br>
 
@@ -85,7 +84,6 @@ const  AdminCompany = () => {
                                 <th>Company Name</th>
                                 <th>WebSite Link</th>
                                 <th>Email</th>
-                                <th>Know More</th>
 
                             </tr>
                         </thead>
@@ -95,7 +93,7 @@ const  AdminCompany = () => {
                                 <td>{posting.name}</td>
                                 <td><a href={`http://${posting.website}`} target="_blank" rel="noopener noreferrer">{posting.website}</a></td>
                                 <td type="email">{posting.email}</td>
-                                <td>      <Button variant="dark">View</Button>{' '}</td>
+                                
                             </tr>
                         )}   
                         </tbody>

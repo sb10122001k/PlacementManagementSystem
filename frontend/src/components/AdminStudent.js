@@ -1,11 +1,15 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Navbar, Container, Nav, Form, Row, Col, Button, Figure, Card, Table ,Dropdown} from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom';
 
 const AdminStudent = () => {
     const [postingData, setPostingData] = useState()
-    const navigate=useNavigate();
+    const navigate=useNavigate()
+    const openResume = (usn) => {
+        navigate('/StudentResume', { state: { usn: usn } })
+    };
+
     useEffect(() => {
         console.log(localStorage.getItem('userid'))
         fetch('http://localhost:1337/api/getallstudent')
@@ -25,14 +29,10 @@ const AdminStudent = () => {
                 });
             })
     }, [])
-
-    const openResume = (usn) => {
-        navigate('/StudentResume',{ state: { usn: usn } })
-      };
     return (
         <div>
 
-            <Navbar bg="dark" variant='dark' expand="lg">
+<Navbar bg="dark" variant='dark' expand="lg">
                 <Container fluid>
                     <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
                     <Navbar.Toggle aria-controls="navbarScroll" />
@@ -40,10 +40,11 @@ const AdminStudent = () => {
                         <Nav
                             className="me-auto my-1 my-lg-0"
                             style={{ maxHeight: '100px' }}
-                            navbarScroll>
-                            <Nav.Link href="AdminHome">Home</Nav.Link>
-                            <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
-                            <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
+                            navbarScroll
+                        >
+                            <Nav.Link href="/AdminHome">Home</Nav.Link>
+                            <Nav.Link href="/AdminJobPosting">Job Posted</Nav.Link>
+                            <Nav.Link href="/AdminPlacedStudent">Placed Students</Nav.Link>
                         </Nav>
 
 
@@ -58,6 +59,7 @@ const AdminStudent = () => {
                                 <Button variant="outline-light">Search</Button>
                             </Form>
                         </div>
+
                         <Dropdown className="me-auto my-1 my-lg-0">
                             <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
@@ -69,8 +71,6 @@ const AdminStudent = () => {
                                 
                             </Dropdown.Menu>
                         </Dropdown>
-
-
 
                     </Navbar.Collapse>
                 </Container>
@@ -100,9 +100,7 @@ const AdminStudent = () => {
                             <td>{posting.usn}</td>
                             <td>{posting.specialization}</td>
                             <td>{posting.currentSemester}</td>
-                            <td>
-                                        <button onClick={() => openResume(posting.usn)}>Resume</button>
-                                    </td>
+                            <td>      <button onClick={() => openResume(posting.usn)}>Resume</button>{' '}</td>
 
                         </tr>
                     )}

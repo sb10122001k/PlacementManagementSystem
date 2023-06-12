@@ -21,7 +21,7 @@ const CareerCounselling = () => {
               <Nav.Link as={Link} to="/StudentSchedule">
                 Schedule
               </Nav.Link>
-              <Nav.Link as={Link} to="/StudentResume">
+              <Nav.Link as={Link} to="/createResume">
                 Resume
               </Nav.Link>
             </Nav>

@@ -51,9 +51,10 @@ const AllJobPosted = () => {
                         <Nav
                             className="me-auto my-1 my-lg-0"
                             style={{ maxHeight: '100px' }}
-                            navbarScroll>
+                            navbarScroll
+                        >
                             <Nav.Link href="CompanyHome">Home</Nav.Link>
-                            <Nav.Link href="CompanyJobPosting">Job Posting</Nav.Link>
+                            <Nav.Link href="NewJobPosting">Job Posting</Nav.Link>
                             <Nav.Link href="CompanyInterview">Interviews</Nav.Link>
                         </Nav>
 
@@ -69,7 +70,7 @@ const AllJobPosted = () => {
                                 <Button variant="outline-light">Search</Button>
                             </Form>
                         </div>
-                      <Dropdown className="me-auto my-1 my-lg-0">
+                        <Dropdown className="me-auto my-1 my-lg-0">
                             <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 

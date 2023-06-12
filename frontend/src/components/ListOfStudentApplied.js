@@ -86,7 +86,7 @@ const ApplicationTable = () => {
     
     <div>
 
-            <Navbar bg="dark" variant='dark' expand="lg">
+<Navbar bg="dark" variant='dark' expand="lg">
                 <Container fluid>
                     <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
                     <Navbar.Toggle aria-controls="navbarScroll" />

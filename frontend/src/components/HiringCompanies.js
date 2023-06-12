@@ -51,7 +51,7 @@ const HiringCompanies = () => {
                         >
                             <Nav.Link href="StudentHome">Home</Nav.Link>
                             <Nav.Link href="StudentSchedule">Schedule</Nav.Link>
-                            <Nav.Link href="StudentResume">Resume</Nav.Link>
+                            <Nav.Link href="createResume">Resume</Nav.Link>
                         </Nav>
 
 
@@ -85,13 +85,16 @@ const HiringCompanies = () => {
             </Navbar>
             <br></br>
             <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
             {<div class="container ">
                 <div class="row justify-content-start">
                     <div className="d-flex justify-content-around">
                     {postingData?.map((posting) =>
                         <div>
                             <Card border="dark" style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/microsoft-logo.png" />
+                                <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/computer-network-logo-design-monitor-display-concept-sign-hardware-software-icon-modern-electronic-technology-symbol-computer-172576719.jpg" />
                                 <Card.Body>
                                     <Card.Title>{posting.jobRole}</Card.Title>
                                     <Card.Text>

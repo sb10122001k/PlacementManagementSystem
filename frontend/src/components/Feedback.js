@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 const FeedbackTable = () => {
   const [feedback, setFeedback] = useState([]);
-
+  const usn =localStorage.getItem('token')
   useEffect(() => {
-    fetch('http://localhost:1337/api/getfeedback/1CD19EC055')
+    fetch(`http://localhost:1337/api/getfeedback/${usn}`)
       .then((response) => response.json())
       .then((data) => {
         setFeedback(data);

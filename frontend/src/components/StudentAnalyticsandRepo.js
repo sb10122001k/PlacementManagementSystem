@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navbar, Container, Nav, Form, Button, Card, Figure, Dropdown } from 'react-bootstrap'
 
 const EngineeringSkillsTable = () => {
   const engineeringSkillsData = [
@@ -55,11 +56,57 @@ const EngineeringSkillsTable = () => {
   ];
 
   return (
+    <div>
+            <Navbar bg="dark" variant='dark' expand="lg">
+                <Container fluid>
+                    <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll">
+                        <Nav
+                            className="me-auto my-1 my-lg-0"
+                            style={{ maxHeight: '100px' }}
+                            navbarScroll
+                        >
+                            <Nav.Link href="/StudentHome">Home</Nav.Link>
+                            <Nav.Link href="/StudentSchedule">Schedule</Nav.Link>
+                            <Nav.Link href="/createResume">Resume</Nav.Link>
+                        </Nav>
+
+
+                        <div className="col-md-6 mx-auto" >
+                            <Form className="d-flex ">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+                                <Button variant="outline-light">Search</Button>
+                            </Form>
+                        </div>
+
+                        <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
+                            <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
+
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
+                        
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+            <br></br>
+            <br></br>
     <div style={{ textAlign: 'center' }}>
       <h1>Engineering Skills in Demand</h1>
+      <br></br>
       {engineeringSkillsData.map((departmentData) => (
         <div key={departmentData.department}>
-          <br></br>
           <h2>{departmentData.department}</h2>
           <table
             style={{
@@ -87,8 +134,11 @@ const EngineeringSkillsTable = () => {
               ))}
             </tbody>
           </table>
+          <br></br>
         </div>
+        
       ))}
+    </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 
 import React, { Component, useState, useEffect } from 'react';
-import { Navbar, Container, Nav, Form, Button, Card, Table } from 'react-bootstrap'
+import { Navbar, Container, Nav, Form, Button, Card, Table,Dropdown } from 'react-bootstrap'
 
 const StudentSlotSelection = () => {
 
@@ -58,7 +58,7 @@ const StudentSlotSelection = () => {
 
     return (
         <div>
-            <Navbar bg="dark" variant='dark' expand="lg">
+             <Navbar bg="dark" variant='dark' expand="lg">
                 <Container fluid>
                     <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
                     <Navbar.Toggle aria-controls="navbarScroll" />
@@ -70,7 +70,7 @@ const StudentSlotSelection = () => {
                         >
                             <Nav.Link href="StudentHome">Home</Nav.Link>
                             <Nav.Link href="StudentSchedule">Schedule</Nav.Link>
-                            <Nav.Link href="StudentResume">Resume</Nav.Link>
+                            <Nav.Link href="createResume">Resume</Nav.Link>
                         </Nav>
 
 
@@ -85,15 +85,23 @@ const StudentSlotSelection = () => {
                                 <Button variant="outline-light">Search</Button>
                             </Form>
                         </div>
-                        <Button variant="outline-dark">
+                        <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
                             <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
 
-                        </Button>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
 
 
 
                     </Navbar.Collapse>
                 </Container>
+            
             </Navbar>
             <br></br>
             <br></br>

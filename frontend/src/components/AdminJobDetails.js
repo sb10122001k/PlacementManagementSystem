@@ -9,6 +9,7 @@ const AdminJobDetails = () => {
     const jobid = postingData._id;
 
     const handleApply = async (e) => {
+
         e.preventDefault();
         try {
             const response = await fetch('http://localhost:1337/api/changeJobStatus', {
@@ -21,7 +22,7 @@ const AdminJobDetails = () => {
             });
       
             if (response.ok) {
-              // Handle successful response, e.g., show a success message
+                alert('Job Applied Successfully');
               console.log('Job status changed successfully.');
             } else {
               // Handle error response, e.g., show an error message
@@ -35,7 +36,7 @@ const AdminJobDetails = () => {
 
     return (
         <div>
-            <Navbar bg="dark" variant='dark' expand="lg">
+             <Navbar bg="dark" variant='dark' expand="lg">
                 <Container fluid>
                     <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
                     <Navbar.Toggle aria-controls="navbarScroll" />
@@ -45,9 +46,9 @@ const AdminJobDetails = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                           <Nav.Link href="AdminHome">Home</Nav.Link>
-                            <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
-                            <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
+                            <Nav.Link href="/AdminHome">Home</Nav.Link>
+                            <Nav.Link href="/AdminJobPosting">Job Posted</Nav.Link>
+                            <Nav.Link href="/AdminPlacedStudent">Placed Students</Nav.Link>
                         </Nav>
 
 
@@ -88,7 +89,7 @@ const AdminJobDetails = () => {
                 <h5 className="container text-justify" align="justify">
                     <img
                         align="right"
-                        src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/google-logo.png"
+                        src="https://thumbs.dreamstime.com/b/computer-network-logo-design-monitor-display-concept-sign-hardware-software-icon-modern-electronic-technology-symbol-computer-172576719.jpg"
                         height="180"
                         width="171"
                     />

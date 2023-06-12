@@ -36,7 +36,7 @@ const AdminJobPosting = () => {
 
     return (  
             <div>
-               <Navbar bg="dark" variant='dark' expand="lg">
+                <Navbar bg="dark" variant='dark' expand="lg">
                 <Container fluid>
                     <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
                     <Navbar.Toggle aria-controls="navbarScroll" />
@@ -46,9 +46,9 @@ const AdminJobPosting = () => {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Nav.Link href="AdminHome">Home</Nav.Link>
-                            <Nav.Link href="AdminJobPosting">Job Posted</Nav.Link>
-                            <Nav.Link href="AdminPlacedStudent">Placed Students</Nav.Link>
+                            <Nav.Link href="/AdminHome">Home</Nav.Link>
+                            <Nav.Link href="/AdminJobPosting">Job Posted</Nav.Link>
+                            <Nav.Link href="/AdminPlacedStudent">Placed Students</Nav.Link>
                         </Nav>
 
 
@@ -90,7 +90,7 @@ const AdminJobPosting = () => {
                         <div className="d-flex justify-content-around">
                         {postingData?.map((posting) =>
                             <Card border="dark" style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/microsoft-logo.png" />
+                                <Card.Img variant="top" src="https://thumbs.dreamstime.com/b/computer-network-logo-design-monitor-display-concept-sign-hardware-software-icon-modern-electronic-technology-symbol-computer-172576719.jpg" />
                                 <Card.Body>
                                     <Card.Title>{posting.Name}</Card.Title>
                                     <Card.Text>

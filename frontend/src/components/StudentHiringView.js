@@ -76,7 +76,7 @@ const StudentHiringView = () => {
             <Nav className="me-auto my-1 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
               <Nav.Link href="StudentHome">Home</Nav.Link>
               <Nav.Link href="StudentSchedule">Schedule</Nav.Link>
-              <Nav.Link href="StudentResume">Resume</Nav.Link>
+              <Nav.Link href="createResume">Resume</Nav.Link>
             </Nav>
 
             <div className="col-md-6 mx-auto">
@@ -109,7 +109,7 @@ const StudentHiringView = () => {
         <h5 className="container text-justify" align="justify">
           <img
             align="right"
-            src="https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/google-logo.png"
+            src="https://thumbs.dreamstime.com/b/computer-network-logo-design-monitor-display-concept-sign-hardware-software-icon-modern-electronic-technology-symbol-computer-172576719.jpg"
             height="180"
             width="171"
           />

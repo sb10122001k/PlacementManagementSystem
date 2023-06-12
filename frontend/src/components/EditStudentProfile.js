@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button,Navbar,Nav,Dropdown, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const StudentProfileEdit = () => {
@@ -96,6 +96,54 @@ const StudentProfileEdit = () => {
   };
 
   return (
+    <div>
+      <Navbar bg="dark" variant='dark' expand="lg">
+                <Container fluid>
+                    <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll">
+                        <Nav
+                            className="me-auto my-1 my-lg-0"
+                            style={{ maxHeight: '100px' }}
+                            navbarScroll
+                        >
+                            <Nav.Link href="StudentHome">Home</Nav.Link>
+                            <Nav.Link href="StudentSchedule">Schedule</Nav.Link>
+                            <Nav.Link href="createResume">Resume</Nav.Link>
+                        </Nav>
+
+
+                        <div className="col-md-6 mx-auto" >
+                            <Form className="d-flex ">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+                                <Button variant="outline-light">Search</Button>
+                            </Form>
+                        </div>
+                        <Button variant="outline-dark">
+                         <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
+                            <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
+
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+                        </Button>
+
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+      <br></br>
+      <div style={{ marginLeft: '20px', marginRight: '20px' }}>
     <Form onSubmit={handleSubmit}>
       <Row>
         
@@ -437,11 +485,13 @@ const StudentProfileEdit = () => {
           onChange={handleChange}
         />
       </Form.Group>
-
-      <Button variant="primary" type="submit">
+    <br></br>
+      <Button variant="dark" type="submit">
         Update Profile
       </Button>
     </Form>
+    </div>
+    </div>
   );
 };
 
