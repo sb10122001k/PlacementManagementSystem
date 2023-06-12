@@ -28,10 +28,9 @@ const InterviewScheduler = () => {
     const data = await response.json();
 
     console.log(data)
-    if (data.status === 'ok') {
-      alert('Job Applied Successfuly')
-      navigate('/viewJobPosting', { replace: true })
-    }
+  
+      alert(data.message)
+      
   // 
 };
 

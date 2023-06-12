@@ -99,7 +99,7 @@ const AdminStudentsApplied = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {postingData.map((posting) => (
+                        {postingData?.map((posting) => (
                             <tr key={posting.appliedid}>
                                 {/* Table body cells */}
                                 <td>{posting.appliedid}</td>

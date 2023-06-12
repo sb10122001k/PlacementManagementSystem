@@ -28,6 +28,9 @@ const StudentLogIn = () => {
       localStorage.setItem('token', data.token);
         navigate('/StudentHome', { replace: true })
     }
+    else{
+      alert(data.error)
+    }
 
 }
 
@@ -50,10 +53,10 @@ const StudentLogIn = () => {
 
               <Form onSubmit={LogInStudent}>
                 <br></br>
-                <h1 class="container text-center">Student LogIn</h1>
+                <h1 className="container text-center">Student LogIn</h1>
                 <br></br>
 
-                <div class="container">
+                <div className="container">
 
                   <Row className="mb-1">
 

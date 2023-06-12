@@ -37,9 +37,9 @@ const CompanyRegister = () => {
     const data = await response.json();
 
     console.log(data)
-    if(data.status === 'ok'){
+    if(data.message=== 'ok'){
         
-        navigate('/login', { replace: true })
+        navigate('/CompanyLogin', { replace: true })
      }
     }
 

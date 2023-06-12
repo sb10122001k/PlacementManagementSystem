@@ -86,7 +86,7 @@ const StudentProfileEdit = () => {
       );
 
       if (response.ok) {
-        navigate('/profile');
+        navigate('/StudentProfile');
       } else {
         console.log('Failed to update profile');
       }

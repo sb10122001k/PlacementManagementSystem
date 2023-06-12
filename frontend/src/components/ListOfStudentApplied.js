@@ -32,14 +32,12 @@ const ApplicationTable = () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      // Handle the response data
       console.log('Status update successful:', data);
-      // Perform any additional actions if needed
     })
     .catch((error) => {
-      // Handle any errors
       console.error('Status update failed:', error);
     });
+    window.location.reload()
   };
 
   async function handleSendFeedback  (e){

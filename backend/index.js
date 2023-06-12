@@ -3,7 +3,7 @@ const cors = require('cors')
 const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
-const { Student, Company, Interview, Posting, AppliedCandidate, Resume, ChatMessage, CompanyInterview, StudentInterview, Feedback, Admin, Template } = require('./models')
+const { Student, Company, Posting, AppliedCandidate, Resume, ChatMessage, CompanyInterview, StudentInterview, Feedback, Admin, Template } = require('./models')
 // const {Student, Company, Posting, AppliedCandidate, Admin} = require('./models')
 const email = require('./emailservice')
 const mongoose = require('mongoose')
@@ -28,6 +28,26 @@ app.get('/api/studentProfile', async (req, res) => {
   res.json(data)
 
 })
+
+app.put('/api/updateProfile/:usn', async (req, res) => {
+  const usn = req.params.usn;
+  const updatedData = req.body;
+
+  try {
+    
+    const result = await Student.findOneAndUpdate({ usn }, updatedData, {
+      new: true,
+    });
+
+    if (result) {
+      res.status(200).json({ message: 'Profile updated successfully' });
+    } else {
+      res.status(404).json({ error: 'Student not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update profile' });
+  }
+});
 
 app.get('/api/sechdule/:usn', async (req, res) => {
   const usn = req.params.usn
@@ -72,7 +92,7 @@ app.post('/api/finalScheduleSelection', async (req, res) => {
 });
 
 app.get('/api/appliedcandidatesadmin', async (req, res) => {
-  console.log("HI")
+
   try {
     const appliedCandidates = await AppliedCandidate.find();
     const formattedCandidates = [];
@@ -81,6 +101,7 @@ app.get('/api/appliedcandidatesadmin', async (req, res) => {
       const { _id, usn, jobid, status } = appliedCandidates[i];
       const student = await Student.findOne({ usn });
       const company = await Posting.findOne({ _id: jobid });
+      console.log(company)
 
       const formattedCandidate = {
         appliedid: _id,
@@ -125,23 +146,23 @@ app.get('/api/companySechdule/:companyEmail', async (req, res) => {
 
       }
       scheduleInterview.push(scheduleInterviews)
-      
+
     }
     console.log(scheduleInterview)
-      res.json(scheduleInterview)
+    res.json(scheduleInterview)
   }
-  catch(error){
+  catch (error) {
     console.log(error)
     res.sendStatus(500)
   }
-    // .then((interviews) => {
-    //   console.log(interviews);
-    //   res.json(interviews);
-    // })
-    // .catch((error) => {
-    //   console.error('Error fetching interview data', error);
-    //   res.status(500).json({ message: 'Failed to fetch interview data' });
-    // });
+  // .then((interviews) => {
+  //   console.log(interviews);
+  //   res.json(interviews);
+  // })
+  // .catch((error) => {
+  //   console.error('Error fetching interview data', error);
+  //   res.status(500).json({ message: 'Failed to fetch interview data' });
+  // });
 });
 
 app.get('/api/companysechdule/:email', (req, res) => {
@@ -216,10 +237,10 @@ app.get('/api/getAllMessages', (req, res) => {
 });
 
 app.get('/api/getResume/:usn', async (req, res) => {
-  const usn=req.params.usn
+  const usn = req.params.usn
   console.log("Req")
   try {
-    const usnPdf = await Resume.findOne({ usn:usn});
+    const usnPdf = await Resume.findOne({ usn: usn });
 
     if (!usnPdf || !usnPdf.resume.data) {
 
@@ -249,10 +270,10 @@ app.post('/api/createresume/:usn', async (req, res) => {
 app.get('/api/getfeedback/:usn', async (req, res) => {
   const usn = req.params.usn;
   console.log(usn);
-  
+
   try {
     const feedback = await Feedback.find({ usn });
-   
+
     res.send(feedback);
   } catch (error) {
     console.error('Error getting feedback:', error);
@@ -263,25 +284,37 @@ app.get('/api/getfeedback/:usn', async (req, res) => {
 
 app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     const { usn } = req.body;
     const pdfData = req.file.buffer;
+    console.log(pdfData)
     const contentType = req.file.mimetype;
 
-    const resume = new Resume({
-      usn,
-      resume: {
+    const existingResume = await Resume.findOne({ usn });
+
+    if (existingResume) {
+      existingResume.resume = {
         data: pdfData,
         contentType
-      }
-    });
-    await resume.save();
+      };
+      await existingResume.save();
+    } else {
+      const newResume = new Resume({
+        usn,
+        resume: {
+          data: pdfData,
+          contentType
+        }
+      });
+      await newResume.save();
+    }
 
     res.status(201).json({ message: 'USN and PDF stored successfully' });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ error: 'An error occurred while storing USN and PDF' });
   }
+
 });
 app.put('/api/updateApplicationStatus/:id', async (req, res) => {
   const id = req.params.id;
@@ -313,6 +346,7 @@ app.post('/api/newJobApplied', async (req, res) => {
 
 app.get('/api/getCandidateList/:id', async (req, res) => {
   const jobId = req.params.id;
+  console.log("HI")
   try {
     const list = await AppliedCandidate.find({ jobid: jobId })
     res.status(200).json(list);
@@ -326,7 +360,7 @@ app.get('/api/getJobPosted/:id', async (req, res) => {
   console.log(req.params.id)
   const companyemail = req.params.id;
   try {
-    const jobPostings = await Posting.find({ email: companyemail });
+    const jobPostings = await Posting.find({ companyEmail: companyemail });
     console.log(jobPostings)
     res.status(200).json(jobPostings);
   } catch (error) {
@@ -547,7 +581,7 @@ app.post('/api/registerCompany', async (req, res) => {
     const company = await newCompany.save()
 
 
-    res.status(200).json({ message: 'ok' })
+    res.status(201).json({ message: 'ok' });
   } catch (err) {
     console.log(err);
   }
@@ -610,7 +644,7 @@ app.post('/api/newJobPosting', async (req, res) => {
     const savedJobPosting = await newJobPosting.save();
 
 
-    res.status(201).json(savedJobPosting);
+    res.status(201).json({status:"ok"});
 
   } catch (error) {
     console.log(error)
@@ -825,7 +859,7 @@ app.post('/api/registerAdmin', async (req, res) => {
 
     const savedAdmin = await admin.save();
 
-    res.status(201).json(savedAdmin);
+    res.status(201).json({status:"ok"});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to register admin' });

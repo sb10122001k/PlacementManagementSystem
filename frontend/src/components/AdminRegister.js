@@ -27,7 +27,7 @@ const AdminRegister = () => {
 
     console.log(data)
     if(data.status === 'ok'){
-        navigate('/login', { replace: true })
+        navigate('/AdminLogIn', { replace: true })
     }
 
 }
