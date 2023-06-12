@@ -93,6 +93,11 @@ const CompanySchema = new mongoose.Schema({
   }
 });
 
+const ChatSchema = new mongoose.Schema({
+  sender: String,
+  message: String,
+});
+
 
 
 const JobPostingSchema = new mongoose.Schema({
@@ -342,4 +347,5 @@ module.exports = {
   Admin: mongoose.model('admin',AdminSchema),
   Template: mongoose.model('template',ResumeTemplateSchema),
   Feedback : mongoose.model('feedback', FeedbackSchema),
+  ChatMessage:mongoose.model('ChatMessage', ChatSchema)
 };

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const InterviewScheduler = () => {
+  const location=useLocation();
   const [schedule, setSchedule] = useState([]);
   const [meetingLink, setMeetingLink] = useState('');
-  const usn = localStorage.getItem('usn')
+  const usn = location.state.usn;
   const companyEmail = localStorage.getItem('token')
   const navigate = useNavigate();
+
   async function handleSubmit(e) {
         e.preventDefault();
     console.log('Button Pressed')

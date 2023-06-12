@@ -1,11 +1,11 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Navbar, Container, Nav, Form, Row, Col, Button, Figure, Card, Table ,Dropdown} from 'react-bootstrap'
-
+import { useNavigate } from 'react-router-dom';
 
 
 const AdminStudent = () => {
     const [postingData, setPostingData] = useState()
-
+    const navigate=useNavigate();
     useEffect(() => {
         console.log(localStorage.getItem('userid'))
         fetch('http://localhost:1337/api/getallstudent')
@@ -25,6 +25,10 @@ const AdminStudent = () => {
                 });
             })
     }, [])
+
+    const openResume = (usn) => {
+        navigate('/StudentResume',{ state: { usn: usn } })
+      };
     return (
         <div>
 
@@ -96,7 +100,9 @@ const AdminStudent = () => {
                             <td>{posting.usn}</td>
                             <td>{posting.specialization}</td>
                             <td>{posting.currentSemester}</td>
-                            <td>      <Button variant="dark">Resume</Button>{' '}</td>
+                            <td>
+                                        <button onClick={() => openResume(posting.usn)}>Resume</button>
+                                    </td>
 
                         </tr>
                     )}

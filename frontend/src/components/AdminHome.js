@@ -115,6 +115,16 @@ const AdminHome = () => {
                                 </Card>
                             </Button>
                         </a>
+                        <a href="/chat">
+                        <Button bg='dark' variant="light">
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="https://static.vecteezy.com/system/resources/previews/005/337/802/original/icon-symbol-chat-outline-illustration-free-vector.jpg" />
+                                <Card.Body>
+                                    <Card.Title>Chat</Card.Title>
+                                </Card.Body>
+                            </Card>
+                        </Button>
+                        </a>
 
                     </div>
                 </div>

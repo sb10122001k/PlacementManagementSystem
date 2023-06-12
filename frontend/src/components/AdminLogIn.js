@@ -10,13 +10,11 @@ const AdminLogIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Create a JSON object with email and password
     const data = {
       email,
       password
     };
 
-    // Make the POST request to the Express server
     fetch('http://localhost:1337/api/adminLogin', {
       method: 'POST',
       headers: {
@@ -25,18 +23,18 @@ const AdminLogIn = () => {
       body: JSON.stringify(data)
     })
     .then(response => {
-      // Handle the response from the server
       if (response.ok) {
-        // Successful login, do something
+        const token = 'admin';
+      localStorage.setItem('token', token);
         navigate('/admin/home')
+
         console.log('Login successful');
       } else {
-        // Login failed, handle the error
+
         console.error('Login failed');
       }
     })
     .catch(error => {
-      // Handle any network or server errors
       console.error('Error:', error);
     });
   };

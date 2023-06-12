@@ -1,45 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const sender = localStorage.getItem('token');
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== '') {
-      setMessages([...messages, newMessage]);
-      setNewMessage('');
+      fetch('http://localhost:1337/api/sendMessage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sender, message: newMessage }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setMessages(...messages,[ { sender: data.sender, message: newMessage }]);
+          window.location.reload(); 
+          setNewMessage('');
+        })
+        .catch((error) => {
+          console.error('Error sending message:', error);
+        });
     }
   };
 
+  useEffect(() => {
+    fetch('http://localhost:1337/api/getAllMessages')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        setMessages(data);
+        console.log(messages)
+      })
+      .catch((error) => {
+        console.error('Error getting messages:', error);
+      });
+  }, []);
+
   return (
-    <div>
+    <div
+      style={{
+        margin: '0 auto',
+        maxWidth: '80%',
+        marginTop: '20px',
+      }}
+    >
       <div
         style={{
           maxHeight: '300px',
           overflowY: 'auto',
           border: '1px solid #ccc',
-          padding: '10px'
+          padding: '10px',
         }}
       >
-        {messages.map((message, index) => (
+        {messages?.map((message, index) => (
           <div
             key={index}
             style={{
               maxHeight: '100px',
-
               backgroundColor: '#f2f2f2',
               padding: '5px',
-              marginBottom: '5px'
+              marginBottom: '5px',
             }}
           >
-            {message}
+            <strong>{message.sender}:</strong> {message.message}
           </div>
         ))}
       </div>
       <div
         style={{
           display: 'flex',
-          marginTop: '10px'
+          marginTop: '10px',
         }}
       >
         <input
@@ -51,7 +84,7 @@ const ChatPage = () => {
             flex: '1',
             padding: '5px',
             border: '1px solid #ccc',
-            borderRadius: '4px'
+            borderRadius: '4px',
           }}
         />
         <button
@@ -63,7 +96,7 @@ const ChatPage = () => {
             padding: '8px 16px',
             marginLeft: '5px',
             cursor: 'pointer',
-            borderRadius: '4px'
+            borderRadius: '4px',
           }}
         >
           Send

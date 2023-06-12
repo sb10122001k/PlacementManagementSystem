@@ -1,439 +1,448 @@
-import React, { Component } from 'react';
-import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap'
-import * as yup from "yup";
-import { Formik } from 'formik'
+import React, { useState, useEffect } from 'react';
+import { Form, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
+const StudentProfileEdit = () => {
+  const navigate = useNavigate();
+  const usn = localStorage.getItem('token')
+  const [formData, setFormData] = useState({
+    usn: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    dateOfBirth: '',
+    country: '',
+    state: '',
+    city: '',
+    zip: '',
+    contactNumber: '',
+    address: '',
+    careerObjective: '',
+    schoolName1: '',
+    education1: '',
+    course1: '',
+    address1: '',
+    score1: '',
+    yearOfCompletion1: '',
+    schoolName2: '',
+    education2: '',
+    course2: '',
+    address2: '',
+    score2: '',
+    yearOfCompletion2: '',
+    collegeName: '',
+    education3: '',
+    course3: '',
+    specialization: '',
+    address3: '',
+    score3: '',
+    courseDuration: '',
+    keySkills: '',
+    careerPreferences: '',
+    // Add other form fields here
+  });
 
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:1337/api/studentProfile/${usn}`
+        );
+        const data = await response.json();
+        if (response.ok) {
+          setFormData(data);
+        } else {
+          console.log('Failed to fetch profile data');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    fetchProfileData();
+  }, [usn]);
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-const schema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  username: yup.string().required(),
-  city: yup.string().required(),
-  state: yup.string().required(),
-  zip: yup.string().required(),
-  file: yup.mixed().required(),
-  terms: yup.bool().required().oneOf([true], 'terms must be accepted'),
-});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    try {
+      const response = await fetch(
+        `http://localhost:1337/api/updateProfile/${usn}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
-const EditStudentProfile = () => {
+      if (response.ok) {
+        navigate('/profile');
+      } else {
+        console.log('Failed to update profile');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <Formik
-      validationSchema={schema}
-      onSubmit={console.log}
-      initialValues={{
-        firstName: '',
-        lastName: '',
-        username: '',
-        city: '',
-        state: '',
-        zip: '',
-        file: null,
-        terms: false,
-      }}
-    >
-      {({
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        values,
-        touched,
-        isValid,
-        errors,
-      }) => (
-        <Form>
-          <br></br>
-          <h1 class="container text-center">Editing The Profile</h1>
-          <br></br>
-
-          <div class="container">
-
-            <Row className="mb-3">
-
-              <Form.Group as={Col} md="4" controlId="formGridFirstname" className="position-relative"
-              >
-                <Form.Label>First Name</Form.Label>
-                <Form.Control type='text' placeholder="First name"
-                  name="firstName"
-                  value={values.firstName}
-                  onChange={handleChange}
-                  required
-                  isValid={touched.firstName && !errors.firstName}
-                  isInvalid={!!errors.firstName} />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.firstName}
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group as={Col} md="4" controlId="formGridLastname">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control type='text' placeholder="Last name"
-                  name="lastName"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  isValid={touched.lastName && !errors.lastName}
-                  isInvalid={!!errors.lastName}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.lastName}
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridUSN">
-                <Form.Label>USN</Form.Label>
-                <Form.Control type='usn' placeholder="USN"
-                  name="string"
-                  value={values.usn}
-                  onChange={handleChange}
-                  required
-                  isValid={touched.usn && !errors.usn}
-                  isInvalid={!!errors.usn} />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.usn}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <br></br>
-
-
-            <Row className="mb-3">
-
-              <Form.Group as={Col} controlId="formGridCurrentSem">
-                <Form.Label>Current Semister</Form.Label>
-                <Form.Control type='number' required placeholder="Current Semister" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" required placeholder="Enter email" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" required placeholder="Password" />
-              </Form.Group>
-            </Row>
-            <br></br>
-            <Row className="mb-3">
-
-              <Form.Group as={Col} controlId="formGridDateofBirth">
-                <Form.Label>Date Of Birth</Form.Label>
-                <Form.Control required placeholder="Date Of Birth" />
-              </Form.Group>
-
-
-              <Form.Group as={Col} controlId="formGridCountry">
-                <Form.Label>Country</Form.Label>
-                <Form.Control required placeholder="Country" />
-              </Form.Group>
-              <Form.Group as={Col} controlId="formGridState">
-                <Form.Label>State</Form.Label>
-                <Form.Control required placeholder="State"
-                  type="text"
-                  name="state"
-                  value={values.state}
-                  onChange={handleChange}
-                  isInvalid={!!errors.state} />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.state}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-
-            <br></br>
-
-            <Row className="mb-3">
-
-              <Form.Group as={Col} controlId="formGridCity">
-                <Form.Label>City</Form.Label>
-                <Form.Control placeholder="City"
-                  type="text"
-                  name="city"
-                  required
-                  value={values.city}
-                  onChange={handleChange}
-                  isInvalid={!!errors.city} />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.city}
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group
-                as={Col}
-                controlId="validationFormik105"
-                className="position-relative"
-              >
-                <Form.Label>Zip</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Zip"
-                  name="zip"
-                  required
-                  value={values.zip}
-                  onChange={handleChange}
-                  isInvalid={!!errors.zip}
-                />
-
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.zip}
-                </Form.Control.Feedback>
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridContactnum">
-                <Form.Label>Contact number</Form.Label>
-                <Form.Control type='text' required placeholder="Contact number" />
-              </Form.Group>
-            </Row>
-            <br></br>
-
-            <Form.Group controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Address</Form.Label>
-              <Form.Control as="textarea" required rows={3} />
-            </Form.Group>
-            <br></br>
-
-            <Form.Group controlId="exampleForm.ControlTextarea2">
-              <Form.Label>Career Objective</Form.Label>
-              <Form.Control as="textarea" required rows={3} />
-            </Form.Group>
-            <br></br>
-            <Row className="mb-3">
-
-              <Form.Group as={Col} controlId="formBasicSchoolname">
-                <Form.Label>School Name </Form.Label>
-                <Form.Control type="text" required placeholder="SchoolName" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicEducation">
-                <Form.Label>Education</Form.Label>
-                <Form.Control type="text" required placeholder="Education" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicCourse">
-                <Form.Label>Course</Form.Label>
-                <Form.Control type="text" required placeholder="Courses" />
-              </Form.Group>
-
-
-            </Row>
-            <br></br>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formBasicAddress">
-                <Form.Label>Address</Form.Label>
-                <Form.Control type="text" required placeholder="Address" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicScore">
-                <Form.Label>Score</Form.Label>
-                <Form.Control type="text" required placeholder="Score" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicYear">
-                <Form.Label>Year of Completion</Form.Label>
-                <Form.Control type="text" required placeholder="Year" />
-              </Form.Group>
-            </Row>
-            <br></br>
-            <Row className="mb-3">
-
-              <Form.Group as={Col} controlId="formBasicSchoolname">
-                <Form.Label>College Name </Form.Label>
-                <Form.Control type="text" required placeholder="SchoolName" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicEducation">
-                <Form.Label>Education</Form.Label>
-                <Form.Control type="text" required placeholder="Education" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicCourse">
-                <Form.Label>Course</Form.Label>
-                <Form.Control type="text" required placeholder="Courses" />
-              </Form.Group>
-            </Row>
-            <br></br>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formBasicAddress">
-                <Form.Label>Address</Form.Label>
-                <Form.Control type="text" required placeholder="Address" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicScore">
-                <Form.Label>Score</Form.Label>
-                <Form.Control type="text" required placeholder="Score" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicYear">
-                <Form.Label>Year of Completion</Form.Label>
-                <Form.Control type="text" required placeholder="Year" />
-              </Form.Group>
-            </Row>
-            <br></br>
-            <Row className="mb-3">
-
-              <Form.Group as={Col} controlId="formBasicSchoolname">
-                <Form.Label>College Name </Form.Label>
-                <Form.Control type="text" required placeholder="SchoolName" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicCourse">
-                <Form.Label>Course</Form.Label>
-                <Form.Control type="text" required placeholder="Courses" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicSpecialization">
-                <Form.Label>Specialization</Form.Label>
-                <Form.Control type="text" required placeholder="Specialization" />
-              </Form.Group>
-            </Row>
-            <br></br>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formBasicAddress">
-                <Form.Label>Address</Form.Label>
-                <Form.Control type="text" required placeholder="Address" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicScore">
-                <Form.Label>Score</Form.Label>
-                <Form.Control type="text" required placeholder="Score" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicCourseduration">
-                <Form.Label>Course Duration</Form.Label>
-                <Form.Control type="text" required placeholder="Course Duration" />
-              </Form.Group>
-            </Row>
-
-            <br></br>
-            <Row className="mb-3">
-
-              <Form.Group className="mb-3" as={Col} controlId="formBasicKeyskills">
-                <Form.Label>Key Skills</Form.Label>
-                <Form.Control type="text" required placeholder="Skills" />
-              </Form.Group>
-
-
-              <Form.Group controlId="formFileMultiple" as={Col} className="mb-3">
-                <Form.Label>Certifications</Form.Label>
-                <Form.Control required type="file" multiple />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>Career Preferences</Form.Label>
-                <Form.Control type="text" placeholder="Career Preferences" />
-              </Form.Group>
-
-            </Row>
-            <br></br>
-
-
-            <Row className="mb-3">
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>Project Name </Form.Label>
-                <Form.Control type="text" required placeholder="First Project" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>Key skills used</Form.Label>
-                <Form.Control type="text" required placeholder="Skills" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>About the Project</Form.Label>
-                <Form.Control type="text" required
-                  placeholder="About the project" />
-              </Form.Group>
-
-            </Row>
-            <br></br>
-
-            <Row className="mb-3">
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>Project Name </Form.Label>
-                <Form.Control type="text" placeholder="Second Project" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>Key skills used</Form.Label>
-                <Form.Control type="text" placeholder="Skills" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>About the Project</Form.Label>
-                <Form.Control type="text" placeholder="About the project" />
-              </Form.Group>
-
-            </Row>
-            <br></br>
-            <Row className="mb-3">
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>Project Name </Form.Label>
-                <Form.Control type="text" placeholder="Third Project" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>Key skills used</Form.Label>
-                <Form.Control type="text" placeholder="Skills" />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formBasicKeyskills">
-                <Form.Label>About the Project</Form.Label>
-                <Form.Control type="text" placeholder="About the project" />
-              </Form.Group>
-
-            </Row>
-            <br></br>
-            <Form.Group className="position-relative mb-3">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type="file"
-                required
-                name="file"
-                onChange={handleChange}
-                isInvalid={!!errors.file}
-              />
-              <Form.Control.Feedback type="invalid" tooltip>
-                {errors.file}
-              </Form.Control.Feedback>
-            </Form.Group>
-
-
-
-            <Form.Group className="position-relative mb-3">
-              <Form.Check
-                required
-                name="terms"
-                label="The information given by me is correct"
-                onChange={handleChange}
-                isInvalid={!!errors.terms}
-                feedback={errors.terms}
-                feedbackType="invalid"
-                id="validationFormik106"
-                feedbackTooltip
-              />
-            </Form.Group>
-
-
-
-            <br></br>
-
-            <Button variant="dark" type="submit">Submit </Button>{' '}
-            <Button variant="dark" type="reset">Cancel </Button>
-            <br></br>
-            <br></br>
-            <br></br>
-
-          </div>
-        </Form>
-      )}
-    </Formik>
+    <Form onSubmit={handleSubmit}>
+      <Row>
+        
+        <Col>
+          <Form.Group controlId="firstName">
+            <Form.Label>First Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="lastName">
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+
+      <Row>
+      <Form.Group controlId="email">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </Form.Group>
+
+      <Form.Group controlId="password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+      </Form.Group>
+      </Row>
+
+      <Form.Group controlId="dateOfBirth">
+        <Form.Label>Date of Birth</Form.Label>
+        <Form.Control
+          type="text"
+          name="dateOfBirth"
+          value={formData.dateOfBirth}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="country">
+        <Form.Label>Country</Form.Label>
+        <Form.Control
+          type="text"
+          name="country"
+          value={formData.country}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="state">
+        <Form.Label>State</Form.Label>
+        <Form.Control
+          type="text"
+          name="state"
+          value={formData.state}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="city">
+        <Form.Label>City</Form.Label>
+        <Form.Control
+          type="text"
+          name="city"
+          value={formData.city}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="zip">
+        <Form.Label>ZIP</Form.Label>
+        <Form.Control
+          type="text"
+          name="zip"
+          value={formData.zip}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="contactNumber">
+        <Form.Label>Contact Number</Form.Label>
+        <Form.Control
+          type="text"
+          name="contactNumber"
+          value={formData.contactNumber}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="address">
+        <Form.Label>Address</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="careerObjective">
+        <Form.Label>Career Objective</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="careerObjective"
+          value={formData.careerObjective}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="schoolName1">
+        <Form.Label>School Name 1</Form.Label>
+        <Form.Control
+          type="text"
+          name="schoolName1"
+          value={formData.schoolName1}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="education1">
+        <Form.Label>Education 1</Form.Label>
+        <Form.Control
+          type="text"
+          name="education1"
+          value={formData.education1}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="course1">
+        <Form.Label>Course 1</Form.Label>
+        <Form.Control
+          type="text"
+          name="course1"
+          value={formData.course1}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="address1">
+        <Form.Label>Address 1</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="address1"
+          value={formData.address1}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="score1">
+        <Form.Label>Score 1</Form.Label>
+        <Form.Control
+          type="text"
+          name="score1"
+          value={formData.score1}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="yearOfCompletion1">
+        <Form.Label>Year of Completion 1</Form.Label>
+        <Form.Control
+          type="text"
+          name="yearOfCompletion1"
+          value={formData.yearOfCompletion1}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="schoolName2">
+        <Form.Label>School Name 2</Form.Label>
+        <Form.Control
+          type="text"
+          name="schoolName2"
+          value={formData.schoolName2}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="education2">
+        <Form.Label>Education 2</Form.Label>
+        <Form.Control
+          type="text"
+          name="education2"
+          value={formData.education2}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="course2">
+        <Form.Label>Course 2</Form.Label>
+        <Form.Control
+          type="text"
+          name="course2"
+          value={formData.course2}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="address2">
+        <Form.Label>Address 2</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="address2"
+          value={formData.address2}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="score2">
+        <Form.Label>Score 2</Form.Label>
+        <Form.Control
+          type="text"
+          name="score2"
+          value={formData.score2}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="yearOfCompletion2">
+        <Form.Label>Year of Completion 2</Form.Label>
+        <Form.Control
+          type="text"
+          name="yearOfCompletion2"
+          value={formData.yearOfCompletion2}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="collegeName">
+        <Form.Label>College Name</Form.Label>
+        <Form.Control
+          type="text"
+          name="collegeName"
+          value={formData.collegeName}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="education3">
+        <Form.Label>Education 3</Form.Label>
+        <Form.Control
+          type="text"
+          name="education3"
+          value={formData.education3}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="course3">
+        <Form.Label>Course 3</Form.Label>
+        <Form.Control
+          type="text"
+          name="course3"
+          value={formData.course3}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="specialization">
+        <Form.Label>Specialization</Form.Label>
+        <Form.Control
+          type="text"
+          name="specialization"
+          value={formData.specialization}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="address3">
+        <Form.Label>Address 3</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="address3"
+          value={formData.address3}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="score3">
+        <Form.Label>Score 3</Form.Label>
+        <Form.Control
+          type="text"
+          name="score3"
+          value={formData.score3}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="courseDuration">
+        <Form.Label>Course Duration</Form.Label>
+        <Form.Control
+          type="text"
+          name="courseDuration"
+          value={formData.courseDuration}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="keySkills">
+        <Form.Label>Key Skills</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="keySkills"
+          value={formData.keySkills}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="careerPreferences">
+        <Form.Label>Career Preferences</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="careerPreferences"
+          value={formData.careerPreferences}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Button variant="primary" type="submit">
+        Update Profile
+      </Button>
+    </Form>
   );
-}
+};
 
-export default EditStudentProfile;
+export default StudentProfileEdit;

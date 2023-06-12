@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Button, ButtonGroup, Modal, Form } from 'react-bootstrap';
+import { Table, Button, ButtonGroup, Modal, Form,Navbar,Dropdown,Nav,Container } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const ApplicationTable = () => {
@@ -13,17 +13,33 @@ const ApplicationTable = () => {
   const companyName = localStorage.getItem('name');
 
   const handleViewResume = (usn) => {
-    console.log(`View resume for application ${usn}`);
-    localStorage.setItem('usn', usn);
-    navigate('/viewCandidateResume', { replace: true });
+    navigate('/StudentResume',{ state: { usn: usn } })
   };
 
-  const handleScheduleInterview = (id) => {
-    console.log(`Schedule interview for application ${id}`);
+  const handleScheduleInterview = (usn) => {
+    console.log(`Schedule interview for application ${usn}`);
+    navigate('/scheduleInterview',{ state: { usn: usn } })
   };
 
   const handleStatusChange = (id, status) => {
-    console.log(`Change status for application ${id} to ${status}`);
+    
+    fetch(`http://localhost:1337/api/updateApplicationStatus/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id, status })
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Handle the response data
+      console.log('Status update successful:', data);
+      // Perform any additional actions if needed
+    })
+    .catch((error) => {
+      // Handle any errors
+      console.error('Status update failed:', error);
+    });
   };
 
   async function handleSendFeedback  (e){
@@ -67,6 +83,55 @@ const ApplicationTable = () => {
   };
 
   return (
+    
+    <div>
+
+            <Navbar bg="dark" variant='dark' expand="lg">
+                <Container fluid>
+                    <img src="https://www.igauge.in/admin/uploaded/rating/logo/CambridgeInstituteLatestLogo2_1623754797.png" height="40" width="110" />
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll">
+                        <Nav
+                            className="me-auto my-1 my-lg-0"
+                            style={{ maxHeight: '100px' }}
+                            navbarScroll
+                        >
+                            <Nav.Link href="CompanyHome">Home</Nav.Link>
+                            <Nav.Link href="NewJobPosting">Job Posting</Nav.Link>
+                            <Nav.Link href="CompanyInterview">Interviews</Nav.Link>
+                        </Nav>
+
+
+                        <div className="col-md-6 mx-auto" >
+                            <Form className="d-flex ">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+                                <Button variant="outline-light">Search</Button>
+                            </Form>
+                        </div>
+                        <Dropdown className="me-auto my-1 my-lg-0">
+                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-Login">
+                            <img className="me-auto my-1 my-lg-0" src="https://icon-library.com/images/my-profile-icon-png/my-profile-icon-png-22.jpg" height="30" width="30" />
+
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/">Log Out</Dropdown.Item>
+                                
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+
+
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+            <br></br>
+            <br></br>
     <>
       <Table striped bordered hover>
         <thead>
@@ -81,6 +146,7 @@ const ApplicationTable = () => {
         <tbody>
           {data?.map((application) => {
             return (
+              
               <tr key={application.id}>
                 <td>{application.usn}</td>
                 <td>
@@ -89,7 +155,7 @@ const ApplicationTable = () => {
                   </Button>
                 </td>
                 <td>
-                  <Button variant="success" onClick={() => handleScheduleInterview(application.id)}>
+                  <Button variant="success" onClick={() => handleScheduleInterview(application.usn)}>
                     Schedule Interview
                   </Button>
                 </td>
@@ -97,19 +163,19 @@ const ApplicationTable = () => {
                   <ButtonGroup>
                     <Button
                       variant={application.status === 'pending' ? 'secondary' : 'outline-secondary'}
-                      onClick={() => handleStatusChange(application.id, 'pending')}
+                      onClick={() => handleStatusChange(application._id, 'pending')}
                     >
                       Pending
                     </Button>
                     <Button
                       variant={application.status === 'accepted' ? 'success' : 'outline-success'}
-                      onClick={() => handleStatusChange(application.id, 'accepted')}
+                      onClick={() => handleStatusChange(application._id, 'accepted')}
                     >
                       Accepted
                     </Button>
                     <Button
                       variant={application.status === 'rejected' ? 'danger' : 'outline-danger'}
-                      onClick={() => handleStatusChange(application.id, 'rejected')}
+                      onClick={() => handleStatusChange(application._id, 'rejected')}
                     >
                       Rejected
                     </Button>
@@ -166,6 +232,7 @@ const ApplicationTable = () => {
         </Modal.Footer>
       </Modal>
     </>
+    </div>
   );
 };
 

@@ -59,6 +59,7 @@ const EngineeringSkillsTable = () => {
       <h1>Engineering Skills in Demand</h1>
       {engineeringSkillsData.map((departmentData) => (
         <div key={departmentData.department}>
+          <br></br>
           <h2>{departmentData.department}</h2>
           <table
             style={{

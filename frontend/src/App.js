@@ -54,6 +54,7 @@ import StudentCoverLetter from './components/StudentCoverLetter';
 import CoverLetter from './components/CoverLetter';
 import CompanyInterview from './components/CompanyInterview'
 import StudentResume from './components/PdfViewer';
+import FeedbackTable from './components/Feedback';
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
           <Route path='/ResumeCreate' element={<ResumeDetail />} />
           <Route path='/createResume' element={<Createresume />} />
           <Route path='/' element={<Home />} />
+          <Route path='/Feedback' element={<FeedbackTable />} />
           <Route path='/StudentResume' element={<StudentResume />} />
           <Route path='/CompanyInterview' element ={<CompanyInterview/>}/>
           <Route path='/StudentCoverLetter' element={<StudentCoverLetter />} />
