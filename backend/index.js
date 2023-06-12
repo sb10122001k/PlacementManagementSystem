@@ -4,7 +4,7 @@ const multer = require('multer');
 const app = express()
 const dotenv = require('dotenv')
 const { Student, Company, Interview, Posting, AppliedCandidate, Resume, CompanyInterview, StudentInterview, Admin, ResumeFeedback, Template } = require('./models')
-// const {Student, Company, Posting, AppliedCandidate, Admin} = require('./models')
+
 const email = require('./emailservice')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
@@ -149,6 +149,7 @@ app.post('/api/Resumeupload', upload.single('pdf'), async (req, res) => {
     res.status(500).json({ error: 'An error occurred while storing USN and PDF' });
   }
 });
+
 app.put('/api/updateApplicationStatus/:id', async (req, res) => {
   const id = req.params.id;
   const { status } = req.body;
@@ -219,38 +220,59 @@ app.get('/api/getallstudent',async(req,res)=>{
 
 
 
-// Get applied candidates with student, job, and company details
-app.get('/api/appliedcandidates/:companyEmail', async (req, res) => {
+
+
+// Assuming you have the student's USN and the job posting's company email
+
+app.get('/api/appliedStudents/:usn/:companyEmail', async (req, res) => {
   try {
-    const companyEmail = req.params.companyEmail;
+    const { usn, companyEmail } = req.params;
 
-    const appliedCandidates = await AppliedCandidate.find({ companyEmail: companyEmail })
-      .populate('usn', 'firstName lastName email branch')
-      .populate({
-        path: 'jobid',
-        select: 'jobRole companyEmail',
-        populate: {
-          path: 'companyEmail',
-          select: 'name'
-        }
-      });
+    // Find the student based on the USN
+    const student = await Student.findOne({ usn });
 
-    const formattedCandidates = appliedCandidates.map((candidate) => ({
-      studentName: candidate.usn.firstName + ' ' + candidate.usn.lastName,
-      studentEmail: candidate.usn.email,
-      usn: candidate.usn.usn,
-      branch: candidate.usn.branch,
-      jobRole: candidate.jobid.jobRole,
-      companyName: candidate.jobid.companyEmail.name,
-      jobId: candidate.jobid._id
-    }));
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
 
-    res.json(formattedCandidates);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server Error' });
+    // Find the job posting based on the company email
+    const posting = await Posting.findOne({ companyEmail });
+
+    if (!posting) {
+      return res.status(404).json({ message: 'Job posting not found' });
+    }
+
+    // Find the applied student in the AppliedCandidate collection
+    const appliedStudent = await AppliedCandidate.findOne({
+      usn: student.usn,
+      jobid: companyEmail
+    });
+
+    if (!appliedStudent) {
+      return res.status(404).json({ message: 'Student has not applied for this job' });
+    }
+
+    // Construct the response object with the student and job posting details
+    const response = {
+      studentName: `${student.firstName} ${student.lastName}`,
+      studentEmail: student.email,
+      usn: student.usn,
+      branch: student.branch,
+      jobRole: posting.jobRole,
+      companyName: posting.companyEmail,
+      jobId: posting.companyEmail,
+      // Add any other relevant details you want to include
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
+
+
+
+
 
 
 app.get('/api/getposting', async (req, res) => {
@@ -345,39 +367,54 @@ app.get('/api/StudentProfile/:id', async (req, res) => {
   res.send(student)
 })
 
+// Register a new company
 app.post('/api/registerCompany', async (req, res) => {
-
-  console.log(req.body);
   try {
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(req.body.password, salt)
+    // Extract the company data from the request body
+    const {
+      name,
+      email,
+      password,
+      address,
+      website,
+      country,
+      state,
+      city,
+      zip,
+      companyLogo,
+      companyDescription,
+      contact: { email: contactEmail, phone: contactPhone }
+    } = req.body;
 
-    const newCompany = await Company.create({
+    // Generate a salt and hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-      name: req.body.companyName,
-      email: req.body.email,
-      password: hashedPassword,
-      address: req.body.address,
-      website: req.body.companyWebsite,
-      contact: {
-        email: req.body.email,
-        phone: req.body.contactNumber
+    // Create a new company instance
+    const company = new Company({
+      name,
+      email,
+      password: hashedPassword, // Store the hashed password
+      address,
+      website,
+      country,
+      state,
+      city,
+      zip,
+      companyLogo,
+      companyDescription,
+      contact: { email: contactEmail, phone: contactPhone }
+    });
 
-      }
+    // Save the company to the database
+    const savedCompany = await company.save();
 
-
-    })
-
-    const company = await newCompany.save()
-
-
-    res.status(200).json(company)
+    res.status(201).json(savedCompany);
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
   }
-
-  // res.status(206).send("ok")
-})
+});
 
 app.get('/api/inveriewSlotAvailability/:usn', async (req, res) => {
   console.log(req.params.usn)
@@ -425,26 +462,36 @@ app.post('/api/companyLogin', async (req, res) => {
 })
 
 app.post('/api/newJobPosting', async (req, res) => {
-  console.log(req.body)
   try {
+    const { companyEmail, jobRole, JobDescription, Package, Qualification, Eligibility, Specialization, Experience, JobLocation, LastDate, DriveFrom, DriveTO, Venue, Name } = req.body;
 
-    const newJobPosting = new Posting(req.body);
-    const studentEmails = await Student.find().distinct('email');
+    const newJobPosting = new Posting({
+      companyEmail,
+      jobRole,
+      JobDescription,
+      Package,
+      Qualification,
+      Eligibility,
+      Specialization,
+      Experience,
+      JobLocation,
+      LastDate,
+      DriveFrom,
+      DriveTO,
+      Venue,
+      Name
+    });
 
-    // Save the job posting to the database
     const savedJobPosting = await newJobPosting.save();
-    const subject = 'New Job Posting Notification';
-    const message = 'A new job has been posted. Check the job board for more details.';
 
-    // for (const email of studentEmails) {
-    //   await sendEmailToStudent(email, subject, message);
-    // }
     res.status(201).json(savedJobPosting);
-
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error', error: err.message });
   }
-});
+  }
+);
+
 
 //delete a job
 app.delete('/api/jobPostings/:id', async (req, res) => {
@@ -828,6 +875,30 @@ app.post('/api/resume-templates', async (req, res) => {
   } catch (error) {
     console.error('Error posting resume template:', error);
     res.status(500).json({ error: 'Failed to post resume template' });
+  }
+});
+
+//accepted students
+app.get('/api/acceptedStudents/:companyEmail', async (req, res) => {
+  try {
+    const { companyEmail } = req.params;
+
+    // Find the job posting based on the company email
+    const posting = await Posting.findOne({ companyEmail });
+
+    if (!posting) {
+      return res.status(404).json({ message: 'Job posting not found' });
+    }
+
+    // Find the students whose status is "accepted" for the given job posting
+    const acceptedStudents = await AppliedCandidate.find({
+      jobid: posting._id,
+      status: 'accepted'
+    }).populate('usn', 'firstName lastName email');
+
+    res.status(200).json(acceptedStudents);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

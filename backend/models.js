@@ -134,11 +134,11 @@ const CompanySchema = new mongoose.Schema({
   contact: {
     email: {
       type: String,
-      required: true
+     
     },
     phone: {
       type: String,
-      required: true
+    
     }
   }
 });
@@ -147,8 +147,9 @@ const CompanySchema = new mongoose.Schema({
 
 const JobPostingSchema = new mongoose.Schema({
   companyEmail: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
+    unique: true,
     ref : 'Company'
   },
   jobRole: {
@@ -323,10 +324,10 @@ const ResumeTemplateSchema = new mongoose.Schema({
     required: true
   }
 });
-
+const Student = mongoose.model('student', StudentSchema)
 // Export the models
 module.exports = {
-  Student: mongoose.model('student', StudentSchema),
+  Student,
   Company: mongoose.model('company', CompanySchema),
   Posting: mongoose.model('posting', JobPostingSchema),
   Resume:mongoose.model('resume',ResumeSchema),
@@ -335,5 +336,5 @@ module.exports = {
   CompanyInterview:mongoose.model('cmpanyInterview',CompanyInterviewSchema),
   StudentInterview:mongoose.model('studentIntervew',StudentInterview),
   Admin: mongoose.model('admin',AdminSchema),
-  Template: mongoose.model('template',ResumeTemplateSchema),
+  Template: mongoose.model('template',ResumeTemplateSchema)
 };
